@@ -30,8 +30,8 @@ public class MedicalErpApplication {
 	@Bean
 	public Docket swaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("org.iitbact.org")).build().apiInfo(apiInfo())
-				.host("staging.org.iitbact");
+				.apis(RequestHandlerSelectors.basePackage("org.iitbact.erp")).build().apiInfo(apiInfo())
+				.host("localhost:8080");
 	}
 
 	private ApiInfo apiInfo() {
