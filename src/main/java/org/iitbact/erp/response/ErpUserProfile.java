@@ -1,19 +1,19 @@
 package org.iitbact.erp.response;
 
 import org.iitbact.erp.beans.BaseBean;
-import org.iitbact.erp.entities.User;
+import org.iitbact.erp.entities.HospitalUser;
 
 public class ErpUserProfile implements BaseBean {
 
-	private User profile;
+	private HospitalUser profile;
 
 
-	public User getProfile() {
+	public HospitalUser getProfile() {
 		return profile;
 	}
 
 
-	public void setProfile(User profile) {
+	public void setProfile(HospitalUser profile) {
 		this.profile = profile;
 	}
 	

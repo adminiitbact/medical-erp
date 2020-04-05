@@ -1,43 +1,33 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 
 
 /**
- * The persistent class for the users database table.
+ * The persistent class for the hospital_users database table.
  * 
  */
 @Entity
 @Table(name="hospital_users")
-public class User implements Serializable {
+@NamedQuery(name="HospitalUser.findAll", query="SELECT h FROM HospitalUser h")
+public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 
 	@Column(name="email_id")
 	private String emailId;
-	
-	@JsonIgnore
+
 	@Id
 	private int id;
 
 	private String name;
-	
+
 	private String role;
 
-	
-	@JsonIgnore
 	@Column(name="user_id")
 	private String userId;
-	
-	
-	public User() {
+
+	public HospitalUser() {
 	}
 
 	public String getEmailId() {
@@ -56,8 +46,6 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	
-
 	public String getName() {
 		return this.name;
 	}
@@ -66,6 +54,13 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	public String getRole() {
+		return this.role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getUserId() {
 		return this.userId;
@@ -73,15 +68,6 @@ public class User implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 }

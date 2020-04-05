@@ -1,7 +1,17 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.TypeDef;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 
 /**
@@ -11,22 +21,31 @@ import javax.persistence.*;
 @Entity
 @Table(name="facility_assets")
 @NamedQuery(name="FacilityAsset.findAll", query="SELECT f FROM FacilityAsset f")
+@TypeDef(
+	    typeClass = JsonBinaryType.class, 
+	    defaultForType = JsonNode.class
+	)
 public class FacilityAsset implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private JsonNode data;
+
 	@Id
-	@SequenceGenerator(name="FACILITY_ASSETS_FACILITYID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FACILITY_ASSETS_FACILITYID_GENERATOR")
 	@Column(name="facility_id")
 	private int facilityId;
 
-	private Object data;
-
-	//bi-directional one-to-one association to Facility
-	@OneToOne
-	private Facility facility;
+	@Column(name="user_id")
+	private String userId;
 
 	public FacilityAsset() {
+	}
+
+	public JsonNode getData() {
+		return this.data;
+	}
+
+	public void setData(JsonNode data) {
+		this.data = data;
 	}
 
 	public int getFacilityId() {
@@ -37,20 +56,12 @@ public class FacilityAsset implements Serializable {
 		this.facilityId = facilityId;
 	}
 
-	public Object getData() {
-		return this.data;
+	public String getUserId() {
+		return this.userId;
 	}
 
-	public void setData(Object data) {
-		this.data = data;
-	}
-
-	public Facility getFacility() {
-		return this.facility;
-	}
-
-	public void setFacility(Facility facility) {
-		this.facility = facility;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

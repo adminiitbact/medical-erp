@@ -1,12 +1,12 @@
 package org.iitbact.erp.repository;
 
-import org.iitbact.erp.entities.User;
+import org.iitbact.erp.entities.HospitalUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<HospitalUser, Integer> {
 
-	User findByEmailId(String emailId);
+	HospitalUser findByEmailId(String emailId);
 
-	User findByUserId(String userId);
+	HospitalUser findByUserId(String userId);
 
 }
