@@ -31,7 +31,7 @@ public class HospitalFacilityServices {
 		
 		HospitalUser user = userRepository.findByUserId(userId);
 		
-		System.out.println("Input fields from frontend : "+ request.getData().toPrettyString());
+		System.out.println("Input fields from frontend : "+ request.getData());
 		
 		BooleanResponse data=new BooleanResponse(true);
 		

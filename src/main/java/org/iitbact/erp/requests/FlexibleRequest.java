@@ -1,16 +1,14 @@
 package org.iitbact.erp.requests;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 public  class FlexibleRequest extends BaseRequest {
 	
-	private JsonNode data;
+	private Object data;
 
-	public JsonNode getData() {
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(JsonNode data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 }
