@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hospital-erp-stag",
+  "private_key_id": "5a7f2384beb53ac635e227e560b07067a0a76d54",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6P2/if5dzFQIx\nFrgCM5dkV2SkyNPMh9Od427hoiEkoOOnVEkagfgK5TWCC1m3Al5OvitdyqEpxCRc\nkDq30/SLYzkgIexmTyr6VKW8egMdcVDiSI7sJRWEbRCgAkSNbx3hAGmCEYgAWm3j\naWeY6NxZfQBMNBhpa8bHSlY4mzfjen5wYZvoQ+/pBxegHta3Q17iQ+QZ+nysmtvA\nO2xLWUKgLIWFTkNYYAcsSAhSMHiJ6SgTrbvOO5PyB8WGTpF0/MVRHWpuYXecPpGu\n+ThrgixbqSSQnVLFw6glau6XzNfkHGcJ40Z5a23u0L97ctswB41ERfGT3/PoiiSt\n9yNcpmUJAgMBAAECggEAClY6/3cqu1hkfBT8DCM7jnYglS9lkenNSkC1MWYDhjo9\nEwG6jPNpsNvH0c/kys4hgyf1gDR0KBKax1255I9UTegpONSpKi8lU390iLa84DAf\nLRqZ1Ba60FQSos7SvzF2Qbv5dHPvTcBhw51grTvp/uLRLBQ4G/cUsTrkTiqkj3DE\nmcGvSA5F9FTmfRtKTMwhOwldAIwvrZ5QIFvVoBu9LgjJFOiEU4X/dv9Il4mT2VGw\nEl9vgbsBkiHLOUvcjOe3klsBi8gOmzjKqi7gwyw0SFLZ9svM2+42P0XZJAR25q81\nz3pjil4SxJyIBznvWZE7OmnTEAxmtTVzVsIgIwt2AQKBgQD0e++umyoK8XRdsWs2\neUgfSAn9HnMl299YClr6To/+OdaG4RyP8GHi0LOQsVY31aV4wVXLOgeAaQgE2ytT\nY6WRxpdLjA06TLqX0zDuzofBc60doR8aGT4hhBpmdshsoNU/7prIAHiNoyF15vIT\nJphEQJrQZla2wwm78ZesjAF45QKBgQDDBUT/Yks1HLigpED+Q+j+iPbliMVCOxpD\n/dsk8o4mbuzEPxunrFVkYayFCW1YhhR6fAs7kfZIqctjLCP1AUZewAUYZohvYQMv\ns7J/JXMi5Hq9b3Z08G8522VV4t/9nzAgcTpknN7O1v657POOW/l1PR6LdmUaf9wl\nz+H7VLUtVQKBgQCREhmfGiNQawYJsoVTxZOuPCjxMWhSRq24qCxj6so2qEtLrbgt\nEQ6EcCKc8R2f8/5EMTSfaseYwronZ4XF7ZMJdTXBdlFDDtSJ0p9ulM6pU+KdekXi\nTqg3axPfSQyUqLrhPMxLcTwXj30DYQ6znmsr1MoIbzF1MTZNd4XwtQMKoQKBgAaN\ndMYH7XL5ZhKvsidY7MkwnOsVb1tMVROXwfc51yDfdUEaxbkahzv6NCu8J1pkFugO\npun3e4jxe433e7XNtymT1hf9yfPEFLFTnlm7TmULvDwFNLu1IGeXQY5jMxd4c8uD\nQm0DAFF+08w3c++Ck50m0pHpBnifdywmEfe53uSJAoGAEzM1cq/ryWeeXpoWsCEE\nRoQWDwAtGeaqcUZX/kBQqfU/zHFMlm/49godL6y+Eizg5gxVQ96+4zE5cAzd+YA+\nVZ92eH9ogkShq/mbtBPWuhXJE3x31OSjB0+aogotVcX2Ak7o1wyg+Mode/DhLPfk\ntUYNPL5g7Zf11F9lHMoavVA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-jrtts@hospital-erp-stag.iam.gserviceaccount.com",
+  "client_id": "115078619912423613913",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jrtts%40hospital-erp-stag.iam.gserviceaccount.com"
+}
