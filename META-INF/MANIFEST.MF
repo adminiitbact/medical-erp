@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: medical-erp-master
+Bundle-SymbolicName: medical-erp-master
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.iitbact.erp,
+ org.iitbact.erp.beans,
+ org.iitbact.erp.controllers,
+ org.iitbact.erp.entities,
+ org.iitbact.erp.exceptions,
+ org.iitbact.erp.repository,
+ org.iitbact.erp.requests,
+ org.iitbact.erp.response,
+ org.iitbact.erp.services

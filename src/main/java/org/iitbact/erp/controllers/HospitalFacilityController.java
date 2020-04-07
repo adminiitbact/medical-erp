@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -26,7 +28,7 @@ public class HospitalFacilityController {
 	
 	@PostMapping(path = "/add/facility/data")
 	@ApiOperation(response = ErpUserProfile.class,value = "Api to add new data under facility")
-	public ResponseBean addFacilityData(@RequestBody FlexibleRequest request) {
+	public ResponseBean addFacilityData(@RequestBody FlexibleRequest request) throws JsonProcessingException {
 		HospitalErpError error = null;
 		BooleanResponse data=null;
 		try {
@@ -37,5 +39,19 @@ public class HospitalFacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
-
+	
+	/*@PostMapping(path = "/fetch/facility/data")
+	@ApiOperation(response = ErpUserProfile.class,value = "Api to add new data under facility")
+	public ResponseBean fetchFacilityData(@RequestBody FlexibleRequest request) {
+		HospitalErpError error = null;
+		ErpUserProfile data= new ErpUserProfile();
+		try {
+			data=facilityServices.fetchFacilityData(request);
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+*/
 }
