@@ -6,7 +6,6 @@ import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
-import org.iitbact.erp.response.ErpUserProfile;
 import org.iitbact.erp.services.HospitalFacilityServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

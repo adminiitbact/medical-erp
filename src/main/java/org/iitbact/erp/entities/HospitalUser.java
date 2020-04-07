@@ -2,6 +2,7 @@ package org.iitbact.erp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -13,6 +14,9 @@ import javax.persistence.*;
 @NamedQuery(name="HospitalUser.findAll", query="SELECT h FROM HospitalUser h")
 public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Column(name="creation_time")
+	private Timestamp creationTime;
 
 	@Column(name="email_id")
 	private String emailId;
@@ -27,7 +31,20 @@ public class HospitalUser implements Serializable {
 	@Column(name="user_id")
 	private String userId;
 
+	//uni-directional many-to-one association to Facility
+	@ManyToOne
+	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
+	private Facility facility;
+
 	public HospitalUser() {
+	}
+
+	public Timestamp getCreationTime() {
+		return this.creationTime;
+	}
+
+	public void setCreationTime(Timestamp creationTime) {
+		this.creationTime = creationTime;
 	}
 
 	public String getEmailId() {
@@ -68,6 +85,14 @@ public class HospitalUser implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Facility getFacility() {
+		return this.facility;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
 	}
 
 }

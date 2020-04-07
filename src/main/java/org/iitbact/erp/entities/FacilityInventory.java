@@ -12,19 +12,19 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the facility_assets database table.
+ * The persistent class for the facility_inventory database table.
  * 
  */
 @Entity
-@Table(name="facility_assets")
-@NamedQuery(name="FacilityAsset.findAll", query="SELECT f FROM FacilityAsset f")
-public class FacilityAsset implements Serializable {
+@Table(name="facility_inventory")
+@NamedQuery(name="FacilityInventory.findAll", query="SELECT f FROM FacilityInventory f")
+public class FacilityInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name="facility_id")
 	private int facilityId;
-	
+
 	private String data;
 
 	//uni-directional many-to-one association to Facility
@@ -32,7 +32,7 @@ public class FacilityAsset implements Serializable {
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
 
-	public FacilityAsset() {
+	public FacilityInventory() {
 	}
 
 	public String getData() {

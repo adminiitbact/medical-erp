@@ -1,54 +1,52 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.TypeDef;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the facility_assets database table.
+ * The persistent class for the temp database table.
  * 
  */
 @Entity
 @Table(name="temp")
 @NamedQuery(name="Temp.findAll", query="SELECT t FROM Temp t")
-@TypeDef(
-	    typeClass = JsonBinaryType.class, 
-	    defaultForType = JsonNode.class
-	)
 public class Temp implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private Object data;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)  
-	int id;
-	
-	public int getId() {
-		return id;
+	private int id;
+
+	private Timestamp timestamp;
+
+	public Temp() {
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public Object getData() {
+		return this.data;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	private String data;
-	public String getData() {
-		return data;
-	}
-	public void setData(String data) {
+
+	public void setData(Object data) {
 		this.data = data;
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Timestamp getTimestamp() {
+		return this.timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
 
 }
