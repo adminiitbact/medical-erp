@@ -27,7 +27,7 @@ public class HospitalFacilityController {
 	
 	
 	@PostMapping(path = "/add/facility/data")
-	@ApiOperation(response = ErpUserProfile.class,value = "Api to add new data under facility")
+	@ApiOperation(response = BooleanResponse.class,value = "Api to add new data under facility")
 	public ResponseBean addFacilityData(@RequestBody FlexibleRequest request) throws JsonProcessingException {
 		HospitalErpError error = null;
 		BooleanResponse data=null;
