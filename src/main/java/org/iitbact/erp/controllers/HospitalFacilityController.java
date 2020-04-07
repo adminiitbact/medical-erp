@@ -4,8 +4,10 @@ import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
+import org.iitbact.erp.response.FacilityProfile;
 import org.iitbact.erp.services.HospitalFacilityServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,20 @@ public class HospitalFacilityController {
 		BooleanResponse data=null;
 		try {
 			data=facilityServices.addFacilityData(request);
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/profile/{facilityId}")
+	@ApiOperation(response = FacilityProfile.class,value = "Api to add new data under facility")
+	public ResponseBean facilityProfile(@RequestBody BaseRequest request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		FacilityProfile data=null;
+		try {
+			data=facilityServices.facilityProfile(request);
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}

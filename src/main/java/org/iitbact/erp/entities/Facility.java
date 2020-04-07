@@ -15,28 +15,12 @@ import java.sql.Timestamp;
 public class Facility implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="ambulance_incharge")
-	private String ambulanceIncharge;
-
-	@Column(name="ambulance_incharge_mob_no")
-	private String ambulanceInchargeMobNo;
-
 	private String area;
-
-	@Column(name="cleaning_incharge")
-	private String cleaningIncharge;
-
-	@Column(name="cleaning_incharge_mob_no")
-	private String cleaningInchargeMobNo;
-
-	@Column(name="contact_person")
-	private String contactPerson;
-
-	@Column(name="contact_person_mob_no")
-	private String contactPersonMobNo;
 
 	@Column(name="creation_time")
 	private Timestamp creationTime;
+
+	private String email;
 
 	@Id
 	@Column(name="facility_id")
@@ -45,42 +29,16 @@ public class Facility implements Serializable {
 	@Column(name="facility_type")
 	private String facilityType;
 
-	@Column(name="health_checkup_incharge")
-	private String healthCheckupIncharge;
-
-	@Column(name="health_checkup_incharge_mob_no")
-	private String healthCheckupInchargeMobNo;
+	@Column(name="government_hospital")
+	private byte governmentHospital;
 
 	private String jurisdiction;
 
-	@Column(name="modification_time")
-	private Timestamp modificationTime;
-
 	private String name;
 
-	@Column(name="organisation_email")
-	private String organisationEmail;
-
-	@Column(name="organisation_telephone")
-	private String organisationTelephone;
+	private String telephone;
 
 	public Facility() {
-	}
-
-	public String getAmbulanceIncharge() {
-		return this.ambulanceIncharge;
-	}
-
-	public void setAmbulanceIncharge(String ambulanceIncharge) {
-		this.ambulanceIncharge = ambulanceIncharge;
-	}
-
-	public String getAmbulanceInchargeMobNo() {
-		return this.ambulanceInchargeMobNo;
-	}
-
-	public void setAmbulanceInchargeMobNo(String ambulanceInchargeMobNo) {
-		this.ambulanceInchargeMobNo = ambulanceInchargeMobNo;
 	}
 
 	public String getArea() {
@@ -91,44 +49,20 @@ public class Facility implements Serializable {
 		this.area = area;
 	}
 
-	public String getCleaningIncharge() {
-		return this.cleaningIncharge;
-	}
-
-	public void setCleaningIncharge(String cleaningIncharge) {
-		this.cleaningIncharge = cleaningIncharge;
-	}
-
-	public String getCleaningInchargeMobNo() {
-		return this.cleaningInchargeMobNo;
-	}
-
-	public void setCleaningInchargeMobNo(String cleaningInchargeMobNo) {
-		this.cleaningInchargeMobNo = cleaningInchargeMobNo;
-	}
-
-	public String getContactPerson() {
-		return this.contactPerson;
-	}
-
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
-	public String getContactPersonMobNo() {
-		return this.contactPersonMobNo;
-	}
-
-	public void setContactPersonMobNo(String contactPersonMobNo) {
-		this.contactPersonMobNo = contactPersonMobNo;
-	}
-
 	public Timestamp getCreationTime() {
 		return this.creationTime;
 	}
 
 	public void setCreationTime(Timestamp creationTime) {
 		this.creationTime = creationTime;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getFacilityId() {
@@ -147,20 +81,12 @@ public class Facility implements Serializable {
 		this.facilityType = facilityType;
 	}
 
-	public String getHealthCheckupIncharge() {
-		return this.healthCheckupIncharge;
+	public byte getGovernmentHospital() {
+		return this.governmentHospital;
 	}
 
-	public void setHealthCheckupIncharge(String healthCheckupIncharge) {
-		this.healthCheckupIncharge = healthCheckupIncharge;
-	}
-
-	public String getHealthCheckupInchargeMobNo() {
-		return this.healthCheckupInchargeMobNo;
-	}
-
-	public void setHealthCheckupInchargeMobNo(String healthCheckupInchargeMobNo) {
-		this.healthCheckupInchargeMobNo = healthCheckupInchargeMobNo;
+	public void setGovernmentHospital(byte governmentHospital) {
+		this.governmentHospital = governmentHospital;
 	}
 
 	public String getJurisdiction() {
@@ -171,14 +97,6 @@ public class Facility implements Serializable {
 		this.jurisdiction = jurisdiction;
 	}
 
-	public Timestamp getModificationTime() {
-		return this.modificationTime;
-	}
-
-	public void setModificationTime(Timestamp modificationTime) {
-		this.modificationTime = modificationTime;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -187,20 +105,12 @@ public class Facility implements Serializable {
 		this.name = name;
 	}
 
-	public String getOrganisationEmail() {
-		return this.organisationEmail;
+	public String getTelephone() {
+		return this.telephone;
 	}
 
-	public void setOrganisationEmail(String organisationEmail) {
-		this.organisationEmail = organisationEmail;
-	}
-
-	public String getOrganisationTelephone() {
-		return this.organisationTelephone;
-	}
-
-	public void setOrganisationTelephone(String organisationTelephone) {
-		this.organisationTelephone = organisationTelephone;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 }

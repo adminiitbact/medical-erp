@@ -8,6 +8,7 @@ import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ErpUserProfile;
+import org.iitbact.erp.response.FacilityProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class HospitalFacilityServices {
 		return data;
 	}
 
-	public ErpUserProfile fetchFacilityData(FlexibleRequest request) {
+	public FacilityProfile facilityProfile(BaseRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
