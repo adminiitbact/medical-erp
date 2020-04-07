@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -23,12 +23,12 @@ public class FacilityAsset implements Serializable {
 	
 	@Id
 	@Column(name="facility_id")
-	private int facilityId;
-	
+	private String facilityId;
+
 	private String data;
 
-	//uni-directional many-to-one association to Facility
-	@ManyToOne
+	//bi-directional one-to-one association to Facility
+	@OneToOne
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
 
@@ -51,12 +51,11 @@ public class FacilityAsset implements Serializable {
 		this.facility = facility;
 	}
 
-
-	public int getFacilityId() {
+	public String getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(int facilityId) {
+	public void setFacilityId(String facilityId) {
 		this.facilityId = facilityId;
 	}
 

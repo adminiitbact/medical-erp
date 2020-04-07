@@ -16,15 +16,15 @@ public class Facility implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String area;
-
+	
+	@Id
+	@Column(name="facility_id")
+	private String facilityId;
+	
 	@Column(name="creation_time")
 	private Timestamp creationTime;
 
 	private String email;
-
-	@Id
-	@Column(name="facility_id")
-	private int facilityId;
 
 	@Column(name="facility_type")
 	private String facilityType;
@@ -37,6 +37,26 @@ public class Facility implements Serializable {
 	private String name;
 
 	private String telephone;
+
+	//bi-directional one-to-one association to FacilityAsset
+	@OneToOne(mappedBy="facility")
+	private FacilityAsset facilityAsset;
+
+	//bi-directional one-to-one association to FacilityChecklist
+	@OneToOne(mappedBy="facility")
+	private FacilityChecklist facilityChecklist;
+
+	//bi-directional one-to-one association to FacilityContact
+	@OneToOne(mappedBy="facility")
+	private FacilityContact facilityContact;
+
+	//bi-directional one-to-one association to FacilityInventory
+	@OneToOne(mappedBy="facility")
+	private FacilityInventory facilityInventory;
+
+	//bi-directional one-to-one association to FacilityMedstaff
+	@OneToOne(mappedBy="facility")
+	private FacilityMedstaff facilityMedstaff;
 
 	public Facility() {
 	}
@@ -63,14 +83,6 @@ public class Facility implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getFacilityId() {
-		return this.facilityId;
-	}
-
-	public void setFacilityId(int facilityId) {
-		this.facilityId = facilityId;
 	}
 
 	public String getFacilityType() {
@@ -111,6 +123,54 @@ public class Facility implements Serializable {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public FacilityAsset getFacilityAsset() {
+		return this.facilityAsset;
+	}
+
+	public void setFacilityAsset(FacilityAsset facilityAsset) {
+		this.facilityAsset = facilityAsset;
+	}
+
+	public FacilityChecklist getFacilityChecklist() {
+		return this.facilityChecklist;
+	}
+
+	public void setFacilityChecklist(FacilityChecklist facilityChecklist) {
+		this.facilityChecklist = facilityChecklist;
+	}
+
+	public FacilityContact getFacilityContact() {
+		return this.facilityContact;
+	}
+
+	public void setFacilityContact(FacilityContact facilityContact) {
+		this.facilityContact = facilityContact;
+	}
+
+	public FacilityInventory getFacilityInventory() {
+		return this.facilityInventory;
+	}
+
+	public void setFacilityInventory(FacilityInventory facilityInventory) {
+		this.facilityInventory = facilityInventory;
+	}
+
+	public FacilityMedstaff getFacilityMedstaff() {
+		return this.facilityMedstaff;
+	}
+
+	public void setFacilityMedstaff(FacilityMedstaff facilityMedstaff) {
+		this.facilityMedstaff = facilityMedstaff;
+	}
+
+	public String getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(String facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }

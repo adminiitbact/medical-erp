@@ -1,5 +1,7 @@
 package org.iitbact.erp.controllers;
 
+import javax.websocket.server.PathParam;
+
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.exceptions.HospitalErpError;
@@ -43,7 +45,7 @@ public class HospitalFacilityController {
 	
 	@PostMapping(path = "/facility/profile/{facilityId}")
 	@ApiOperation(response = FacilityProfile.class,value = "Api to add new data under facility")
-	public ResponseBean facilityProfile(@RequestBody BaseRequest request) throws JsonProcessingException {
+	public ResponseBean facilityProfile(@RequestBody BaseRequest request,@PathParam("facilityId") long facilityId) throws JsonProcessingException {
 		HospitalErpError error = null;
 		FacilityProfile data=null;
 		try {

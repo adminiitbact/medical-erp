@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -20,16 +20,15 @@ import javax.persistence.Table;
 @NamedQuery(name="FacilityContact.findAll", query="SELECT f FROM FacilityContact f")
 public class FacilityContact implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name="facility_id")
-	private int facilityId;
-	
+	private String facilityId;
 
 	private String data;
 
-	//uni-directional many-to-one association to Facility
-	@ManyToOne
+	//bi-directional one-to-one association to Facility
+	@OneToOne
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
 
@@ -52,11 +51,11 @@ public class FacilityContact implements Serializable {
 		this.facility = facility;
 	}
 
-	public int getFacilityId() {
+	public String getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(int facilityId) {
+	public void setFacilityId(String facilityId) {
 		this.facilityId = facilityId;
 	}
 
