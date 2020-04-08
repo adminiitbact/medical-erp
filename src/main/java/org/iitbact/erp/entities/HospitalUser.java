@@ -34,6 +34,10 @@ public class HospitalUser implements Serializable {
 
 	@Column(name="user_id")
 	private String userId;
+	
+	@Column(name="facility_id")
+	private int facilityId;
+	
 
 	//uni-directional many-to-one association to Facility
 	@ManyToOne
@@ -97,6 +101,14 @@ public class HospitalUser implements Serializable {
 
 	public void setFacility(Facility facility) {
 		this.facility = facility;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }
