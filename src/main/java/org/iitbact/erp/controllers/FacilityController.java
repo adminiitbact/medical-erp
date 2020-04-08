@@ -35,20 +35,8 @@ public class FacilityController {
 	@Autowired
 	private FacilityServices facilityServices;
 	
+
 	
-	@PostMapping(path = "/facility/{facilityId}")
-	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
-	public ResponseBean addFacilityData(@PathVariable int facilityId, @RequestBody FacilityRequest request) throws JsonProcessingException {
-		HospitalErpError error = null;
-		BooleanResponse data=null;
-		try {
-			data=facilityServices.addFacilityData(facilityId, request);
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
-		return responseBuilder.build();
-	}
 	@GetMapping(path = "/facility/{facilityId}")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -62,6 +50,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
+	
 	@GetMapping(path = "/facility/{facilityId}/assets")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityAssetsData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -75,6 +64,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
+	
 	@GetMapping(path = "/facility/{facilityId}/inventory")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityInventoryData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -88,6 +78,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
+	
 	@GetMapping(path = "/facility/{facilityId}/contacts")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityContactsData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -101,6 +92,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
+	
 	@GetMapping(path = "/facility/{facilityId}/checklist")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityChecklistData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -114,6 +106,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
 		return responseBuilder.build();
 	}
+	
 	@GetMapping(path = "/facility/{facilityId}/medstaff")
 	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
 	public ResponseBean getFacilityMedstaffData(@PathVariable int facilityId, @RequestParam String authToken) throws JsonProcessingException {
@@ -128,6 +121,95 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
+	@PostMapping(path = "/facility/{facilityId}")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityData(@PathVariable int facilityId, @RequestBody FacilityRequest request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityData(facilityId, request);
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/{facilityId}/assets")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityAssets(@PathVariable int facilityId, @RequestBody FacilityAsset request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityAssets(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/{facilityId}/contacts")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityContacts(@PathVariable int facilityId, @RequestBody FacilityContact request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityContacts(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/{facilityId}/inventory")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityInventory(@PathVariable int facilityId, @RequestBody FacilityInventory request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityInventory(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/{facilityId}/medstaff")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityMedstaff(@PathVariable int facilityId, @RequestBody FacilityMedstaff request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityMedstaff(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facility/{facilityId}/checklist")
+	@ApiOperation(response = BooleanResponse.class,value = "API request to add new data for a facility")
+	public ResponseBean addFacilityChecklist(@PathVariable int facilityId, @RequestBody FacilityChecklist request) throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data=null;
+		try {
+			data=facilityServices.addFacilityChecklist(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data,error);
+		return responseBuilder.build();
+	}
+
 	
 	/*@PostMapping(path = "/fetch/facility/data")
 	@ApiOperation(response = ErpUserProfile.class,value = "Api to add new data under facility")

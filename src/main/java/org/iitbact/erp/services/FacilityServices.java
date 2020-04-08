@@ -5,6 +5,9 @@ package org.iitbact.erp.services;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.FacilityAsset;
 import org.iitbact.erp.entities.FacilityChecklist;
+import org.iitbact.erp.entities.FacilityContact;
+import org.iitbact.erp.entities.FacilityInventory;
+import org.iitbact.erp.entities.FacilityMedstaff;
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.repository.FacilityRepository;
 import org.iitbact.erp.repository.UserRepository;
@@ -78,6 +81,73 @@ public class FacilityServices {
 		return returnVal;
 	}
 	
+	public BooleanResponse addFacilityAssets(int facilityId, FacilityAsset request) throws JsonProcessingException {
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//TODO: Raise some error
+		}
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Object data = request.getData();
+		if (data != null) {
+			facility.getFacilityAsset().setData(data);
+		}
+		facilityRepository.save(facility);
+		BooleanResponse returnVal=new BooleanResponse(true);	
+		return returnVal;
+	}
+	
+	public BooleanResponse addFacilityInventory(int facilityId, FacilityInventory request) throws JsonProcessingException {
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//TODO: Raise some error
+		}
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Object data = request.getData();
+		if (data != null) {
+			facility.getFacilityInventory().setData(data);
+		}
+		facilityRepository.save(facility);
+		BooleanResponse returnVal=new BooleanResponse(true);	
+		return returnVal;
+	}
+	public BooleanResponse addFacilityMedstaff(int facilityId, FacilityMedstaff request) throws JsonProcessingException {
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//TODO: Raise some error
+		}
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Object data = request.getData();
+		if (data != null) {
+			facility.getFacilityMedstaff().setData(data);
+		}
+		facilityRepository.save(facility);
+		BooleanResponse returnVal=new BooleanResponse(true);	
+		return returnVal;
+	}
+	public BooleanResponse addFacilityChecklist(int facilityId, FacilityChecklist request) throws JsonProcessingException {
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//TODO: Raise some error
+		}
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Object data = request.getData();
+		if (data != null) {
+			facility.getFacilityChecklist().setData(data);
+		}
+		facilityRepository.save(facility);
+		BooleanResponse returnVal=new BooleanResponse(true);	
+		return returnVal;
+	}
+	
+	public BooleanResponse addFacilityContacts(int facilityId, FacilityContact request) throws JsonProcessingException {
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//TODO: Raise some error
+		}
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Object data = request.getData();
+		if (data != null) {
+			facility.getFacilityContact().setData(data);
+		}
+		facilityRepository.save(facility);
+		BooleanResponse returnVal=new BooleanResponse(true);	
+		return returnVal;
+	}
 	private boolean authenticateUser(String authToken) {
 		String userId = validationService.verifyFirebaseIdToken(authToken);
 		HospitalUser user = userRepository.findByUserId(userId);

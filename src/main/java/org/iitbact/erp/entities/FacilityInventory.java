@@ -12,8 +12,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.iitbact.erp.beans.BaseBean;
+import org.iitbact.erp.requests.BaseRequest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import io.swagger.annotations.ApiModelProperty;
 
 
 /**
@@ -23,12 +28,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="facility_inventory")
 @NamedQuery(name="FacilityInventory.findAll", query="SELECT f FROM FacilityInventory f")
-@JsonIgnoreProperties("facility")
-public class FacilityInventory implements Serializable, BaseBean {
+@JsonIgnoreProperties(value= {"facility, facility_id"}, ignoreUnknown=true)
+@JsonInclude(Include.NON_NULL)
+public class FacilityInventory extends BaseRequest implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="facility_id")
+	@ApiModelProperty(hidden=true)
 	private int facilityId;
 	
 	@Type(type = "json")
@@ -38,6 +45,7 @@ public class FacilityInventory implements Serializable, BaseBean {
 	//bi-directional one-to-one association to Facility
 	@OneToOne
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
+	@ApiModelProperty(hidden=true)
 	private Facility facility;
 
 	public FacilityInventory() {
