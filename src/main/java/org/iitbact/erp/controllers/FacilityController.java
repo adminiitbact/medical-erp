@@ -28,7 +28,7 @@ public class FacilityController {
 	private FacilityServices facilityServices;
 
 	@PostMapping(path = "/facility/{facilityId}")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new data for a facility")
+	@ApiOperation(response = Facility.class, value = "API request to fetcb a facility data")
 	public ResponseBean getFacilityData(@PathVariable int facilityId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -58,7 +58,7 @@ public class FacilityController {
 	}
 
 	@PostMapping(path = "/facility/{facilityId}/assets")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new data for a facility")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add assets for a facility")
 	public ResponseBean addFacilityAssets(@PathVariable int facilityId, @RequestBody FlexibleRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -75,7 +75,7 @@ public class FacilityController {
 
 	@PostMapping(path = "/facility/{facilityId}/inventory")
 
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new data for a facility")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add inventory for a facility")
 	public ResponseBean addFacilityInventory(@PathVariable int facilityId, @RequestBody FlexibleRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -91,8 +91,7 @@ public class FacilityController {
 	}
 
 	@PostMapping(path = "/facility/{facilityId}/medstaff")
-
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new data for a facility")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add med staff for a facility")
 	public ResponseBean addFacilityMedstaff(@PathVariable int facilityId, @RequestBody FlexibleRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -108,8 +107,7 @@ public class FacilityController {
 	}
 
 	@PostMapping(path = "/facility/{facilityId}/checklist")
-
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new data for a facility")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add checklists for a facility")
 	public ResponseBean addFacilityChecklist(@PathVariable int facilityId, @RequestBody FlexibleRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
