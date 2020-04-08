@@ -11,14 +11,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import org.iitbact.erp.beans.BaseBean;
-import org.iitbact.erp.requests.BaseRequest;
+import org.hibernate.annotations.TypeDef;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import io.swagger.annotations.ApiModelProperty;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 
 /**
@@ -27,15 +22,16 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Entity
 @Table(name="facility_contacts")
+@TypeDef(
+	    name = "json",
+	    typeClass = JsonStringType.class
+	)
 @NamedQuery(name="FacilityContact.findAll", query="SELECT f FROM FacilityContact f")
-@JsonIgnoreProperties(value= {"facility, facility_id"}, ignoreUnknown=true)
-@JsonInclude(Include.NON_NULL)
-public class FacilityContact extends BaseRequest implements Serializable, BaseBean {
+public class FacilityContact implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="facility_id")
-	@ApiModelProperty(hidden=true)
 	private int facilityId;
 	
 	@Type(type = "json")
@@ -45,7 +41,6 @@ public class FacilityContact extends BaseRequest implements Serializable, BaseBe
 	//bi-directional one-to-one association to Facility
 	@OneToOne
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
-	@ApiModelProperty(hidden=true)
 	private Facility facility;
 
 	public FacilityContact() {

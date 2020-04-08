@@ -4,6 +4,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.iitbact.erp.beans.BaseBean;
+import org.iitbact.erp.constants.Constants;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.sql.Timestamp;
 
@@ -33,7 +36,7 @@ public class Facility implements Serializable, BaseBean {
 	private String facilityType;
 
 	@Column(name="government_hospital")
-	private Byte governmentHospital;
+	private boolean governmentHospital;
 
 	private String jurisdiction;
 
@@ -42,23 +45,23 @@ public class Facility implements Serializable, BaseBean {
 	private String telephone;
 
 	//bi-directional one-to-one association to FacilityAsset
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private FacilityAsset facilityAsset;
 
 	//bi-directional one-to-one association to FacilityChecklist
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private FacilityChecklist facilityChecklist;
 
 	//bi-directional one-to-one association to FacilityContact
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private FacilityContact facilityContact;
 
 	//bi-directional one-to-one association to FacilityInventory
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private FacilityInventory facilityInventory;
 
 	//bi-directional one-to-one association to FacilityMedstaff
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private FacilityMedstaff facilityMedstaff;
 
 	public Facility() {
@@ -96,11 +99,11 @@ public class Facility implements Serializable, BaseBean {
 		this.facilityType = facilityType;
 	}
 
-	public Byte getGovernmentHospital() {
+	public boolean getGovernmentHospital() {
 		return this.governmentHospital;
 	}
 
-	public void setGovernmentHospital(Byte governmentHospital) {
+	public void setGovernmentHospital(boolean governmentHospital) {
 		this.governmentHospital = governmentHospital;
 	}
 
@@ -189,6 +192,16 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	public void updateProfileData(JsonNode facilityData) {
+		this.setName(facilityData.get(Constants.NAME).asText());
+		this.setArea(facilityData.get(Constants.AREA).asText());
+		this.setJurisdiction(facilityData.get(Constants.JURISDICTION).asText());
+		this.setFacilityType(facilityData.get(Constants.TYPE).asText());
+		this.setGovernmentHospital(facilityData.get(Constants.IS_GOVERNMENT_FACILITY).asBoolean());
+		this.setTelephone(facilityData.get(Constants.TELEPHONE).asText());
+		this.setEmail(facilityData.get(Constants.EMAIL).asText());
 	}
 
 }

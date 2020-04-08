@@ -17,7 +17,7 @@ public class UserServices {
 	private ApiValidationService validationService;
 
 	public ErpUserProfile profile(BaseRequest request) {
-		String userId = validationService.verifyFirebaseIdToken(request);
+		String userId = validationService.verifyFirebaseIdToken(request.getAuthToken());
 		HospitalUser user = userRepository.findByUserId(userId);
 		ErpUserProfile response = new ErpUserProfile();
 		response.setProfile(user);

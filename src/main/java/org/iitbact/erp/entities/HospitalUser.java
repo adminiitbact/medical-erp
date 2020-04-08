@@ -1,11 +1,15 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -15,7 +19,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="hospital_users")
 @NamedQuery(name="HospitalUser.findAll", query="SELECT h FROM HospitalUser h")
-@JsonIgnoreProperties("facility")
 public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +38,7 @@ public class HospitalUser implements Serializable {
 	@Column(name="user_id")
 	private String userId;
 	
-	@Column(name="facility_id")
+	@Column(name="facility_id",insertable = false,updatable = false)
 	private int facilityId;
 	
 
