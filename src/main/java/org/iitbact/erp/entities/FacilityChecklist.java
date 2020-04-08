@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 
@@ -39,7 +41,8 @@ public class FacilityChecklist implements Serializable {
 	private Object data;
 
 	//bi-directional one-to-one association to Facility
-	@OneToOne
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
 	
