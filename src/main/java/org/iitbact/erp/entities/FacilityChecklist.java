@@ -10,6 +10,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
+
 
 /**
  * The persistent class for the facility_checklist database table.
@@ -17,29 +23,41 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="facility_checklist")
+@TypeDef(
+	    name = "json",
+	    typeClass = JsonStringType.class
+	)
 @NamedQuery(name="FacilityChecklist.findAll", query="SELECT f FROM FacilityChecklist f")
+@JsonIgnoreProperties("facility")
 public class FacilityChecklist implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="facility_id")
-	private String facilityId;
+	private int facilityId;
 
-	private String data;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+	private Object data;
 
 	//bi-directional one-to-one association to Facility
 	@OneToOne
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
-
+	
 	public FacilityChecklist() {
 	}
+	
+	public FacilityChecklist(Facility facility) {
+		this.setFacility(facility);
+		this.setFacilityId(facility.getFacilityId());
+	}
 
-	public String getData() {
+	public Object getData() {
 		return this.data;
 	}
 
-	public void setData(String data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 
@@ -51,11 +69,11 @@ public class FacilityChecklist implements Serializable {
 		this.facility = facility;
 	}
 
-	public String getFacilityId() {
+	public int getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
 

@@ -19,7 +19,7 @@ public class Facility implements Serializable {
 	
 	@Id
 	@Column(name="facility_id")
-	private String facilityId;
+	private int facilityId;
 	
 	@Column(name="creation_time")
 	private Timestamp creationTime;
@@ -30,7 +30,7 @@ public class Facility implements Serializable {
 	private String facilityType;
 
 	@Column(name="government_hospital")
-	private byte governmentHospital;
+	private Byte governmentHospital;
 
 	private String jurisdiction;
 
@@ -39,23 +39,23 @@ public class Facility implements Serializable {
 	private String telephone;
 
 	//bi-directional one-to-one association to FacilityAsset
-	@OneToOne(mappedBy="facility")
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
 	private FacilityAsset facilityAsset;
 
 	//bi-directional one-to-one association to FacilityChecklist
-	@OneToOne(mappedBy="facility")
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
 	private FacilityChecklist facilityChecklist;
 
 	//bi-directional one-to-one association to FacilityContact
-	@OneToOne(mappedBy="facility")
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
 	private FacilityContact facilityContact;
 
 	//bi-directional one-to-one association to FacilityInventory
-	@OneToOne(mappedBy="facility")
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
 	private FacilityInventory facilityInventory;
 
 	//bi-directional one-to-one association to FacilityMedstaff
-	@OneToOne(mappedBy="facility")
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
 	private FacilityMedstaff facilityMedstaff;
 
 	public Facility() {
@@ -93,11 +93,11 @@ public class Facility implements Serializable {
 		this.facilityType = facilityType;
 	}
 
-	public byte getGovernmentHospital() {
+	public Byte getGovernmentHospital() {
 		return this.governmentHospital;
 	}
 
-	public void setGovernmentHospital(byte governmentHospital) {
+	public void setGovernmentHospital(Byte governmentHospital) {
 		this.governmentHospital = governmentHospital;
 	}
 
@@ -126,6 +126,9 @@ public class Facility implements Serializable {
 	}
 
 	public FacilityAsset getFacilityAsset() {
+		if(this.facilityAsset == null) {
+			this.facilityAsset = new FacilityAsset(this);
+		}
 		return this.facilityAsset;
 	}
 
@@ -134,6 +137,9 @@ public class Facility implements Serializable {
 	}
 
 	public FacilityChecklist getFacilityChecklist() {
+		if(this.facilityChecklist == null) {
+			this.facilityChecklist = new FacilityChecklist(this);
+		}
 		return this.facilityChecklist;
 	}
 
@@ -142,6 +148,9 @@ public class Facility implements Serializable {
 	}
 
 	public FacilityContact getFacilityContact() {
+		if(this.facilityContact == null) {
+			this.facilityContact = new FacilityContact(this);
+		}
 		return this.facilityContact;
 	}
 
@@ -150,6 +159,9 @@ public class Facility implements Serializable {
 	}
 
 	public FacilityInventory getFacilityInventory() {
+		if(this.facilityInventory == null) {
+			this.facilityInventory = new FacilityInventory(this);
+		}
 		return this.facilityInventory;
 	}
 
@@ -158,6 +170,9 @@ public class Facility implements Serializable {
 	}
 
 	public FacilityMedstaff getFacilityMedstaff() {
+		if(this.facilityMedstaff == null) {
+			this.facilityMedstaff = new FacilityMedstaff(this);
+		}
 		return this.facilityMedstaff;
 	}
 
@@ -165,11 +180,11 @@ public class Facility implements Serializable {
 		this.facilityMedstaff = facilityMedstaff;
 	}
 
-	public String getFacilityId() {
+	public int getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
 

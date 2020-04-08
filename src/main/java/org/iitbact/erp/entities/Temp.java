@@ -2,6 +2,9 @@ package org.iitbact.erp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+
 import java.sql.Timestamp;
 
 
@@ -14,7 +17,9 @@ import java.sql.Timestamp;
 @NamedQuery(name="Temp.findAll", query="SELECT t FROM Temp t")
 public class Temp implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Type(type = "json")
+    @Column(columnDefinition = "json")
 	private Object data;
 	
 	@Id

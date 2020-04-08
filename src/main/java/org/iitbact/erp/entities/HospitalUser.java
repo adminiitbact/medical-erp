@@ -2,6 +2,9 @@ package org.iitbact.erp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 
 
@@ -12,6 +15,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="hospital_users")
 @NamedQuery(name="HospitalUser.findAll", query="SELECT h FROM HospitalUser h")
+@JsonIgnoreProperties("facility")
 public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 

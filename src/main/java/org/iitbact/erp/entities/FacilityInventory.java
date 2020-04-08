@@ -10,6 +10,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 /**
  * The persistent class for the facility_inventory database table.
@@ -18,14 +22,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="facility_inventory")
 @NamedQuery(name="FacilityInventory.findAll", query="SELECT f FROM FacilityInventory f")
+@JsonIgnoreProperties("facility")
 public class FacilityInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="facility_id")
-	private String facilityId;
-
-	private String data;
+	private int facilityId;
+	
+	@Type(type = "json")
+    @Column(columnDefinition = "json")
+	private Object data;
 
 	//bi-directional one-to-one association to Facility
 	@OneToOne
@@ -34,12 +41,15 @@ public class FacilityInventory implements Serializable {
 
 	public FacilityInventory() {
 	}
-
-	public String getData() {
+	public FacilityInventory(Facility facility) {
+		this.setFacility(facility);
+		this.setFacilityId(facility.getFacilityId());
+	}
+	public Object getData() {
 		return this.data;
 	}
 
-	public void setData(String data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 
@@ -51,11 +61,11 @@ public class FacilityInventory implements Serializable {
 		this.facility = facility;
 	}
 
-	public String getFacilityId() {
+	public int getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
 
