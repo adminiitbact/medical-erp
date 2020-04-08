@@ -2,6 +2,9 @@ package org.iitbact.erp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.iitbact.erp.beans.BaseBean;
+
 import java.sql.Timestamp;
 
 
@@ -12,7 +15,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="facilities")
 @NamedQuery(name="Facility.findAll", query="SELECT f FROM Facility f")
-public class Facility implements Serializable {
+public class Facility implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	private String area;
@@ -39,23 +42,23 @@ public class Facility implements Serializable {
 	private String telephone;
 
 	//bi-directional one-to-one association to FacilityAsset
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityAsset facilityAsset;
 
 	//bi-directional one-to-one association to FacilityChecklist
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityChecklist facilityChecklist;
 
 	//bi-directional one-to-one association to FacilityContact
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityContact facilityContact;
 
 	//bi-directional one-to-one association to FacilityInventory
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityInventory facilityInventory;
 
 	//bi-directional one-to-one association to FacilityMedstaff
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityMedstaff facilityMedstaff;
 
 	public Facility() {
