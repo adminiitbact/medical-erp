@@ -3,7 +3,6 @@ package org.iitbact.erp.services;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.repository.FacilityRepository;
-import org.iitbact.erp.repository.UserRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
@@ -18,17 +17,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FacilityServices {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private FacilityRepository facilityRepository;
 
 	@Autowired
 	private ApiValidationService validationService;
 
 	private void authenticateUser(String authToken) {
-		String userId = validationService.verifyFirebaseIdToken(authToken);
-		userRepository.findByUserId(userId);
+		validationService.verifyFirebaseIdToken(authToken);
+		// userRepository.findByUserId(userId);
 		// TODO: If user.facilityId == facilityId or user should be able to access this
 		// data then continue, else throw error
 		// throw runtime hospital exception
@@ -38,7 +34,7 @@ public class FacilityServices {
 			throws JsonProcessingException {
 		this.authenticateUser(request.getAuthToken());
 
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
@@ -53,7 +49,7 @@ public class FacilityServices {
 
 	public BooleanResponse addFacilityAssets(int facilityId, FlexibleRequest request) throws JsonProcessingException {
 		this.authenticateUser(request.getAuthToken());
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
 			facility.getFacilityAsset().setData(data);
@@ -66,7 +62,7 @@ public class FacilityServices {
 	public BooleanResponse addFacilityInventory(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
 		this.authenticateUser(request.getAuthToken());
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
 			facility.getFacilityInventory().setData(data);
@@ -78,7 +74,7 @@ public class FacilityServices {
 
 	public BooleanResponse addFacilityMedstaff(int facilityId, FlexibleRequest request) throws JsonProcessingException {
 		this.authenticateUser(request.getAuthToken());
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
 			facility.getFacilityMedstaff().setData(data);
@@ -91,7 +87,7 @@ public class FacilityServices {
 	public BooleanResponse addFacilityChecklist(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
 		this.authenticateUser(request.getAuthToken());
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
 			facility.getFacilityChecklist().setData(data);
@@ -114,7 +110,7 @@ public class FacilityServices {
 
 	public Facility fetchFacilityData(int facilityId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		Facility facility = facilityRepository.findById(facilityId).get();
 		return facility;
 	}
 }

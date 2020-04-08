@@ -1,7 +1,6 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,12 +24,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="creation_time")
-	private Timestamp creationTime;
-
 	@Column(name="email_id")
 	private String emailId;
 
+	@JsonIgnore
 	@Id
 	private int id;
 
@@ -53,15 +50,7 @@ public class HospitalUser implements Serializable {
 
 	public HospitalUser() {
 	}
-
-	public Timestamp getCreationTime() {
-		return this.creationTime;
-	}
-
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
-
+	
 	public String getEmailId() {
 		return this.emailId;
 	}

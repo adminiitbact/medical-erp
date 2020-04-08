@@ -1,14 +1,20 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.iitbact.erp.beans.BaseBean;
 import org.iitbact.erp.constants.Constants;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import java.sql.Timestamp;
 
 
 /**
@@ -27,9 +33,6 @@ public class Facility implements Serializable, BaseBean {
 	@Column(name="facility_id")
 	private int facilityId;
 	
-	@Column(name="creation_time")
-	private Timestamp creationTime;
-
 	private String email;
 
 	@Column(name="facility_type")
@@ -73,14 +76,6 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setArea(String area) {
 		this.area = area;
-	}
-
-	public Timestamp getCreationTime() {
-		return this.creationTime;
-	}
-
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
 	}
 
 	public String getEmail() {
