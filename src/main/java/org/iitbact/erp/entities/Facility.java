@@ -2,6 +2,9 @@ package org.iitbact.erp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.iitbact.erp.beans.BaseBean;
+
 import java.sql.Timestamp;
 
 
@@ -12,7 +15,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="facilities")
 @NamedQuery(name="Facility.findAll", query="SELECT f FROM Facility f")
-public class Facility implements Serializable {
+public class Facility implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	private String area;

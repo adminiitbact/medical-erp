@@ -79,9 +79,12 @@ public class FacilityServices {
 		return returnVal;
 	}
 
-	public ErpUserProfile fetchFacilityData(FlexibleRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public Facility fetchFacilityData(int facilityId, String authToken) {
+		String userId = validationService.verifyFirebaseIdToken(authToken);
+		HospitalUser user = userRepository.findByUserId(userId);
+		//TODO: If user.facilityId == facilityId or user should be able to access this data then continue, else throw error
+		Facility facility = facilityRepository.findByFacilityId(facilityId);
+		return facility;
 	}
 
 }
