@@ -42,23 +42,23 @@ public class Facility implements Serializable, BaseBean {
 	private String telephone;
 
 	//bi-directional one-to-one association to FacilityAsset
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityAsset facilityAsset;
 
 	//bi-directional one-to-one association to FacilityChecklist
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityChecklist facilityChecklist;
 
 	//bi-directional one-to-one association to FacilityContact
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityContact facilityContact;
 
 	//bi-directional one-to-one association to FacilityInventory
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityInventory facilityInventory;
 
 	//bi-directional one-to-one association to FacilityMedstaff
-	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private FacilityMedstaff facilityMedstaff;
 
 	public Facility() {

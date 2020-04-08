@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.iitbact.erp.beans.BaseBean;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="facility_contacts")
 @NamedQuery(name="FacilityContact.findAll", query="SELECT f FROM FacilityContact f")
 @JsonIgnoreProperties("facility")
-public class FacilityContact implements Serializable {
+public class FacilityContact implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	@Id

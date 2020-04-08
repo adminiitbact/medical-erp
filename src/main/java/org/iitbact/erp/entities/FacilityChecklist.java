@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.iitbact.erp.beans.BaseBean;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -29,7 +30,7 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 	)
 @NamedQuery(name="FacilityChecklist.findAll", query="SELECT f FROM FacilityChecklist f")
 @JsonIgnoreProperties("facility")
-public class FacilityChecklist implements Serializable {
+public class FacilityChecklist implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	@Id

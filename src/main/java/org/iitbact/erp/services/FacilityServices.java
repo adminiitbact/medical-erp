@@ -40,10 +40,9 @@ public class FacilityServices {
 	}
 
 	public BooleanResponse addFacilityData(int facilityId, FacilityRequest request) throws JsonProcessingException {
-		String userId = validationService.verifyFirebaseIdToken(request);
-		
-		HospitalUser user = userRepository.findByUserId(userId);
-		//TODO: If user.facilityId == facilityId, else throw error
+		if (!this.authenticateUser(request.getAuthToken())) {
+			//Raise some error
+		}
 		Facility facility = facilityRepository.findByFacilityId(facilityId);
 		facility.setName(request.getName());
 		facility.setArea(request.getArea());
@@ -78,13 +77,19 @@ public class FacilityServices {
 		BooleanResponse returnVal=new BooleanResponse(true);	
 		return returnVal;
 	}
-
-	public Facility fetchFacilityData(int facilityId, String authToken) {
+	
+	private boolean authenticateUser(String authToken) {
 		String userId = validationService.verifyFirebaseIdToken(authToken);
 		HospitalUser user = userRepository.findByUserId(userId);
 		//TODO: If user.facilityId == facilityId or user should be able to access this data then continue, else throw error
+		return true;
+	}
+
+	public Facility fetchFacilityData(int facilityId, String authToken) {
+		if (!this.authenticateUser(authToken)) {
+			//Raise some error
+		}
 		Facility facility = facilityRepository.findByFacilityId(facilityId);
 		return facility;
 	}
-
 }
