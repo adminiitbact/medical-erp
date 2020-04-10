@@ -22,8 +22,14 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Path lister action
-      uses: Rishabh510/Path-lister-action@1.0
-      with:
-        path: "."
-        type: ".war"
+
+    - name: Beanstalk Deploy
+    uses: einaregilsson/beanstalk-deploy@v9
+    with:
+        aws_access_key: ${{ secrets.aws_access_key }}
+        aws_secret_key: ${{ secrets.aws_secret_key }}
+        region: ap-south-1
+        application_name: backend_deploy_test_2
+        environment_name: BackendDeployTest2-env
+        version_label: ${{ github.sha }}
+        deployment_package: target/hospitalerp.war
