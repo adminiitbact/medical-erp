@@ -4,6 +4,7 @@ public interface Constants {
 	
 	 final String FACILITY_DATA="facility_data";
 	 final String CONTACT_DATA="contact_data";
+	 final String PERSONAL_DATA="personal_data";
 	 
 	 final String NAME="facility_name";
 	 final String AREA="area";
@@ -12,6 +13,12 @@ public interface Constants {
 	 final String EMAIL="organisation_email";
 	 final String TELEPHONE="organisation_telephone";
 	 final String IS_GOVERNMENT_FACILITY="is_government_facility";
+	 final String PATIENT_NAME = "name";
+	 final String AGE = "age";
+	 final String CONTACT_NUMBER = "contactNumber";
+	 final String GENDER = "gender";
+		
+	
 	 
 	
 	

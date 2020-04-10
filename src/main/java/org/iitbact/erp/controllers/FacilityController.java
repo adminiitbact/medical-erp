@@ -28,7 +28,7 @@ public class FacilityController {
 	private FacilityServices facilityServices;
 
 	@PostMapping(path = "/facility/{facilityId}")
-	@ApiOperation(response = Facility.class, value = "API request to fetcb a facility data")
+	@ApiOperation(response = Facility.class, value = "API request to fetch a facility data")
 	public ResponseBean getFacilityData(@PathVariable int facilityId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -120,5 +120,7 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
 		return responseBuilder.build();
 	}
+
+	
 
 }
