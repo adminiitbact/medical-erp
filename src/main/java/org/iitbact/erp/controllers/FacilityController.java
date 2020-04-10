@@ -74,7 +74,6 @@ public class FacilityController {
 	}
 
 	@PostMapping(path = "/facility/{facilityId}/inventory")
-
 	@ApiOperation(response = BooleanResponse.class, value = "API request to add inventory for a facility")
 	public ResponseBean addFacilityInventory(@PathVariable int facilityId, @RequestBody FlexibleRequest request)
 			throws JsonProcessingException {

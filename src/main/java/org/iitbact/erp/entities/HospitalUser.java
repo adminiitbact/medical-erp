@@ -1,15 +1,17 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -22,12 +24,10 @@ import javax.persistence.Table;
 public class HospitalUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="creation_time")
-	private Timestamp creationTime;
-
 	@Column(name="email_id")
 	private String emailId;
 
+	@JsonIgnore
 	@Id
 	private int id;
 
@@ -43,21 +43,14 @@ public class HospitalUser implements Serializable {
 	
 
 	//uni-directional many-to-one association to Facility
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
 
 	public HospitalUser() {
 	}
-
-	public Timestamp getCreationTime() {
-		return this.creationTime;
-	}
-
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
-
+	
 	public String getEmailId() {
 		return this.emailId;
 	}
