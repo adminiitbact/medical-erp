@@ -29,25 +29,20 @@ public class Ward implements Serializable {
 	private int totalBeds;
 	@Column(name = "available_beds")
 	private int availableBeds;
-	
-	//uni-directional many-to-one association to Facility
+
+	// uni-directional many-to-one association to Facility
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
+	@JoinColumn(name = "facility_id", referencedColumnName = "facility_id")
 	private Facility facility;
 
-	
 	public Ward() {
 	}
-	
-	
 
 	public Ward(Facility facility) {
 		this.setFacility(facility);
 		this.setFacilityId(facility.getFacilityId());
 	}
-
-
 
 	public int getId() {
 		return id;
