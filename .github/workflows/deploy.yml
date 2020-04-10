@@ -24,8 +24,8 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Beanstalk Deploy
-    uses: einaregilsson/beanstalk-deploy@v9
-    with:
+      uses: einaregilsson/beanstalk-deploy@v9
+      with:
         aws_access_key: ${{ secrets.aws_access_key }}
         aws_secret_key: ${{ secrets.aws_secret_key }}
         region: ap-south-1
