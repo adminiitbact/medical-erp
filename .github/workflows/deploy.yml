@@ -22,3 +22,10 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Path lister action
+      uses: Rishabh510/Path-lister-action@1.0
+      with:
+	# Path to find the files
+	path: "."
+	# Type of files to find
+	type: ".class"
