@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.iitbact.erp.beans.BaseBean;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "patients")
-public class Patient implements Serializable {
+public class Patient implements Serializable,BaseBean {
 	private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@Id
