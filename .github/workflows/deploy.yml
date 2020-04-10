@@ -26,4 +26,4 @@ jobs:
       uses: Rishabh510/Path-lister-action@1.0
       with:
         path: "."
-        type: ".class"
+        type: ".war"
