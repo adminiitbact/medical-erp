@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master, piyush/deploy ]
+    branches: [ master, piyush/deploy, release ]
   pull_request:
     branches: [ master ]
 
