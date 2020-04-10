@@ -58,7 +58,7 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "/details/{id}")
-	@ApiOperation(response = Patient.class, value = "API Search Patient By Name")
+	@ApiOperation(response = Patient.class, value = "API to  id")
 	public ResponseBean getPatientDetails(@PathVariable int id) throws JsonProcessingException {
 		HospitalErpError error = null;
 		Patient data = new Patient();
