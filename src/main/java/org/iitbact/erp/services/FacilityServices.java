@@ -98,17 +98,6 @@ public class FacilityServices {
 		return returnVal;
 	}
 
-	/*
-	 * public BooleanResponse addFacilityContacts(int facilityId, FacilityContact
-	 * request) throws JsonProcessingException {
-	 * this.authenticateUser(request.getAuthToken()); Facility facility =
-	 * facilityRepository.findByFacilityId(facilityId); Object data =
-	 * request.getData(); if (data != null) {
-	 * facility.getFacilityContact().setData(data); }
-	 * facilityRepository.save(facility); BooleanResponse returnVal=new
-	 * BooleanResponse(true); return returnVal; }
-	 */
-
 	public Facility fetchFacilityData(int facilityId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
 		Facility facility = facilityRepository.findById(facilityId).get();

@@ -24,8 +24,8 @@ public class Patient implements Serializable {
 
 	private int age;
 
-	@Column(name = "contact_number")
-	private int contactNumber;
+	@Column(name="contact_number")
+	private String contactNumber;
 
 	private String gender;
 
@@ -41,7 +41,7 @@ public class Patient implements Serializable {
 		this.setName(patientdata.get(Constants.PATIENT_NAME).asText());
 		this.setGender(patientdata.get(Constants.GENDER).asText());
 		this.setAge(patientdata.get(Constants.AGE).asInt());
-		this.setContactNumber(patientdata.get(Constants.CONTACT_NUMBER).asInt());
+		this.setContactNumber(patientdata.get(Constants.CONTACT_NUMBER).asText());
 	}
 	public String getAddress() {
 		return this.address;
@@ -59,11 +59,11 @@ public class Patient implements Serializable {
 		this.age = age;
 	}
 
-	public int getContactNumber() {
+	public String getContactNumber() {
 		return this.contactNumber;
 	}
 
-	public void setContactNumber(int contactNumber) {
+	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 
