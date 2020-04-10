@@ -14,5 +14,11 @@ public interface Constants {
 	final String TELEPHONE = "organisation_telephone";
 	final String IS_GOVERNMENT_FACILITY = "is_government_facility";
 	final String COVID_FACILITY_TYPE = "covid_facility_type";
-
+	
+	
+	 final String PATIENT_NAME = "name";
+	 final String AGE = "age";
+	 final String CONTACT_NUMBER = "contactNumber";
+	 final String GENDER = "gender";
+		
 }

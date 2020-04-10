@@ -28,8 +28,8 @@ public class PatientServices {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
 		if (data != null) {
-			//Patient patient = new Patient(data);
-		//	patientRepository.save(patient);
+			Patient patient = new Patient(data);
+			patientRepository.save(patient);
 		}
 
 		BooleanResponse returnVal = new BooleanResponse(true);
