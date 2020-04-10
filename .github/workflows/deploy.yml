@@ -25,7 +25,5 @@ jobs:
     - name: Path lister action
       uses: Rishabh510/Path-lister-action@1.0
       with:
-	# Path to find the files
-	path: "."
-	# Type of files to find
-	type: ".class"
+        path: "."
+        type: ".class"
