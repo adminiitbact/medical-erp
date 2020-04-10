@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Ward implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@Id
 	private int id;
 
@@ -34,6 +35,19 @@ public class Ward implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
 	private Facility facility;
+
+	
+	public Ward() {
+	}
+	
+	
+
+	public Ward(Facility facility) {
+		this.setFacility(facility);
+		this.setFacilityId(facility.getFacilityId());
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -85,6 +99,14 @@ public class Ward implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
 	}
 
 }
