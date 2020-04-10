@@ -37,6 +37,9 @@ public class Facility implements Serializable, BaseBean {
 
 	@Column(name="facility_type")
 	private String facilityType;
+	
+	@Column(name="covid_facility_type")
+	private String covidFacilityType;
 
 	@Column(name="government_hospital")
 	private boolean governmentHospital;
@@ -197,6 +200,15 @@ public class Facility implements Serializable, BaseBean {
 		this.setGovernmentHospital(facilityData.get(Constants.IS_GOVERNMENT_FACILITY).asBoolean());
 		this.setTelephone(facilityData.get(Constants.TELEPHONE).asText());
 		this.setEmail(facilityData.get(Constants.EMAIL).asText());
+		this.setCovidFacilityType(facilityData.get(Constants.COVID_FACILITY_TYPE).asText());
+	}
+
+	public String getCovidFacilityType() {
+		return covidFacilityType;
+	}
+
+	public void setCovidFacilityType(String covidFacilityType) {
+		this.covidFacilityType = covidFacilityType;
 	}
 
 }
