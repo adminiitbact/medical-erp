@@ -9,14 +9,12 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.constants.Constants;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import org.iitbact.erp.beans.BaseBean;
 
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
-public class Patient implements Serializable {
+public class Patient implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
@@ -24,7 +22,7 @@ public class Patient implements Serializable {
 
 	private int age;
 
-	@Column(name="contact_number")
+	@Column(name = "contact_number")
 	private String contactNumber;
 
 	private String gender;
@@ -37,12 +35,15 @@ public class Patient implements Serializable {
 
 	public Patient() {
 	}
-	public Patient(JsonNode patientdata) {
-		this.setName(patientdata.get(Constants.PATIENT_NAME).asText());
-		this.setGender(patientdata.get(Constants.GENDER).asText());
-		this.setAge(patientdata.get(Constants.AGE).asInt());
-		this.setContactNumber(patientdata.get(Constants.CONTACT_NUMBER).asText());
+
+	public void updatePatient(Patient patient) {
+		this.setAddress(patient.getAddress());
+		this.setAge(patient.age);
+		this.setContactNumber(patient.getContactNumber());
+		this.setGender(patient.getGender());
+		this.setName(patient.getName());
 	}
+
 	public String getAddress() {
 		return this.address;
 	}

@@ -20,5 +20,6 @@ public interface Constants {
 	 final String AGE = "age";
 	 final String CONTACT_NUMBER = "contactNumber";
 	 final String GENDER = "gender";
+	final String ADDRESS = "address";
 		
 }

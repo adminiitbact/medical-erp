@@ -1,14 +1,13 @@
 package org.iitbact.erp.services;
 
+import java.util.List;
+
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.repository.PatientRepository;
-import org.iitbact.erp.requests.FlexibleRequest;
+import org.iitbact.erp.requests.PatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PatientServices {
@@ -22,16 +21,35 @@ public class PatientServices {
 		validationService.verifyFirebaseIdToken(authToken);
 	}
 
-	public BooleanResponse addPatient(FlexibleRequest request) {
+	public BooleanResponse addPatient(PatientRequestBean request) {
 		//this.authenticateUser(request.getAuthToken());
 
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
-		if (data != null) {
-			Patient patient = new Patient(data);
-			patientRepository.save(patient);
+		if (request.getData() != null) {
+			patientRepository.save(request.getData());
 		}
 
+		BooleanResponse returnVal = new BooleanResponse(true);
+		return returnVal;
+	}
+
+	public List<Patient> searchPatientByName(String name) {
+		//this.authenticateUser(request.getAuthToken());
+
+				return patientRepository.findByName(name);
+	}
+
+	public Patient getPatientDetails(int id) {
+		//this.authenticateUser(request.getAuthToken());
+		return patientRepository.findById(id);
+	}
+
+	public BooleanResponse updatePatientDetails(Patient patient) {
+		Patient entity = patientRepository.findById(patient.getPatientId());
+		if(entity!=null){
+			entity.updatePatient(patient);
+			patientRepository.save(entity);
+		}
+		
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
 	}
