@@ -72,7 +72,7 @@ public class PatientController {
 		return responseBuilder.build();
 	}
 
-	@PostMapping(path = "/details/update")
+	@PostMapping(path = "/update/details")
 	@ApiOperation(response = Patient.class, value = "API Search Patient By Name")
 	public ResponseBean updatePateintDetails(@RequestBody Patient patient) throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -86,5 +86,7 @@ public class PatientController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
 		return responseBuilder.build();
 	}
+	
+	
 
 }
