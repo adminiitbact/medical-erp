@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.beans.BaseBean;
-
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
-public class Patient implements Serializable, BaseBean {
+public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
@@ -30,6 +30,7 @@ public class Patient implements Serializable, BaseBean {
 	private String name;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
 

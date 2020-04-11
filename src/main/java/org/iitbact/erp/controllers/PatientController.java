@@ -11,6 +11,7 @@ import org.iitbact.erp.requests.PatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
+import org.iitbact.erp.response.PatientResponse;
 import org.iitbact.erp.services.PatientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +47,7 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "/search/patient/byname/{name}")
-	@ApiOperation(response = Patient.class,responseContainer = "List", value = "API Search Patient By Name. Returns a list of patients")
+	@ApiOperation(response = Patient.class, responseContainer = "List", value = "API Search Patient By Name. Returns a list of patients")
 	public ResponseBean searchPatientByName(@PathVariable String name, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -60,20 +61,20 @@ public class PatientController {
 		return responseBuilder.build();
 	}
 
-	/*
-	 * @PostMapping(path = "/patient/details/{id}")
-	 * 
-	 * @ApiOperation(response = Patient.class, value =
-	 * "API to fetch pateint's details") public ResponseBean
-	 * getPatientDetails(@PathVariable int id,@RequestBody BaseRequest request)
-	 * throws JsonProcessingException { HospitalErpError error = null; Patient data
-	 * = new Patient(); try { data =
-	 * (patientServices.getPatientDetails(id,request));
-	 * 
-	 * } catch (HospitalErpException e) { error = e.getError(); } ResponseBuilder
-	 * responseBuilder = new ResponseBuilder(data, error); return
-	 * responseBuilder.build(); }
-	 */
+	@PostMapping(path = "/patient/details/{id}")
+	@ApiOperation(response = Patient.class, value = "API to fetch pateint's details")
+	public ResponseBean getPatientDetails(@PathVariable int id, @RequestBody BaseRequest request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		PatientResponse data = new PatientResponse();
+		try {
+			data.setPatientDetails(patientServices.getPatientDetails(id, request));
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
 
 	@PostMapping(path = "/update/patient/details")
 	@ApiOperation(response = BooleanResponse.class, value = "API to update patient's details")

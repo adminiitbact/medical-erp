@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.iitbact.erp.requests.PatientRequestBean;
 
 
 /**
@@ -15,17 +18,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="patient_live_status")
-@NamedQuery(name="PatientLiveStatus.findAll", query="SELECT p FROM PatientLiveStatus p")
 public class PatientLiveStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String condition;
-
 	@Column(name="facility_id")
 	private int facilityId;
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name="patient_condition")
+	private String patientCondition;
 
 	@Column(name="patient_id")
 	private int patientId;
@@ -38,13 +42,13 @@ public class PatientLiveStatus implements Serializable {
 
 	public PatientLiveStatus() {
 	}
-
-	public String getCondition() {
-		return this.condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
+	
+	public PatientLiveStatus(PatientRequestBean request,Patient patient) {
+		this.patientCondition=request.getSeverity();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=patient.getPatientId();
+		this.testOutcome=request.getTestOutcome();
 	}
 
 	public int getFacilityId() {
@@ -61,6 +65,14 @@ public class PatientLiveStatus implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getPatientCondition() {
+		return this.patientCondition;
+	}
+
+	public void setPatientCondition(String patientCondition) {
+		this.patientCondition = patientCondition;
 	}
 
 	public int getPatientId() {

@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.beans.BaseBean;
+import org.iitbact.erp.requests.PatientRequestBean;
 
 
 /**
@@ -18,35 +20,38 @@ import org.iitbact.erp.beans.BaseBean;
 @Entity
 @Table(name="patient_history")
 @NamedQuery(name="PatientHistory.findAll", query="SELECT p FROM PatientHistory p")
-public class PatientHistory implements Serializable,BaseBean {
+public class PatientHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private String condition;
 
 	@Column(name="facility_id")
 	private int facilityId;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name="patient_condition")
+	private String patientCondition;
 
 	@Column(name="test_outcome")
 	private String testOutcome;
 
 	@Column(name="ward_id")
 	private int wardId;
-
+	
 	@Column(name="patient_id")
 	private int patientId;
 	
+
 	public PatientHistory() {
 	}
-
-	public String getCondition() {
-		return this.condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
+	
+	public PatientHistory(PatientRequestBean request, Patient patient) {
+		this.patientCondition=request.getSeverity();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=patient.getPatientId();
+		this.testOutcome=request.getTestOutcome();
 	}
 
 	public int getFacilityId() {
@@ -63,6 +68,14 @@ public class PatientHistory implements Serializable,BaseBean {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getPatientCondition() {
+		return this.patientCondition;
+	}
+
+	public void setPatientCondition(String patientCondition) {
+		this.patientCondition = patientCondition;
 	}
 
 	public String getTestOutcome() {
@@ -88,4 +101,5 @@ public class PatientHistory implements Serializable,BaseBean {
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
 	}
+
 }
