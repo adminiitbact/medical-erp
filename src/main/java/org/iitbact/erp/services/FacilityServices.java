@@ -5,8 +5,10 @@ import java.util.List;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
+import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.repository.FacilityRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
+import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
@@ -22,6 +24,9 @@ public class FacilityServices {
 
 	@Autowired
 	private FacilityRepository facilityRepository;
+	
+	@Autowired
+	private WardRepository wardRepository;
 
 	@Autowired
 	private ApiValidationService validationService;
@@ -114,6 +119,11 @@ public class FacilityServices {
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
 		return patientLiveStatusRepository.findByFacilityId(facilityId);
+	}
+
+	public List<Ward> fetchAvailableWards(int facilityId, BaseRequest request) {
+		this.authenticateUser(request.getAuthToken());
+		return  wardRepository.findByFacilityId(facilityId);
 	}
 
 }
