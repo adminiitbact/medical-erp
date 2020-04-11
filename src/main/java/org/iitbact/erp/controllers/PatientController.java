@@ -8,6 +8,7 @@ import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.requests.PatientUpdateRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
@@ -100,6 +101,22 @@ public class PatientController {
 		PatientLiveStatusResponse data = null;
 		try {
 			data = (patientServices.fetchPatientStatusLive(patientId, request));
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/patient/status/update")
+	@ApiOperation(response = BooleanResponse.class, value = "API to transfer facility/ Change Ward / or Update test and condition of a patient")
+	public ResponseBean transferPatient(@RequestBody PatientTransferRequestBean request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data = null;
+		try {
+			data = (patientServices.patientStatusUpdate(request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();

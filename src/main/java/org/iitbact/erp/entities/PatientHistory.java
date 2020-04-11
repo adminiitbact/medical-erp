@@ -53,6 +53,15 @@ public class PatientHistory implements Serializable {
 		this.patientId=patient.getPatientId();
 		this.testOutcome=request.getTestOutcome();
 	}
+	
+	public PatientHistory(PatientLiveStatus request) {
+		this.patientCondition=request.getPatientCondition();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=request.getPatientId();
+		this.testOutcome=request.getTestOutcome();
+	}
+	
 
 	public int getFacilityId() {
 		return this.facilityId;

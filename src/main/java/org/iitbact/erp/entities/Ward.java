@@ -92,5 +92,9 @@ public class Ward implements Serializable {
 	public void decreaseAvailabilityByOne() {
 		this.availableBeds-=1;
 	}
+	public void IncreaseAvailabilityByOne() {
+		this.availableBeds+=1;
+	}
+	
 	
 }

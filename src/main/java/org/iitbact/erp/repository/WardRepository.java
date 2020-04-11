@@ -10,4 +10,6 @@ public interface WardRepository extends JpaRepository<Ward, Integer> {
 
 	@Query(value = "Select * from wards  where available_beds > 0 and `type` = ?1 and facility_id = ?2", nativeQuery = true)
 	List<Ward> fetchFacilityWardList(String type,int facilityId);
+	
+	//Ward findById(int id);
 }

@@ -13,6 +13,7 @@ import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.requests.PatientUpdateRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
@@ -66,9 +67,7 @@ public class PatientServices {
 			// TODO Single threaded ()
 			// Decrease the bed available from ward
 			if (request.getWardId() != 0) {
-				Ward ward = wardRepo.getOne(request.getWardId());
-				ward.decreaseAvailabilityByOne();
-				wardRepo.save(ward);
+				changeWardAvailablility(request.getWardId(), -1);
 			}
 		}
 		BooleanResponse returnVal = new BooleanResponse(true);
@@ -94,7 +93,7 @@ public class PatientServices {
 
 	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository.findByPatientId(patientId);
+		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository.findByPatientIdFromMultipleTables(patientId);
 		PatientLiveStatusResponse response = new PatientLiveStatusResponse();
 		response.setPatientStatus(patientStatus);
 
@@ -104,5 +103,55 @@ public class PatientServices {
 	public Patient getPatientDetails(int id, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
 		return patientRepository.findByPatientId(id);
+	}
+
+	@Transactional
+	public BooleanResponse patientStatusUpdate(PatientTransferRequestBean request) {
+		this.authenticateUser(request.getAuthToken());
+		
+		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository
+				.findByPatientId(request.getData().getPatientId());
+
+		int requestWardId = request.getData().getWardId();
+		int currentWardId = patientCurrentStatus.getWardId();
+		int requestFacilityId = request.getData().getFacilityId();
+		
+		if (requestWardId != currentWardId) {
+			if (requestWardId != 0) {
+				if(currentWardId!=0){
+					changeWardAvailablility(currentWardId, 1);
+				}
+				changeWardAvailablility(requestWardId, -1);
+			} 
+			else {
+				if(currentWardId!=0){
+					changeWardAvailablility(currentWardId, 1);
+				}
+			}
+			
+		}
+
+		if (requestFacilityId != 0) {
+			PatientHistory history = new PatientHistory(request.getData());
+			patientHistoryRepository.save(history);
+			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(request.getData().getPatientId());
+			patientLiveStatus.update(request.getData());
+			patientLiveStatusRepository.save(patientLiveStatus);
+		}
+
+	
+		BooleanResponse returnVal = new BooleanResponse(true);
+		return returnVal;
+	}
+
+	private boolean changeWardAvailablility(int id, int value) {
+		Ward ward = wardRepo.getOne(id);
+		if (value == 1) {
+			ward.IncreaseAvailabilityByOne();
+		} else {
+			ward.decreaseAvailabilityByOne();
+		}
+		wardRepo.save(ward);
+		return true;
 	}
 }

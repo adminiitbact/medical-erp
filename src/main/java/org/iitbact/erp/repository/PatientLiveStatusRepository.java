@@ -10,9 +10,11 @@ import org.springframework.data.jpa.repository.Query;
 public interface PatientLiveStatusRepository extends JpaRepository<PatientLiveStatus, Integer> {
 
 	@Query(nativeQuery = true, value = "SELECT pls.patient_id patientID,pls.patient_condition patientCondition,pls.test_outcome testOutcome,f.name facilityName,w.name wardName,w.`type` wardType,f.facility_id facilityId,w.id wardId FROM patient_live_status pls INNER JOIN facilities f ON f.facility_id=pls.facility_id LEFT JOIN wards w ON w.id=pls.ward_id WHERE pls.patient_id=?1")
-	PatientLiveStatusInterface findByPatientId(int patientId);
+	PatientLiveStatusInterface findByPatientIdFromMultipleTables(int patientId);
 
 	@Query(nativeQuery = true, value = "SELECT pls.patient_id patientID,pls.patient_condition patientCondition,pls.test_outcome testOutcome,f.name facilityName,w.name wardName,w.`type` wardType,f.facility_id facilityId,w.id wardId FROM patient_live_status pls INNER JOIN facilities f ON f.facility_id=pls.facility_id  LEFT JOIN wards w ON w.id=pls.ward_id WHERE pls.facility_id=?1")
 	List<PatientLiveStatusInterface> findByFacilityId(int facilityId);
+	
+	PatientLiveStatus findByPatientId(int patientId);
 
 }

@@ -50,6 +50,14 @@ public class PatientLiveStatus implements Serializable {
 		this.patientId=patient.getPatientId();
 		this.testOutcome=request.getTestOutcome();
 	}
+	
+	public PatientLiveStatus(PatientLiveStatus request) {
+		this.patientCondition=request.getPatientCondition();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=request.getPatientId();
+		this.testOutcome=request.getTestOutcome();
+	}
 
 	public int getFacilityId() {
 		return this.facilityId;
@@ -99,4 +107,11 @@ public class PatientLiveStatus implements Serializable {
 		this.wardId = wardId;
 	}
 
+	public void update(PatientLiveStatus request) {
+		this.patientCondition=request.getPatientCondition();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=request.getPatientId();
+		this.testOutcome=request.getTestOutcome();
+	}
 }
