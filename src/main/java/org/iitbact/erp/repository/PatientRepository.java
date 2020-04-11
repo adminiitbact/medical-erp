@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
 	List<Patient> findByNameContaining(String name);
+
+	Patient findByPatientId(int id);
 }

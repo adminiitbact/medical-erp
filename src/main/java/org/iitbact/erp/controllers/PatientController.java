@@ -8,6 +8,7 @@ import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientUpdateRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
@@ -78,11 +79,11 @@ public class PatientController {
 
 	@PostMapping(path = "/update/patient/details")
 	@ApiOperation(response = BooleanResponse.class, value = "API to update patient's details")
-	public ResponseBean updatePateintDetails(@RequestBody PatientRequestBean request) throws JsonProcessingException {
+	public ResponseBean updatePateintDetails(@RequestBody PatientUpdateRequestBean request) throws JsonProcessingException {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
-			data = (patientServices.updatePatientDetails(request));
+			data =  (patientServices.updatePatientDetails(request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();

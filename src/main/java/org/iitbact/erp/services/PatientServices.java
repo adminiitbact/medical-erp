@@ -13,6 +13,7 @@ import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientUpdateRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class PatientServices {
 
 	@Autowired
 	private PatientLiveStatusRepository patientLiveStatusRepository;
-	
+
 	@Autowired
 	private PatientHistoryRepository patientHistoryRepository;
-	
+
 	@Autowired
 	private WardRepository wardRepo;
 
@@ -44,27 +45,28 @@ public class PatientServices {
 	@Transactional
 	public BooleanResponse addPatient(PatientRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-		
-		//TODO validation to check if user exist wrt mobilie no. age & gender (to reduce duplicate data in system)
+
+		// TODO validation to check if user exist wrt mobilie no. age & gender
+		// (to reduce duplicate data in system)
 		// TODO ward / facilily mapping check in case of ward Id is not zero
-		
-		Patient patient=request.getData();
+
+		Patient patient = request.getData();
 		if (request.getData() != null) {
-			patient= patientRepository.save(request.getData()) ;
+			patient = patientRepository.save(request.getData());
 		}
-		
-		//Insert into patient History & patient live status table
-		if(request.getFacilityId()!=0) {
-			PatientLiveStatus patientLiveStatus=new PatientLiveStatus(request,patient);
-			PatientHistory history=new PatientHistory(request,patient);
-			
+
+		// Insert into patient History & patient live status table
+		if (request.getFacilityId() != 0) {
+			PatientLiveStatus patientLiveStatus = new PatientLiveStatus(request, patient);
+			PatientHistory history = new PatientHistory(request, patient);
+
 			patientLiveStatusRepository.save(patientLiveStatus);
 			patientHistoryRepository.save(history);
-			
-			//TODO Single threaded () 
-			//Decrease the bed available from ward
-			if(request.getWardId()!=0) {
-				Ward ward=wardRepo.getOne(request.getWardId());
+
+			// TODO Single threaded ()
+			// Decrease the bed available from ward
+			if (request.getWardId() != 0) {
+				Ward ward = wardRepo.getOne(request.getWardId());
 				ward.decreaseAvailabilityByOne();
 				wardRepo.save(ward);
 			}
@@ -78,7 +80,7 @@ public class PatientServices {
 		return patientRepository.findByNameContaining(name);
 	}
 
-	public BooleanResponse updatePatientDetails(PatientRequestBean request) {
+	public BooleanResponse updatePatientDetails(PatientUpdateRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
 		Patient entity = patientRepository.findById(request.getData().getPatientId()).get();
 		if (entity != null) {
@@ -92,7 +94,6 @@ public class PatientServices {
 
 	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-
 		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository.findByPatientId(patientId);
 		PatientLiveStatusResponse response = new PatientLiveStatusResponse();
 		response.setPatientStatus(patientStatus);
@@ -102,6 +103,6 @@ public class PatientServices {
 
 	public Patient getPatientDetails(int id, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-		return patientRepository.getOne(id);
+		return patientRepository.findByPatientId(id);
 	}
 }
