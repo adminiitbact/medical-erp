@@ -1,7 +1,14 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.iitbact.erp.beans.BaseBean;
 
 
 /**
@@ -11,7 +18,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="patient_live_status")
 @NamedQuery(name="PatientLiveStatus.findAll", query="SELECT p FROM PatientLiveStatus p")
-public class PatientLiveStatus implements Serializable {
+public class PatientLiveStatus implements Serializable,BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	private String condition;
