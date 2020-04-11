@@ -1,22 +1,17 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /**
- * The persistent class for the patient_history database table.
+ * The persistent class for the patient_live_status database table.
  * 
  */
 @Entity
-@Table(name="patient_history")
-@NamedQuery(name="PatientHistory.findAll", query="SELECT p FROM PatientHistory p")
-public class PatientHistory implements Serializable {
+@Table(name="patient_live_status")
+@NamedQuery(name="PatientLiveStatus.findAll", query="SELECT p FROM PatientLiveStatus p")
+public class PatientLiveStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String condition;
@@ -27,16 +22,16 @@ public class PatientHistory implements Serializable {
 	@Id
 	private int id;
 
+	@Column(name="patient_id")
+	private int patientId;
+
 	@Column(name="test_outcome")
 	private String testOutcome;
 
 	@Column(name="ward_id")
 	private int wardId;
 
-	@Column(name="patient_id")
-	private int patientId;
-	
-	public PatientHistory() {
+	public PatientLiveStatus() {
 	}
 
 	public String getCondition() {
@@ -63,6 +58,14 @@ public class PatientHistory implements Serializable {
 		this.id = id;
 	}
 
+	public int getPatientId() {
+		return this.patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
 	public String getTestOutcome() {
 		return this.testOutcome;
 	}
@@ -79,11 +82,4 @@ public class PatientHistory implements Serializable {
 		this.wardId = wardId;
 	}
 
-	public int getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(int patientId) {
-		this.patientId = patientId;
-	}
 }

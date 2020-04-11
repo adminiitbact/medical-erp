@@ -11,5 +11,6 @@
 		<class>org.iitbact.erp.entities.PatientHistory</class>
 		<class>org.iitbact.erp.entities.Patient</class>
 		<class>org.iitbact.erp.entities.Ward</class>
+		<class>org.iitbact.erp.entities.PatientLiveStatus</class>
 	</persistence-unit>
 </persistence>

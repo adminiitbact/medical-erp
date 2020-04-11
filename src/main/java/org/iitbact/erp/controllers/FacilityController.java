@@ -5,6 +5,7 @@ import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.requests.AvailableFacilityRequest;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
@@ -121,6 +122,21 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
+	@PostMapping(path = "/available/facilities")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to fetch all available facilities")
+	public ResponseBean availableFacilities(@RequestBody AvailableFacilityRequest request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		BooleanResponse data = null;
+		try {
+			//data = facilityServices.addFacilityChecklist(facilityId, request);
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
 	
 	
 
