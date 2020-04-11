@@ -111,9 +111,9 @@ public class FacilityServices {
 		return facility;
 	}
 
-	public List<PatientLiveStatusInterface> searchPatientByFacility(int facility_id, BaseRequest request) {
+	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-		return patientLiveStatusRepository.findByFacilityId(facility_id);
+		return patientLiveStatusRepository.findByFacilityId(facilityId);
 	}
 
 }

@@ -126,14 +126,14 @@ public class FacilityController {
 	}
 	
 	
-	@PostMapping(path = "/list/patients/{facility_id}")
+	@PostMapping(path = "/list/patients/{facilityId}")
 	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility. Returns a list of patients")
-	public ResponseBean searchPatientByFacility(@PathVariable int facility_id, @RequestBody BaseRequest request)
+	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
 		ListResponse<PatientLiveStatusInterface> data = new ListResponse<>();
 		try {
-			data.setList(facilityServices.searchPatientByFacility(facility_id, request));
+			data.setList(facilityServices.searchPatientByFacility(facilityId, request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();
