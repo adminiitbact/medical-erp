@@ -3,7 +3,6 @@ package org.iitbact.erp.repository;
 import java.util.List;
 
 import org.iitbact.erp.entities.Facility;
-import org.iitbact.erp.entities.Ward;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -3,7 +3,8 @@ package org.iitbact.erp.controllers;
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Facility;
-import org.iitbact.erp.entities.Ward;
+import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.AvailableFacilityRequest;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -125,48 +125,32 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
+	
+	@PostMapping(path = "/list/patients/{facility_id}")
+	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility. Returns a list of patients")
+	public ResponseBean searchPatientByFacility(@PathVariable int facility_id, @RequestBody BaseRequest request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		ListResponse<PatientLiveStatusInterface> data = new ListResponse<>();
+		try {
+			data.setList(facilityServices.searchPatientByFacility(facility_id, request));
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	
+	//TODO
 	@PostMapping(path = "/available/facilities")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to fetch all available facilities")
+	@ApiOperation(response = BooleanResponse.class, value = " TODO : API request to fetch all available facilities")
 	public ResponseBean availableFacilities(@RequestBody AvailableFacilityRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
 			//data = facilityServices.addFacilityChecklist(facilityId, request);
-
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-	
-	
-
-	@PostMapping(path = "/facility/list")
-	@ApiOperation(response = ListResponse.class, value = "API request to fetch list of facilities with Severity and test filter")
-	public ResponseBean fetchFacilityList(@RequestParam String severity, String test, @RequestBody BaseRequest request)
-			throws JsonProcessingException {
-		HospitalErpError error = null;
-		ListResponse<Facility> data = new ListResponse<>();
-		try {
-			data.setList(facilityServices.fetchFacilityList(severity, test, request));
-
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-
-	@PostMapping(path = "/facility/{facilityId}/ward/list")
-	@ApiOperation(response = ListResponse.class, value = "API request to fetch list of wards from a facility with Severity and test filter")
-	public ResponseBean fetchFacilityWardList(@PathVariable int facilityId, @RequestParam String severity, String test,
-			@RequestBody BaseRequest request) throws JsonProcessingException {
-		HospitalErpError error = null;
-		ListResponse<Ward> data = new ListResponse<>();
-		try {
-			data.setList(facilityServices.fetchFacilityWardList(severity, test, facilityId, request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();

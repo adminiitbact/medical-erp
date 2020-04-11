@@ -3,13 +3,13 @@ package org.iitbact.erp.services;
 import java.util.List;
 
 import org.iitbact.erp.entities.Patient;
-import org.iitbact.erp.entities.PatientLiveStatus;
-import org.iitbact.erp.repository.PatientHistoryRepository;
+import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
 import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
+import org.iitbact.erp.response.PatientLiveStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,10 @@ public class PatientServices {
 
 	@Autowired
 	private PatientRepository patientRepository;
-	
-	@Autowired 
-	private PatientHistoryRepository patientHistoryRepository;
-	
+
 	@Autowired
 	private PatientLiveStatusRepository patientLiveStatusRepository;
-	
+
 	@Autowired
 	private ApiValidationService validationService;
 
@@ -43,35 +40,30 @@ public class PatientServices {
 		return returnVal;
 	}
 
-	public List<Patient> searchPatientByName(String name,BaseRequest request) {
+	public List<Patient> searchPatientByName(String name, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
-				return patientRepository.findByName(name);
-	}
-
-	public Patient getPatientDetails(int id,BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
-		return patientRepository.findById(id);
+		return patientRepository.findByNameContaining(name);
 	}
 
 	public BooleanResponse updatePatientDetails(PatientRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-		Patient entity = patientRepository.findById(request.getData().getPatientId());
-		if(entity!=null){
+		Patient entity = patientRepository.findById(request.getData().getPatientId()).get();
+		if (entity != null) {
 			entity.updatePatient(request.getData());
 			patientRepository.save(entity);
 		}
-		
+
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
 	}
 
-	public PatientLiveStatus fetchPatientStatusLive(int patientId,BaseRequest request) {
-		//this.authenticateUser(request.getAuthToken());
-		return patientLiveStatusRepository.findByPatientId(patientId);
-	}
+	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {
+		this.authenticateUser(request.getAuthToken());
 
-	public List<Patient> searchPatientByFacility(int facility_id,BaseRequest request) {
-	 this.authenticateUser(request.getAuthToken());
-		return patientRepository.findByFacilityId(facility_id);
+		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository.findByPatientId(patientId);
+		PatientLiveStatusResponse response = new PatientLiveStatusResponse();
+		response.setPatientStatus(patientStatus);
+
+		return response;
 	}
 }
