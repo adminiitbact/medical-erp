@@ -1,10 +1,13 @@
 package org.iitbact.erp.controllers;
 
+import org.iitbact.erp.beans.BaseBean;
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientHistory;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
@@ -43,12 +46,13 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "/search/byname/{name}")
-	@ApiOperation(response = Patient.class, value = "API Search Patient By Name")
-	public ResponseBean searchPatientByName(@PathVariable String name) throws JsonProcessingException {
+	@ApiOperation(response = ListResponse.class, value = "API Search Patient By Name. Returns a list of patients")
+	public ResponseBean searchPatientByName(@PathVariable String name, @RequestBody BaseRequest request)
+			throws JsonProcessingException {
 		HospitalErpError error = null;
 		ListResponse<Patient> data = new ListResponse<>();
 		try {
-			data.setList(patientServices.searchPatientByName(name));
+			data.setList(patientServices.searchPatientByName(name, request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();
@@ -58,12 +62,12 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "/details/{id}")
-	@ApiOperation(response = Patient.class, value = "API to  id")
-	public ResponseBean getPatientDetails(@PathVariable int id) throws JsonProcessingException {
+	@ApiOperation(response = Patient.class, value = "API to fetch pateint's details")
+	public ResponseBean getPatientDetails(@PathVariable int id,@RequestBody BaseRequest request) throws JsonProcessingException {
 		HospitalErpError error = null;
 		Patient data = new Patient();
 		try {
-			data = (patientServices.getPatientDetails(id));
+			data = (patientServices.getPatientDetails(id,request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();
@@ -73,12 +77,12 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "/update/details")
-	@ApiOperation(response = Patient.class, value = "API Search Patient By Name")
-	public ResponseBean updatePateintDetails(@RequestBody Patient patient) throws JsonProcessingException {
+	@ApiOperation(response = BooleanResponse.class, value = "API to update patient's details")
+	public ResponseBean updatePateintDetails(@RequestBody PatientRequestBean request) throws JsonProcessingException {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
-			data = (patientServices.updatePatientDetails(patient));
+			data = (patientServices.updatePatientDetails(request));
 
 		} catch (HospitalErpException e) {
 			error = e.getError();
@@ -86,7 +90,37 @@ public class PatientController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
 		return responseBuilder.build();
 	}
-	
-	
+
+	@PostMapping(path = "/status/live/{patientId}")
+	@ApiOperation(response = PatientHistory.class, value = "API to fetch live status for patient")
+	public ResponseBean fetchPatientStatusLive(@PathVariable int patientId, @RequestBody BaseRequest request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		PatientHistory data = null;
+		try {
+			data = (patientServices.fetchPatientStatusLive(patientId, request));
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+
+	@PostMapping(path = "/list/facility/{facility_id}")
+	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility. Returns a list of patients")
+	public ResponseBean searchPatientByFacility(@PathVariable int facility_id, @RequestBody BaseRequest request)
+			throws JsonProcessingException {
+		HospitalErpError error = null;
+		ListResponse<Patient> data = new ListResponse<>();
+		try {
+			data.setList(patientServices.searchPatientByFacility(facility_id, request));
+
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
 
 }

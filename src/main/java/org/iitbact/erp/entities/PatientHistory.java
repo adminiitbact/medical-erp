@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.iitbact.erp.beans.BaseBean;
 
 
 /**
@@ -18,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="patient_history")
 @NamedQuery(name="PatientHistory.findAll", query="SELECT p FROM PatientHistory p")
-public class PatientHistory implements Serializable {
+public class PatientHistory implements Serializable,BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	private String condition;
@@ -39,7 +42,6 @@ public class PatientHistory implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="patient_id", referencedColumnName="patient_id")
 	private Patient patient;
-
 	public PatientHistory() {
 	}
 

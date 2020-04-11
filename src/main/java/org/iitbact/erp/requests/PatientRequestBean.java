@@ -12,5 +12,5 @@ public class PatientRequestBean extends BaseRequest {
 	public void setData(Patient data) {
 		this.data = data;
 	}
-	
+
 }
