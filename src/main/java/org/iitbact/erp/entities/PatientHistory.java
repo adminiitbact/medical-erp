@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.iitbact.erp.beans.BaseBean;
+
 
 /**
  * The persistent class for the patient_history database table.
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="patient_history")
 @NamedQuery(name="PatientHistory.findAll", query="SELECT p FROM PatientHistory p")
-public class PatientHistory implements Serializable {
+public class PatientHistory implements Serializable,BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	private String condition;

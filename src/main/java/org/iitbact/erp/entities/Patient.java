@@ -9,15 +9,12 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.iitbact.erp.beans.BaseBean;
 
-/**
- * The persistent class for the patients database table.
- * 
- */
 @Entity
-@Table(name="patients")
-@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
-public class Patient implements Serializable {
+@Table(name = "patients")
+@NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
+public class Patient implements Serializable, BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
@@ -25,7 +22,7 @@ public class Patient implements Serializable {
 
 	private int age;
 
-	@Column(name="contact_number")
+	@Column(name = "contact_number")
 	private String contactNumber;
 
 	private String gender;
@@ -33,10 +30,18 @@ public class Patient implements Serializable {
 	private String name;
 
 	@Id
-	@Column(name="patient_id")
+	@Column(name = "patient_id")
 	private int patientId;
 
 	public Patient() {
+	}
+
+	public void updatePatient(Patient patient) {
+		this.setAddress(patient.getAddress());
+		this.setAge(patient.age);
+		this.setContactNumber(patient.getContactNumber());
+		this.setGender(patient.getGender());
+		this.setName(patient.getName());
 	}
 
 	public String getAddress() {
