@@ -3,8 +3,9 @@ package org.iitbact.erp.services;
 import java.util.List;
 
 import org.iitbact.erp.entities.Patient;
-import org.iitbact.erp.entities.PatientHistory;
+import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.repository.PatientHistoryRepository;
+import org.iitbact.erp.repository.PatientLiveStatusRepository;
 import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientRequestBean;
@@ -20,6 +21,9 @@ public class PatientServices {
 	
 	@Autowired 
 	private PatientHistoryRepository patientHistoryRepository;
+	
+	@Autowired
+	private PatientLiveStatusRepository patientLiveStatusRepository;
 	
 	@Autowired
 	private ApiValidationService validationService;
@@ -61,9 +65,9 @@ public class PatientServices {
 		return returnVal;
 	}
 
-	public PatientHistory fetchPatientStatusLive(int patientId,BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
-		return patientHistoryRepository.findLatestStatus(patientId);
+	public PatientLiveStatus fetchPatientStatusLive(int patientId,BaseRequest request) {
+		//this.authenticateUser(request.getAuthToken());
+		return patientLiveStatusRepository.findByPatientId(patientId);
 	}
 
 	public List<Patient> searchPatientByFacility(int facility_id,BaseRequest request) {

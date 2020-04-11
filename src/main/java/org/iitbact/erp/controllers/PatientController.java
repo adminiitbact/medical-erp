@@ -4,6 +4,7 @@ import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientHistory;
+import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
@@ -95,7 +96,7 @@ public class PatientController {
 	public ResponseBean fetchPatientStatusLive(@PathVariable int patientId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
-		PatientHistory data = null;
+		PatientLiveStatus data = null;
 		try {
 			data = (patientServices.fetchPatientStatusLive(patientId, request));
 
