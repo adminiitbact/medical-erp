@@ -31,7 +31,7 @@ public class HospitalErpApplication {
 	public Docket swaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("org.iitbact.erp")).build().apiInfo(apiInfo())
-				.host("localhost:8080");
+				.host("staging.iitbact.org:8080");
 	}
 
 	private ApiInfo apiInfo() {
