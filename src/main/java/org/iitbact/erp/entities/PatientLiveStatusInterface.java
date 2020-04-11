@@ -16,18 +16,6 @@ public interface PatientLiveStatusInterface {
 
 	public String getTestOutcome();
 
-	/*
-	 * public String getAddress();
-	 * 
-	 * public int getAge();
-	 * 
-	 * public String getContactNumber();
-	 * 
-	 * public String getGender();
-	 * 
-	 * public String getName();
-	 */
-
 	public int getPatientId();
 
 }
