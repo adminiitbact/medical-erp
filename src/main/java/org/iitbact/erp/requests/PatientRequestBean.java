@@ -1,23 +1,17 @@
 package org.iitbact.erp.requests;
 
-import org.iitbact.erp.entities.Patient;
-
 public class PatientRequestBean extends BaseRequest {
-	Patient data;
-	
+	private String address;
+	private int age;
+	private String contactNumber;
+	private String gender;
+	private String name;
 	private int facilityId;
 	private int wardId;
 	private String testOutcome;
 	private String severity;
 
-	public Patient getData() {
-		return data;
-	}
-
-	public void setData(Patient data) {
-		this.data = data;
-	}
-
+	
 	public int getFacilityId() {
 		return facilityId;
 	}
@@ -48,6 +42,46 @@ public class PatientRequestBean extends BaseRequest {
 
 	public void setSeverity(String severity) {
 		this.severity = severity;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

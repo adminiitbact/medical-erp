@@ -125,16 +125,14 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
-	
-	@PostMapping(path = "/list/patients/{facilityId}")
-	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility. Returns a list of patients")
+	@PostMapping(path = "/facilities/{facilityId}/patients/get")
+	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility.")
 	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
 		ListResponse<PatientLiveStatusInterface> data = new ListResponse<>();
 		try {
 			data.setList(facilityServices.searchPatientByFacility(facilityId, request));
-
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
@@ -142,16 +140,13 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
-	//TODO
-	@PostMapping(path = "/available/facilities")
-	@ApiOperation(response = BooleanResponse.class, value = " TODO : API request to fetch all available facilities")
-	public ResponseBean availableFacilities(@RequestBody AvailableFacilityRequest request)
-			throws JsonProcessingException {
+	@PostMapping(path = "/facilities")
+	@ApiOperation(response = BooleanResponse.class, value = " API request to fetch all available facilities")
+	public ResponseBean availableFacilities(@RequestBody AvailableFacilityRequest request) {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
 			//data = facilityServices.addFacilityChecklist(facilityId, request);
-
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}

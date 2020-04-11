@@ -11,6 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.iitbact.erp.requests.PatientProfileRequestBean;
+import org.iitbact.erp.requests.PatientRequestBean;
+
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
@@ -37,12 +40,20 @@ public class Patient implements Serializable {
 	public Patient() {
 	}
 
-	public void updatePatient(Patient patient) {
-		this.setAddress(patient.getAddress());
-		this.setAge(patient.age);
-		this.setContactNumber(patient.getContactNumber());
-		this.setGender(patient.getGender());
-		this.setName(patient.getName());
+	public Patient(PatientRequestBean request) {
+		this.setAddress(request.getAddress());
+		this.setAge(request.getAge());
+		this.setContactNumber(request.getContactNumber());
+		this.setGender(request.getGender());
+		this.setName(request.getName());
+	}
+
+	public void updatePatient(PatientProfileRequestBean request) {
+		this.setAddress(request.getAddress());
+		this.setAge(request.getAge());
+		this.setContactNumber(request.getContactNumber());
+		this.setGender(request.getGender());
+		this.setName(request.getName());
 	}
 
 	public String getAddress() {
