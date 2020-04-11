@@ -8,9 +8,12 @@
 		<class>org.iitbact.erp.entities.FacilityContact</class>
 		<class>org.iitbact.erp.entities.FacilityInventory</class>
 		<class>org.iitbact.erp.entities.FacilityMedstaff</class>
-		<class>org.iitbact.erp.entities.PatientHistory</class>
 		<class>org.iitbact.erp.entities.Patient</class>
 		<class>org.iitbact.erp.entities.Ward</class>
 		<class>org.iitbact.erp.entities.PatientLiveStatus</class>
+		<class>org.iitbact.erp.entities.PatientHistory</class>
+		<properties>
+			<property name="eclipselink.exclude-eclipselink-orm" value="false"/>
+		</properties>
 	</persistence-unit>
 </persistence>
