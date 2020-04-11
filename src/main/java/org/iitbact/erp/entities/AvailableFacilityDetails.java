@@ -7,5 +7,6 @@ public interface AvailableFacilityDetails {
 	public String getArea();
 	public String getJurisdiction();
 	public int getAvailability();
+	public String covidFacilityType();
 	
 }

@@ -125,8 +125,6 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
-	///TODO
-	
 	@PostMapping(path = "/facilities/{facilityId}/patients/get")
 	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility.")
 	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody BaseRequest request)
