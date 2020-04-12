@@ -36,6 +36,9 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
+	
+	@Column(name = "emergency_contact")
+	private String emergencyContact;
 
 	public Patient() {
 	}
