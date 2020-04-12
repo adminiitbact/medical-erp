@@ -8,6 +8,5 @@ public interface FacilityDetails {
 	public String getFacilityType();
 	public String getCovidFacilityType();
 	public String getTelephone();
-	
 	public int getAvailability();
 }

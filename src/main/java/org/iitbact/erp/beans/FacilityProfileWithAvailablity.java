@@ -10,11 +10,11 @@ public class FacilityProfileWithAvailablity {
 	private String area;
 	private String name;
 	private String telephone;
-	private int availablity;
+	private int availability;
 	
 	public FacilityProfileWithAvailablity(FacilityDetails facility) {
 		this.area=facility.getArea();
-		this.availablity=facility.getAvailability();
+		this.availability=facility.getAvailability();
 		this.covidFacilityType=facility.getCovidFacilityType();
 		this.facilityId=facility.getFacilityId();
 		this.facilityType=facility.getFacilityType();
@@ -64,14 +64,16 @@ public class FacilityProfileWithAvailablity {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public int getAvailablity() {
-		return availablity;
+	
+	public int getAvailability() {
+		return availability;
 	}
-	public void setAvailablity(int availablity) {
-		this.availablity = availablity;
+	public void setAvailability(int availability) {
+		this.availability = availability;
+	}
+	public void substractAssigned(Integer totalAssigned) {
+		this.availability-=totalAssigned;
 	}
 	
-	public void substractAssigned(int totalAssigned) {
-		this.availablity-=totalAssigned;
-	}
+	
 }
