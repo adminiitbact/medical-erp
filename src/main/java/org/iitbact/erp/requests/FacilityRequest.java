@@ -1,20 +1,22 @@
 package org.iitbact.erp.requests;
 
+import org.iitbact.erp.constants.SEVERITY;
+import org.iitbact.erp.constants.TEST_STATUS;
+
 public class FacilityRequest extends BaseRequest {
-	private String testStatus;
-	private String severity;
-	
-	
-	public String getSeverity() {
-		return severity;
-	}
-	public void setSeverity(String severity) {
-		this.severity = severity;
-	}
-	public String getTestStatus() {
+	private TEST_STATUS testStatus;
+	private SEVERITY severity;
+	public TEST_STATUS getTestStatus() {
 		return testStatus;
 	}
-	public void setTestStatus(String testStatus) {
+	public void setTestStatus(TEST_STATUS testStatus) {
 		this.testStatus = testStatus;
 	}
+	public SEVERITY getSeverity() {
+		return severity;
+	}
+	public void setSeverity(SEVERITY severity) {
+		this.severity = severity;
+	}
+	
 }
