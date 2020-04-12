@@ -39,8 +39,8 @@ public class Ward implements Serializable {
 	@Column(name="covid_status")
 	private String covidStatus;
 	
-	@Column(name="patient_condition")
-	private String patientCondition;
+	@Column(name="severity")
+	private String severity;
 
 	public Ward() {
 	}
@@ -100,13 +100,11 @@ public class Ward implements Serializable {
 		this.covidStatus = covidStatus;
 	}
 
-	public String getPatientCondition() {
-		return patientCondition;
+	public String getSeverity() {
+		return severity;
 	}
 
-	public void setPatientCondition(String patientCondition) {
-		this.patientCondition = patientCondition;
+	public void setSeverity(String severity) {
+		this.severity = severity;
 	}
-	
-	
 }

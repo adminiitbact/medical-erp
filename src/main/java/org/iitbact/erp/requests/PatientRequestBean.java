@@ -11,7 +11,7 @@ public class PatientRequestBean extends BaseRequest {
 	private String name;
 	private int facilityId;
 	private int wardId;
-	private TEST_STATUS testOutcome;
+	private TEST_STATUS testStatus;
 	private SEVERITY severity;
 
 	
@@ -71,20 +71,20 @@ public class PatientRequestBean extends BaseRequest {
 		this.name = name;
 	}
 
-	public TEST_STATUS getTestOutcome() {
-		return testOutcome;
-	}
-
-	public void setTestOutcome(TEST_STATUS testOutcome) {
-		this.testOutcome = testOutcome;
-	}
-
 	public SEVERITY getSeverity() {
 		return severity;
 	}
 
 	public void setSeverity(SEVERITY severity) {
 		this.severity = severity;
+	}
+
+	public TEST_STATUS getTestStatus() {
+		return testStatus;
+	}
+
+	public void setTestStatus(TEST_STATUS testStatus) {
+		this.testStatus = testStatus;
 	}
 
 }

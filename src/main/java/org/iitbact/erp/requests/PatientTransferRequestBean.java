@@ -6,11 +6,11 @@ import org.iitbact.erp.constants.TEST_STATUS;
 public class PatientTransferRequestBean extends BaseRequest {
 	private int facilityId;
 	
-	private SEVERITY patientCondition;
+	private SEVERITY severity;
 
 	private int patientId;
 
-	private TEST_STATUS testOutcome;
+	private TEST_STATUS testStatus;
 
 	private int wardId;
 
@@ -22,14 +22,6 @@ public class PatientTransferRequestBean extends BaseRequest {
 		this.facilityId = facilityId;
 	}
 
-	public SEVERITY getPatientCondition() {
-		return patientCondition;
-	}
-
-	public void setPatientCondition(SEVERITY patientCondition) {
-		this.patientCondition = patientCondition;
-	}
-
 	public int getPatientId() {
 		return patientId;
 	}
@@ -38,20 +30,29 @@ public class PatientTransferRequestBean extends BaseRequest {
 		this.patientId = patientId;
 	}
 
-	public TEST_STATUS getTestOutcome() {
-		return testOutcome;
-	}
-
-	public void setTestOutcome(TEST_STATUS testOutcome) {
-		this.testOutcome = testOutcome;
-	}
-
+	
 	public int getWardId() {
 		return wardId;
 	}
 
 	public void setWardId(int wardId) {
 		this.wardId = wardId;
+	}
+
+	public SEVERITY getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(SEVERITY severity) {
+		this.severity = severity;
+	}
+
+	public TEST_STATUS getTestStatus() {
+		return testStatus;
+	}
+
+	public void setTestStatus(TEST_STATUS testStatus) {
+		this.testStatus = testStatus;
 	}
 
 	

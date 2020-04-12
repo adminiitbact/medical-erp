@@ -58,7 +58,7 @@ public class FacilityServices {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
-		facility.updateProfileData(data.get(Constants.FACILITY_DATA));
+		facility.updateProfileData(data.get(Constants.FACILITY_DATA));//TODO
 		if (data != null) {
 			facility.getFacilityContact().setData(data.get(Constants.CONTACT_DATA));
 		}

@@ -10,10 +10,12 @@ public interface PatientLiveStatusInterface {
 
 	public String getWardName();
 
-	public String getPatientCondition();
+	public String getSeverity();
 
-	public String getTestOutcome();
+	public String getTestStatus();
 
 	public int getPatientId();
-
+	
+	public String getPatientName();
+	
 }

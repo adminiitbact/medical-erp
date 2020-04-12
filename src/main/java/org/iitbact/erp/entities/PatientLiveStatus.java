@@ -29,14 +29,14 @@ public class PatientLiveStatus implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="patient_condition")
-	private String patientCondition;
+	@Column(name="severity")
+	private String severity;
 
 	@Column(name="patient_id")
 	private int patientId;
 
-	@Column(name="test_outcome")
-	private String testOutcome;
+	@Column(name="test_status")
+	private String testStatus;
 
 	@Column(name="ward_id")
 	private int wardId;
@@ -48,8 +48,8 @@ public class PatientLiveStatus implements Serializable {
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
-		this.testOutcome=request.getTestOutcome().toString();
-		this.patientCondition=request.getSeverity().toString();
+		this.testStatus=request.getTestStatus().toString();
+		this.severity=request.getSeverity().toString();
 	}
 	
 	public int getFacilityId() {
@@ -68,28 +68,12 @@ public class PatientLiveStatus implements Serializable {
 		this.id = id;
 	}
 
-	public String getPatientCondition() {
-		return this.patientCondition;
-	}
-
-	public void setPatientCondition(String patientCondition) {
-		this.patientCondition = patientCondition;
-	}
-
 	public int getPatientId() {
 		return this.patientId;
 	}
 
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
-	}
-
-	public String getTestOutcome() {
-		return this.testOutcome;
-	}
-
-	public void setTestOutcome(String testOutcome) {
-		this.testOutcome = testOutcome;
 	}
 
 	public int getWardId() {
@@ -101,10 +85,10 @@ public class PatientLiveStatus implements Serializable {
 	}
 
 	public void update(PatientTransferRequestBean request) {
-		this.patientCondition=request.getPatientCondition().toString();
+		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=request.getPatientId();
-		this.testOutcome=request.getTestOutcome().toString();
+		this.testStatus=request.getTestStatus().toString();
 	}
 }

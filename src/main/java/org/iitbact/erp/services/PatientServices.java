@@ -1,7 +1,5 @@
 package org.iitbact.erp.services;
 
-import java.util.List;
-
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientHistory;
 import org.iitbact.erp.entities.PatientLiveStatus;
@@ -69,11 +67,6 @@ public class PatientServices {
 		
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
-	}
-
-	public List<Patient> searchPatientByName(String name, BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
-		return patientRepository.findByNameContaining(name);
 	}
 
 	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {

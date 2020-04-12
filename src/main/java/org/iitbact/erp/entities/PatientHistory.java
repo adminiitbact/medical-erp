@@ -31,11 +31,11 @@ public class PatientHistory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="patient_condition")
-	private String patientCondition;
+	@Column(name="severity")
+	private String severity;
 
-	@Column(name="test_outcome")
-	private String testOutcome;
+	@Column(name="test_status")
+	private String testStatus;
 
 	@Column(name="ward_id")
 	private int wardId;
@@ -48,19 +48,19 @@ public class PatientHistory implements Serializable {
 	}
 	
 	public PatientHistory(PatientRequestBean request, Patient patient) {
-		this.patientCondition=request.getSeverity().toString();
+		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
-		this.testOutcome=request.getTestOutcome().toString();
+		this.testStatus=request.getTestStatus().toString();
 	}
 	
 	public PatientHistory(PatientTransferRequestBean request) {
-		this.patientCondition=request.getPatientCondition().toString();
+		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=request.getPatientId();
-		this.testOutcome=request.getTestOutcome().toString();
+		this.testStatus=request.getTestStatus().toString();
 	}
 	
 
@@ -80,21 +80,6 @@ public class PatientHistory implements Serializable {
 		this.id = id;
 	}
 
-	public String getPatientCondition() {
-		return this.patientCondition;
-	}
-
-	public void setPatientCondition(String patientCondition) {
-		this.patientCondition = patientCondition;
-	}
-
-	public String getTestOutcome() {
-		return this.testOutcome;
-	}
-
-	public void setTestOutcome(String testOutcome) {
-		this.testOutcome = testOutcome;
-	}
 
 	public int getWardId() {
 		return this.wardId;
@@ -110,6 +95,22 @@ public class PatientHistory implements Serializable {
 
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
+	}
+
+	public String getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(String severity) {
+		this.severity = severity;
+	}
+
+	public String getTestStatus() {
+		return testStatus;
+	}
+
+	public void setTestStatus(String testStatus) {
+		this.testStatus = testStatus;
 	}
 
 }
