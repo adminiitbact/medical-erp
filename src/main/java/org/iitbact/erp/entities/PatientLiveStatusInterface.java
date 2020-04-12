@@ -10,8 +10,6 @@ public interface PatientLiveStatusInterface {
 
 	public String getWardName();
 
-	public String getWardType();
-
 	public String getPatientCondition();
 
 	public String getTestOutcome();

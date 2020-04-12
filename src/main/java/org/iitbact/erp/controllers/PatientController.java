@@ -2,7 +2,6 @@ package org.iitbact.erp.controllers;
 
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
-import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
@@ -72,7 +71,7 @@ public class PatientController {
 	}
 	
 	@PostMapping(path = "/patients/{patientId}/status/get")
-	@ApiOperation(response = PatientLiveStatus.class, value = "API to fetch live status for patients")
+	@ApiOperation(response = PatientLiveStatusResponse.class, value = "API to fetch live status for patients")
 	public ResponseBean fetchPatientStatusLive(@PathVariable int patientId, @RequestBody BaseRequest request){
 		HospitalErpError error = null;
 		PatientLiveStatusResponse data = null;
@@ -93,7 +92,6 @@ public class PatientController {
 		BooleanResponse data = null;
 		try {
 			data = (patientServices.patientStatusUpdate(request));
-
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}

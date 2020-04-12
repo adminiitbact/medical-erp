@@ -36,7 +36,11 @@ public class Ward implements Serializable {
 	@Column(name="total_beds")
 	private int totalBeds;
 
-	private String type;
+	@Column(name="covid_status")
+	private String covidStatus;
+	
+	@Column(name="patient_condition")
+	private String patientCondition;
 
 	public Ward() {
 	}
@@ -81,19 +85,27 @@ public class Ward implements Serializable {
 		this.totalBeds = totalBeds;
 	}
 
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public void decreaseAvailabilityByOne() {
 		this.availableBeds-=1;
 	}
 	public void IncreaseAvailabilityByOne() {
 		this.availableBeds+=1;
+	}
+
+	public String getCovidStatus() {
+		return covidStatus;
+	}
+
+	public void setCovidStatus(String covidStatus) {
+		this.covidStatus = covidStatus;
+	}
+
+	public String getPatientCondition() {
+		return patientCondition;
+	}
+
+	public void setPatientCondition(String patientCondition) {
+		this.patientCondition = patientCondition;
 	}
 	
 	

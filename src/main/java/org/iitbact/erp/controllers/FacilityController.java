@@ -1,15 +1,15 @@
 package org.iitbact.erp.controllers;
 
+import org.iitbact.erp.beans.FacilityProfileWithAvailablity;
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Facility;
-import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
-import org.iitbact.erp.requests.AvailableFacilityRequest;
 import org.iitbact.erp.requests.BaseRequest;
+import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
@@ -127,7 +127,7 @@ public class FacilityController {
 	}
 	
 	@PostMapping(path = "/facilities/{facilityId}/patients/get")
-	@ApiOperation(response = Patient.class, value = "API to fetch list of patients from a particuar facility.")
+	@ApiOperation(response = PatientLiveStatusInterface.class,responseContainer = "List", value = "API to fetch list of patients from a particuar facility.")
 	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody BaseRequest request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
@@ -142,12 +142,12 @@ public class FacilityController {
 	}
 	
 	@PostMapping(path = "/facilities")
-	@ApiOperation(response = BooleanResponse.class, value = " API request to fetch all available facilities")
-	public ResponseBean availableFacilities(@RequestBody AvailableFacilityRequest request) {
+	@ApiOperation(response = FacilityProfileWithAvailablity.class,responseContainer = "List", value = " API request to fetch all available facilities")
+	public ResponseBean facilities(@RequestBody FacilityRequest request) {
 		HospitalErpError error = null;
-		BooleanResponse data = null;
+		ListResponse<FacilityProfileWithAvailablity> data = new ListResponse<FacilityProfileWithAvailablity>();
 		try {
-			//data = facilityServices.addFacilityChecklist(facilityId, request);
+			data.setList(facilityServices.facilities(request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
@@ -157,7 +157,7 @@ public class FacilityController {
 	
 	
 	@PostMapping(path = "/facilities/{facilityId}/wards")
-	@ApiOperation(response = Ward.class, value = " API request to fetch all available wards from facilities")
+	@ApiOperation(response = Ward.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
 	public ResponseBean fetchAvailableWards(@PathVariable int facilityId,@RequestBody BaseRequest request){
 		HospitalErpError error = null;
 		ListResponse<Ward> data = new ListResponse<>();

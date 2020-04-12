@@ -1,5 +1,8 @@
 package org.iitbact.erp.requests;
 
+import org.iitbact.erp.constants.SEVERITY;
+import org.iitbact.erp.constants.TEST_STATUS;
+
 public class PatientRequestBean extends BaseRequest {
 	private String address;
 	private int age;
@@ -8,8 +11,8 @@ public class PatientRequestBean extends BaseRequest {
 	private String name;
 	private int facilityId;
 	private int wardId;
-	private String testOutcome;
-	private String severity;
+	private TEST_STATUS testOutcome;
+	private SEVERITY severity;
 
 	
 	public int getFacilityId() {
@@ -26,22 +29,6 @@ public class PatientRequestBean extends BaseRequest {
 
 	public void setWardId(int wardId) {
 		this.wardId = wardId;
-	}
-
-	public String getTestOutcome() {
-		return testOutcome;
-	}
-
-	public void setTestOutcome(String testOutcome) {
-		this.testOutcome = testOutcome;
-	}
-
-	public String getSeverity() {
-		return severity;
-	}
-
-	public void setSeverity(String severity) {
-		this.severity = severity;
 	}
 
 	public String getAddress() {
@@ -82,6 +69,22 @@ public class PatientRequestBean extends BaseRequest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public TEST_STATUS getTestOutcome() {
+		return testOutcome;
+	}
+
+	public void setTestOutcome(TEST_STATUS testOutcome) {
+		this.testOutcome = testOutcome;
+	}
+
+	public SEVERITY getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(SEVERITY severity) {
+		this.severity = severity;
 	}
 
 }

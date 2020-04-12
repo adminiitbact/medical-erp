@@ -11,6 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 
 
 /**
@@ -47,19 +48,19 @@ public class PatientHistory implements Serializable {
 	}
 	
 	public PatientHistory(PatientRequestBean request, Patient patient) {
-		this.patientCondition=request.getSeverity();
+		this.patientCondition=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
-		this.testOutcome=request.getTestOutcome();
+		this.testOutcome=request.getTestOutcome().toString();
 	}
 	
-	public PatientHistory(PatientLiveStatus request) {
-		this.patientCondition=request.getPatientCondition();
+	public PatientHistory(PatientTransferRequestBean request) {
+		this.patientCondition=request.getPatientCondition().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=request.getPatientId();
-		this.testOutcome=request.getTestOutcome();
+		this.testOutcome=request.getTestOutcome().toString();
 	}
 	
 

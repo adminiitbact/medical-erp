@@ -6,8 +6,5 @@ import org.iitbact.erp.entities.Ward;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WardRepository extends JpaRepository<Ward, Integer> {
-
 	List<Ward> findByFacilityId(int facilityId);
-	
-	//Ward findById(int id);
 }

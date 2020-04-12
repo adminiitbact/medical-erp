@@ -84,8 +84,6 @@ public class PatientServices {
 		return response;
 	}
 
-	/// TODO
-
 	public Patient getPatientProfile(int patientId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
 		return patientRepository.findById(patientId).get();
@@ -107,12 +105,13 @@ public class PatientServices {
 		this.authenticateUser(request.getAuthToken());
 		
 		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository
-				.findByPatientId(request.getData().getPatientId());
+				.findByPatientId(request.getPatientId());
 
-		int requestWardId = request.getData().getWardId();
+		int requestWardId = request.getWardId();
 		int currentWardId = patientCurrentStatus.getWardId();
-		int requestFacilityId = request.getData().getFacilityId();
+		int requestFacilityId = request.getFacilityId();
 		
+		//Synchronus TODO
 		if (requestWardId != currentWardId) {
 			if (requestWardId != 0) {
 				if(currentWardId!=0){
@@ -129,10 +128,10 @@ public class PatientServices {
 		}
 
 		if (requestFacilityId != 0) {
-			PatientHistory history = new PatientHistory(request.getData());
+			PatientHistory history = new PatientHistory(request);
 			patientHistoryRepository.save(history);
-			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(request.getData().getPatientId());
-			patientLiveStatus.update(request.getData());
+			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(request.getPatientId());
+			patientLiveStatus.update(request);
 			patientLiveStatusRepository.save(patientLiveStatus);
 		}
 

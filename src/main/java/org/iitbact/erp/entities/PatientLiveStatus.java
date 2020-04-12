@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 
 
 /**
@@ -44,21 +45,13 @@ public class PatientLiveStatus implements Serializable {
 	}
 	
 	public PatientLiveStatus(PatientRequestBean request,Patient patient) {
-		this.patientCondition=request.getSeverity();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
-		this.testOutcome=request.getTestOutcome();
+		this.testOutcome=request.getTestOutcome().toString();
+		this.patientCondition=request.getSeverity().toString();
 	}
 	
-	public PatientLiveStatus(PatientLiveStatus request) {
-		this.patientCondition=request.getPatientCondition();
-		this.facilityId=request.getFacilityId();
-		this.wardId=request.getWardId();
-		this.patientId=request.getPatientId();
-		this.testOutcome=request.getTestOutcome();
-	}
-
 	public int getFacilityId() {
 		return this.facilityId;
 	}
@@ -107,11 +100,11 @@ public class PatientLiveStatus implements Serializable {
 		this.wardId = wardId;
 	}
 
-	public void update(PatientLiveStatus request) {
-		this.patientCondition=request.getPatientCondition();
+	public void update(PatientTransferRequestBean request) {
+		this.patientCondition=request.getPatientCondition().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=request.getPatientId();
-		this.testOutcome=request.getTestOutcome();
+		this.testOutcome=request.getTestOutcome().toString();
 	}
 }
