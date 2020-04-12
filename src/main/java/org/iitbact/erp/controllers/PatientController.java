@@ -85,13 +85,13 @@ public class PatientController {
 		return responseBuilder.build();
 	}
 	
-	@PostMapping(path = "/patient/status/update")
+	@PostMapping(path = "/patients/{patientId}/status/post")
 	@ApiOperation(response = BooleanResponse.class, value = "API to transfer facility/ Change Ward / or Update test and condition of a patient")
-	public ResponseBean transferPatient(@RequestBody PatientTransferRequestBean request) {
+	public ResponseBean transferPatient(@PathVariable int patientId, @RequestBody PatientTransferRequestBean request) {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
-			data = (patientServices.patientStatusUpdate(request));
+			data = (patientServices.patientStatusUpdate(patientId,request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
