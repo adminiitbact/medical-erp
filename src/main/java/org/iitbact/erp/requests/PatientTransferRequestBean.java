@@ -8,8 +8,6 @@ public class PatientTransferRequestBean extends BaseRequest {
 	
 	private SEVERITY severity;
 
-	private int patientId;
-
 	private TEST_STATUS testStatus;
 
 	private int wardId;
@@ -22,15 +20,6 @@ public class PatientTransferRequestBean extends BaseRequest {
 		this.facilityId = facilityId;
 	}
 
-	public int getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(int patientId) {
-		this.patientId = patientId;
-	}
-
-	
 	public int getWardId() {
 		return wardId;
 	}

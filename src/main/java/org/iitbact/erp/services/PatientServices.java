@@ -94,11 +94,11 @@ public class PatientServices {
 	}
 
 	@Transactional
-	public BooleanResponse patientStatusUpdate(PatientTransferRequestBean request) {
+	public BooleanResponse patientStatusUpdate(int patientId, PatientTransferRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
 		
 		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository
-				.findByPatientId(request.getPatientId());
+				.findByPatientId(patientId);
 
 		int requestWardId = request.getWardId();
 		int currentWardId = patientCurrentStatus.getWardId();
@@ -123,7 +123,7 @@ public class PatientServices {
 		if (requestFacilityId != 0) {
 			PatientHistory history = new PatientHistory(request);
 			patientHistoryRepository.save(history);
-			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(request.getPatientId());
+			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(patientId);
 			patientLiveStatus.update(request);
 			patientLiveStatusRepository.save(patientLiveStatus);
 		}
