@@ -84,11 +84,11 @@ public class PatientLiveStatus implements Serializable {
 		this.wardId = wardId;
 	}
 
-	public void update(PatientTransferRequestBean request) {
+	public void update(int patientId,PatientTransferRequestBean request) {
 		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
-		this.patientId=request.getPatientId();
+		this.patientId=patientId;
 		this.testStatus=request.getTestStatus().toString();
 	}
 }

@@ -10,6 +10,8 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String gender;
 
 	private String name;
+	
+	private String emergencyContact;
 
 	public String getAddress() {
 		return address;
@@ -49,5 +51,13 @@ public class PatientProfileRequestBean extends BaseRequest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
 	}
 }

@@ -121,10 +121,10 @@ public class PatientServices {
 		}
 
 		if (requestFacilityId != 0) {
-			PatientHistory history = new PatientHistory(request);
+			PatientHistory history = new PatientHistory(patientId,request);
 			patientHistoryRepository.save(history);
 			PatientLiveStatus patientLiveStatus =  patientLiveStatusRepository.findByPatientId(patientId);
-			patientLiveStatus.update(request);
+			patientLiveStatus.update(patientId,request);
 			patientLiveStatusRepository.save(patientLiveStatus);
 		}
 

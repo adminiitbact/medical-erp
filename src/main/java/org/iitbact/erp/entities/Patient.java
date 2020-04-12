@@ -49,6 +49,7 @@ public class Patient implements Serializable {
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
+		this.setEmergencyContact(request.getEmergencyContact());
 	}
 
 	public void updatePatient(PatientProfileRequestBean request) {
@@ -57,6 +58,7 @@ public class Patient implements Serializable {
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
+		this.setEmergencyContact(request.getEmergencyContact());
 	}
 
 	public String getAddress() {
@@ -105,6 +107,14 @@ public class Patient implements Serializable {
 
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
+	}
+
+	public String getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
 	}
 
 }
