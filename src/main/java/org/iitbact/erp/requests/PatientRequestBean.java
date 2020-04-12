@@ -9,6 +9,7 @@ public class PatientRequestBean extends BaseRequest {
 	private String contactNumber;
 	private String gender;
 	private String name;
+	private String emergencyContact;
 	private int facilityId;
 	private int wardId;
 	private TEST_STATUS testStatus;
@@ -85,6 +86,14 @@ public class PatientRequestBean extends BaseRequest {
 
 	public void setTestStatus(TEST_STATUS testStatus) {
 		this.testStatus = testStatus;
+	}
+
+	public String getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
 	}
 
 }
