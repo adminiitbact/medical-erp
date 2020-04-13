@@ -139,19 +139,17 @@ public class FacilityServices {
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
 
 		List<FacilityDetails> facilities = null;
-		//List<FacilityAssignedPatients> assignedPatients=null;
+		//List<FacilityAssignedPatients> assignedPatients=null;//TODO do something about it
 		
 		// Fetch facilities based on covid status (suspected/confirmed)
 		if (covidStatus != null) {
 			facilities = facilityRepository.getFacilities(covidStatus,
 					request.getSeverity().toString());
-			
 			/*
 			 * assignedPatients = facilityRepository
 			 * .assignedPatients(request.getSeverity().toString(),
 			 * request.getTestStatus().toString());
 			 */
-			
 		}else {
 			facilities = facilityRepository.getFacilities();//TODO what to do in case of nagative
 			/*

@@ -39,6 +39,10 @@ public class Patient implements Serializable {
 	
 	@Column(name = "emergency_contact")
 	private String emergencyContact;
+	
+	@Column(name="patient_hospital_id")
+	private String patientHospitalId;
+	
 
 	public Patient() {
 	}
@@ -50,6 +54,7 @@ public class Patient implements Serializable {
 		this.setGender(request.getGender());
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
+		this.setPatientHospitalId(request.getPatientHospitalId());
 	}
 
 	public void updatePatient(PatientProfileRequestBean request) {
@@ -59,6 +64,7 @@ public class Patient implements Serializable {
 		this.setGender(request.getGender());
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
+		this.setPatientHospitalId(request.getPatientHospitalId());
 	}
 
 	public String getAddress() {
@@ -115,6 +121,14 @@ public class Patient implements Serializable {
 
 	public void setEmergencyContact(String emergencyContact) {
 		this.emergencyContact = emergencyContact;
+	}
+
+	public String getPatientHospitalId() {
+		return patientHospitalId;
+	}
+
+	public void setPatientHospitalId(String patientHospitalId) {
+		this.patientHospitalId = patientHospitalId;
 	}
 
 }
