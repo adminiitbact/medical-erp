@@ -1,14 +1,14 @@
 package org.iitbact.erp.requests;
 
 public class GetPatientRequestBean extends BaseRequest {
-	boolean referred;
+	boolean wardAlloted;
 
-	public boolean isReferred() {
-		return referred;
+	public boolean isWardAlloted() {
+		return wardAlloted;
 	}
 
-	public void setReferred(boolean referred) {
-		this.referred = referred;
+	public void setWardAlloted(boolean wardAlloted) {
+		this.wardAlloted = wardAlloted;
 	}
-	
+
 }

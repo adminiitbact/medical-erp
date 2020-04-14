@@ -124,11 +124,11 @@ public class FacilityServices {
 	}
 
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
-		if(request.isReferred()){
-			return patientLiveStatusRepository.findReferredPatientByFacilityId(facilityId);
+		//this.authenticateUser(request.getAuthToken());
+		if(request.isWardAlloted()){
+			return patientLiveStatusRepository.findWardAllotedPatientByFacilityId(facilityId);
 		}else{
-			return patientLiveStatusRepository.findAssignedPatientByFacilityId(facilityId);
+			return patientLiveStatusRepository.findReferredPatientByFacilityId(facilityId);
 		}
 	}
 		
