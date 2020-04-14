@@ -16,7 +16,9 @@ import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
+import org.iitbact.erp.requests.GetPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
+import org.iitbact.erp.response.MappedAdminFacilityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,13 +52,13 @@ public class FacilityServices {
 
 	public BooleanResponse addFacilityProfileData(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
-		//this.authenticateUser(request.getAuthToken());
+		// this.authenticateUser(request.getAuthToken());
 
 		Facility facility = facilityRepository.findById(facilityId).get();
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
-		facility.updateProfileData(data.get(Constants.FACILITY_DATA));//TODO
+		facility.updateProfileData(data.get(Constants.FACILITY_DATA));// TODO
 		if (data != null) {
 			facility.getFacilityContact().setData(data.get(Constants.CONTACT_DATA));
 		}
@@ -121,10 +123,15 @@ public class FacilityServices {
 		return facility;
 	}
 
-	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, BaseRequest request) {
+	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-		return patientLiveStatusRepository.findByFacilityId(facilityId);
+		if(request.isReferred()){
+			return patientLiveStatusRepository.findReferredPatientByFacilityId(facilityId);
+		}else{
+			return patientLiveStatusRepository.findAssignedPatientByFacilityId(facilityId);
+		}
 	}
+		
 
 	public List<Ward> fetchAvailableWards(int facilityId, BaseRequest request) {
 		this.authenticateUser(request.getAuthToken());
@@ -139,35 +146,36 @@ public class FacilityServices {
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
 
 		List<FacilityDetails> facilities = null;
-		//List<FacilityAssignedPatients> assignedPatients=null;//TODO do something about it
-		
+		// List<FacilityAssignedPatients> assignedPatients=null;//TODO do
+		// something about it
+
 		// Fetch facilities based on covid status (suspected/confirmed)
-		if (covidStatus != null) {
-			facilities = facilityRepository.getFacilities(covidStatus,
-					request.getSeverity().toString());
+		if (covidStatus != null && request.getFacilityId() != 0) {
+			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(),request.getFacilityId());
 			/*
 			 * assignedPatients = facilityRepository
 			 * .assignedPatients(request.getSeverity().toString(),
 			 * request.getTestStatus().toString());
 			 */
-		}else {
-			facilities = facilityRepository.getFacilities();//TODO what to do in case of nagative
+		} else {
+			facilities = facilityRepository.getFacilities();// TODO what to do
+															// in case of
+															// nagative
 			/*
 			 * assignedPatients = facilityRepository .assignedPatients();
 			 */
 		}
-		
 
 		// Create Response
 		List<FacilityProfileWithAvailablity> data = new ArrayList<FacilityProfileWithAvailablity>();
-		
+
 		for (FacilityDetails facility : facilities) {
 			FacilityProfileWithAvailablity facilityProfileWithAvailablity = new FacilityProfileWithAvailablity(
 					facility);
-			
+
 			/*
-			 * if(!assignedPatients.isEmpty()) { FacilityAssignedPatients totalAssigned =
-			 * assignedPatients.stream().filter(x ->
+			 * if(!assignedPatients.isEmpty()) { FacilityAssignedPatients
+			 * totalAssigned = assignedPatients.stream().filter(x ->
 			 * facilityProfileWithAvailablity.getFacilityId() ==
 			 * x.getFacilityId()).findAny().get();
 			 * 
@@ -175,7 +183,7 @@ public class FacilityServices {
 			 * facilityProfileWithAvailablity.substractAssigned(totalAssigned.
 			 * getTotalAssigned()); } }
 			 */
-			
+
 			data.add(facilityProfileWithAvailablity);
 		}
 		return data;
@@ -189,5 +197,14 @@ public class FacilityServices {
 		}
 		return Constants.SUSPECTED;
 	}
+
+	public List<MappedAdminFacilityResponse> fetchMappedFacilitiesByAdmin(BaseRequest request, int facilityId) {
+		return facilityRepository.fetchMappedFacilityList(facilityId);
+	}
+
+	public List<Facility> fetchFacilitiesByAdmin(BaseRequest request, int adminId) {
+		return facilityRepository.fetchFacilityListAdmin(adminId);
+	}
+
 
 }

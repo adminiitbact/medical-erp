@@ -11,8 +11,10 @@ import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
+import org.iitbact.erp.requests.GetPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
+import org.iitbact.erp.response.MappedAdminFacilityResponse;
 import org.iitbact.erp.services.FacilityServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -128,7 +130,7 @@ public class FacilityController {
 	
 	@PostMapping(path = "/facilities/{facilityId}/patients/get")
 	@ApiOperation(response = PatientLiveStatusInterface.class,responseContainer = "List", value = "API to fetch list of patients from a particuar facility.")
-	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody BaseRequest request)
+	public ResponseBean searchPatientByFacility(@PathVariable int facilityId, @RequestBody GetPatientRequestBean request)
 			throws JsonProcessingException {
 		HospitalErpError error = null;
 		ListResponse<PatientLiveStatusInterface> data = new ListResponse<>();
@@ -141,7 +143,7 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
-	@PostMapping(path = "/facilities")
+	@PostMapping(path = "/facilities/{facilityId}")
 	@ApiOperation(response = FacilityProfileWithAvailablity.class,responseContainer = "List", value = " API request to fetch all available facilities")
 	public ResponseBean facilities(@RequestBody FacilityRequest request) {
 		HospitalErpError error = null;
@@ -169,5 +171,35 @@ public class FacilityController {
 		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
 		return responseBuilder.build();
 	}
+	
+	@PostMapping(path = "facilities/mapped/{facilityId}")
+	@ApiOperation(response = MappedAdminFacilityResponse.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
+	public ResponseBean fetchMappedFacilitiesByAdmin(@PathVariable int facilityId,@RequestBody BaseRequest request){
+		HospitalErpError error = null;
+		ListResponse<MappedAdminFacilityResponse> data = new ListResponse<>();
+		try {
+			data.setList(facilityServices.fetchMappedFacilitiesByAdmin(request,facilityId));  
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	
+	
+	@PostMapping(path = "/facilities/admin/{admin_id}")
+	@ApiOperation(response = MappedAdminFacilityResponse.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
+	public ResponseBean fetchFacilitiesByAdmin(@PathVariable int admin_id,@RequestBody BaseRequest request){
+		HospitalErpError error = null;
+		ListResponse<Facility> data = new ListResponse<>();
+		try {
+			data.setList(facilityServices.fetchFacilitiesByAdmin(request,admin_id));  
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	
 	
 }

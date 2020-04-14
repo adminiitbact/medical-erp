@@ -1,13 +1,22 @@
-package org.iitbact.erp.entities;
+package org.iitbact.erp.response;
 
-public interface FacilityDetails {
+import org.iitbact.erp.beans.BaseBean;
+
+public interface MappedAdminFacilityResponse extends BaseBean {
 	public int getFacilityId();
+
 	public String getName();
+
 	public String getArea();
+
 	public String getJurisdiction();
+
 	public String getFacilityType();
+
 	public String getCovidFacilityType();
-	public String getTelephone();
-	public int getAvailability();
+
+	public String getGovernmentHospital();
+
 	public boolean isMapped();
+
 }

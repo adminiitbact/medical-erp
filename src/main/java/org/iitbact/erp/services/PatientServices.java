@@ -11,7 +11,7 @@ import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
-import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
@@ -42,7 +42,7 @@ public class PatientServices {
 	}
 
 	@Transactional
-	public BooleanResponse addPatient(PatientRequestBean request) {
+	public BooleanResponse addPatient(PostPatientRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
 		// TODO validation to check if user exist wrt mobilie no. age & gender
 		// (to reduce duplicate data in system)

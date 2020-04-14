@@ -6,7 +6,7 @@ import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
-import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
@@ -58,7 +58,7 @@ public class PatientController {
 	
 	@PostMapping(path = "/patients/new")
 	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's into database")
-	public ResponseBean addPatient(@RequestBody PatientRequestBean request) {
+	public ResponseBean addPatient(@RequestBody PostPatientRequestBean request) {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {

@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
 
 
@@ -44,7 +44,7 @@ public class PatientLiveStatus implements Serializable {
 	public PatientLiveStatus() {
 	}
 	
-	public PatientLiveStatus(PatientRequestBean request,Patient patient) {
+	public PatientLiveStatus(PostPatientRequestBean request,Patient patient) {
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();

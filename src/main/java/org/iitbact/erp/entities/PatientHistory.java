@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
 
 
@@ -47,7 +47,7 @@ public class PatientHistory implements Serializable {
 	public PatientHistory() {
 	}
 	
-	public PatientHistory(PatientRequestBean request, Patient patient) {
+	public PatientHistory(PostPatientRequestBean request, Patient patient) {
 		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();

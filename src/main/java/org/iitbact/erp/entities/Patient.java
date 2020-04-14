@@ -12,7 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.iitbact.erp.requests.PatientProfileRequestBean;
-import org.iitbact.erp.requests.PatientRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 
 @Entity
 @Table(name = "patients")
@@ -47,7 +47,7 @@ public class Patient implements Serializable {
 	public Patient() {
 	}
 
-	public Patient(PatientRequestBean request) {
+	public Patient(PostPatientRequestBean request) {
 		this.setAddress(request.getAddress());
 		this.setAge(request.getAge());
 		this.setContactNumber(request.getContactNumber());

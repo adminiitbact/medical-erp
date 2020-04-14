@@ -4,6 +4,7 @@ import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 
 public class FacilityRequest extends BaseRequest {
+	private int facilityId;
 	private TEST_STATUS testStatus;
 	private SEVERITY severity;
 
@@ -21,6 +22,14 @@ public class FacilityRequest extends BaseRequest {
 
 	public void setSeverity(SEVERITY severity) {
 		this.severity = severity;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }

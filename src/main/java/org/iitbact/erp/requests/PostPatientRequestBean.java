@@ -3,7 +3,7 @@ package org.iitbact.erp.requests;
 import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 
-public class PatientRequestBean extends BaseRequest {
+public class PostPatientRequestBean extends BaseRequest {
 	private String address;
 	private int age;
 	private String contactNumber;
