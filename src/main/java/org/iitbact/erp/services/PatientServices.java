@@ -117,7 +117,6 @@ public class PatientServices {
 					changeWardAvailablility(currentWardId, 1);
 				}
 			}
-			
 		}
 
 		if (requestFacilityId != 0) {

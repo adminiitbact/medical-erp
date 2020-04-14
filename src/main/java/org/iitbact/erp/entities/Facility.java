@@ -203,7 +203,9 @@ public class Facility implements Serializable, BaseBean {
 		this.setGovernmentHospital(facilityData.get(Constants.IS_GOVERNMENT_FACILITY).asBoolean());
 		this.setTelephone(facilityData.get(Constants.TELEPHONE).asText());
 		this.setEmail(facilityData.get(Constants.EMAIL).asText());
-		this.setCovidFacilityType(facilityData.get(Constants.COVID_FACILITY_TYPE).asText());
+		if(facilityData.get(Constants.COVID_FACILITY_TYPE)!=null) {
+			this.setCovidFacilityType(facilityData.get(Constants.COVID_FACILITY_TYPE).asText());	
+		}
 	}
 
 	public String getCovidFacilityType() {
