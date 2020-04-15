@@ -133,14 +133,16 @@ public class FacilityServices {
 	}
 		
 
-	public List<Ward> fetchAvailableWards(int facilityId, BaseRequest request) {
+	public List<Ward> fetchAvailableWards(int facilityId, FacilityRequest request) {
 		this.authenticateUser(request.getAuthToken());
-		return wardRepository.findByFacilityId(facilityId);
+		String covidStatus = getCovidStatus(request.getTestStatus().toString());
+
+		return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId,covidStatus,request.getSeverity().toString());
 	}
 
 	//
 
-	public List<FacilityProfileWithAvailablity> facilities(FacilityRequest request) {
+	public List<FacilityProfileWithAvailablity> facilities(int facilityId,FacilityRequest request) {
 		this.authenticateUser(request.getAuthToken());
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
@@ -150,8 +152,8 @@ public class FacilityServices {
 		// something about it
 
 		// Fetch facilities based on covid status (suspected/confirmed)
-		if (covidStatus != null && request.getFacilityId() != 0) {
-			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(),request.getFacilityId());
+		if (covidStatus != null && facilityId != 0) {
+			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(),facilityId);
 			/*
 			 * assignedPatients = facilityRepository
 			 * .assignedPatients(request.getSeverity().toString(),
@@ -192,10 +194,9 @@ public class FacilityServices {
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
 			return Constants.CONFIRMED;
-		} else if (TEST_STATUS.NEGATIVE.toString().equalsIgnoreCase(testStatus)) {
-			return null;
+		} else {
+			return Constants.SUSPECTED;
 		}
-		return Constants.SUSPECTED;
 	}
 
 	public List<MappedAdminFacilityResponse> fetchMappedFacilitiesByAdmin(BaseRequest request, int facilityId) {

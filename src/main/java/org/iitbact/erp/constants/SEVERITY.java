@@ -2,7 +2,7 @@ package org.iitbact.erp.constants;
 
 public enum SEVERITY {
 	
-    MILD("Mild or Very Mild"),MODERATE("Moderate"),SEVERE("Severe"),NO_SYMPTOMS("No Symptoms");
+    MILD("Mild or Very Mild"),MODERATE("Moderate"),SEVERE("Severe");
 	
 	private String severity;
 	

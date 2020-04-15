@@ -38,8 +38,8 @@ public class Facility implements Serializable, BaseBean {
 	
 	private String email;
 
-	@Column(name="facility_type")
-	private String facilityType;
+	@Column(name="institution_type")
+	private String institutionType;
 	
 	@Column(name="covid_facility_type")
 	private String covidFacilityType;
@@ -52,6 +52,15 @@ public class Facility implements Serializable, BaseBean {
 	private String name;
 
 	private String telephone;
+	
+	@Column(name="facility_status")
+	private String facilityStatus;
+	
+	@Column(name="hospital_category")
+	private String hospitalCategory;
+
+	@Column(name="agreement_status")
+	private String agreementStatus;
 
 	//bi-directional one-to-one association to FacilityAsset
 	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -90,14 +99,6 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getFacilityType() {
-		return this.facilityType;
-	}
-
-	public void setFacilityType(String facilityType) {
-		this.facilityType = facilityType;
 	}
 
 	public boolean getGovernmentHospital() {
@@ -214,6 +215,38 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setCovidFacilityType(String covidFacilityType) {
 		this.covidFacilityType = covidFacilityType;
+	}
+
+	public String getInstitutionType() {
+		return institutionType;
+	}
+
+	public void setInstitutionType(String institutionType) {
+		this.institutionType = institutionType;
+	}
+
+	public String getFacilityStatus() {
+		return facilityStatus;
+	}
+
+	public void setFacilityStatus(String facilityStatus) {
+		this.facilityStatus = facilityStatus;
+	}
+
+	public String getHospitalCategory() {
+		return hospitalCategory;
+	}
+
+	public void setHospitalCategory(String hospitalCategory) {
+		this.hospitalCategory = hospitalCategory;
+	}
+
+	public String getAgreementStatus() {
+		return agreementStatus;
+	}
+
+	public void setAgreementStatus(String agreementStatus) {
+		this.agreementStatus = agreementStatus;
 	}
 
 }

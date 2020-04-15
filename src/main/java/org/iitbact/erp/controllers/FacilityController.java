@@ -145,11 +145,11 @@ public class FacilityController {
 	
 	@PostMapping(path = "/facilities/{facilityId}")
 	@ApiOperation(response = FacilityProfileWithAvailablity.class,responseContainer = "List", value = " API request to fetch all available facilities")
-	public ResponseBean facilities(@RequestBody FacilityRequest request) {
+	public ResponseBean facilities(@PathVariable int facilityId, @RequestBody FacilityRequest request) {
 		HospitalErpError error = null;
 		ListResponse<FacilityProfileWithAvailablity> data = new ListResponse<FacilityProfileWithAvailablity>();
 		try {
-			data.setList(facilityServices.facilities(request));
+			data.setList(facilityServices.facilities(facilityId,request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
@@ -160,7 +160,7 @@ public class FacilityController {
 	
 	@PostMapping(path = "/facilities/{facilityId}/wards")
 	@ApiOperation(response = Ward.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
-	public ResponseBean fetchAvailableWards(@PathVariable int facilityId,@RequestBody BaseRequest request){
+	public ResponseBean fetchAvailableWards(@PathVariable int facilityId,@RequestBody FacilityRequest request){
 		HospitalErpError error = null;
 		ListResponse<Ward> data = new ListResponse<>();
 		try {

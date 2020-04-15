@@ -21,7 +21,7 @@ public interface Constants {
 	 final String CONTACT_NUMBER = "contactNumber";
 	 final String GENDER = "gender";
 	final String ADDRESS = "address";
-	final String SUSPECTED = "suspected";
-	final String CONFIRMED = "confirmed";
+	final String SUSPECTED = "Suspected";
+	final String CONFIRMED = "Confirmed";
 		
 }
