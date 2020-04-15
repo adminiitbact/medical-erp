@@ -5,7 +5,7 @@ public interface FacilityDetails {
 	public String getName();
 	public String getArea();
 	public String getJurisdiction();
-	public String getFacilityType();
+	public String getInstitutionType();
 	public String getCovidFacilityType();
 	public String getTelephone();
 	public int getAvailability();

@@ -18,7 +18,6 @@ import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.requests.GetPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
-import org.iitbact.erp.response.MappedAdminFacilityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -198,14 +197,4 @@ public class FacilityServices {
 			return Constants.SUSPECTED;
 		}
 	}
-
-	public List<MappedAdminFacilityResponse> fetchMappedFacilitiesByAdmin(BaseRequest request, int facilityId) {
-		return facilityRepository.fetchMappedFacilityList(facilityId);
-	}
-
-	public List<Facility> fetchFacilitiesByAdmin(BaseRequest request, int adminId) {
-		return facilityRepository.fetchFacilityListAdmin(adminId);
-	}
-
-
 }

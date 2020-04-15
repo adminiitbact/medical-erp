@@ -4,7 +4,7 @@ import org.iitbact.erp.entities.FacilityDetails;
 
 public class FacilityProfileWithAvailablity {
 	private int facilityId;
-	private String facilityType;
+	private String institutionType;
 	private String covidFacilityType;
 	private String jurisdiction;
 	private String area;
@@ -18,7 +18,7 @@ public class FacilityProfileWithAvailablity {
 		this.availability = facility.getAvailability();
 		this.covidFacilityType = facility.getCovidFacilityType();
 		this.facilityId = facility.getFacilityId();
-		this.facilityType = facility.getFacilityType();
+		this.institutionType = facility.getInstitutionType();
 		this.jurisdiction = facility.getJurisdiction();
 		this.name = facility.getName();
 		this.telephone = facility.getTelephone();
@@ -31,14 +31,6 @@ public class FacilityProfileWithAvailablity {
 
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
-	}
-
-	public String getFacilityType() {
-		return facilityType;
-	}
-
-	public void setFacilityType(String facilityType) {
-		this.facilityType = facilityType;
 	}
 
 	public String getCovidFacilityType() {
@@ -99,6 +91,14 @@ public class FacilityProfileWithAvailablity {
 
 	public void setMapped(boolean mapped) {
 		this.mapped = mapped;
+	}
+
+	public String getInstitutionType() {
+		return institutionType;
+	}
+
+	public void setInstitutionType(String institutionType) {
+		this.institutionType = institutionType;
 	}
 
 }

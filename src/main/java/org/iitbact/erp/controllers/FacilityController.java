@@ -14,7 +14,6 @@ import org.iitbact.erp.requests.FlexibleRequest;
 import org.iitbact.erp.requests.GetPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.ListResponse;
-import org.iitbact.erp.response.MappedAdminFacilityResponse;
 import org.iitbact.erp.services.FacilityServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -165,35 +164,6 @@ public class FacilityController {
 		ListResponse<Ward> data = new ListResponse<>();
 		try {
 			data.setList(facilityServices.fetchAvailableWards(facilityId, request));  
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-	
-	@PostMapping(path = "facilities/mapped/{facilityId}")
-	@ApiOperation(response = MappedAdminFacilityResponse.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
-	public ResponseBean fetchMappedFacilitiesByAdmin(@PathVariable int facilityId,@RequestBody BaseRequest request){
-		HospitalErpError error = null;
-		ListResponse<MappedAdminFacilityResponse> data = new ListResponse<>();
-		try {
-			data.setList(facilityServices.fetchMappedFacilitiesByAdmin(request,facilityId));  
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-	
-	
-	@PostMapping(path = "/facilities/admin/{admin_id}")
-	@ApiOperation(response = MappedAdminFacilityResponse.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
-	public ResponseBean fetchFacilitiesByAdmin(@PathVariable int admin_id,@RequestBody BaseRequest request){
-		HospitalErpError error = null;
-		ListResponse<Facility> data = new ListResponse<>();
-		try {
-			data.setList(facilityServices.fetchFacilitiesByAdmin(request,admin_id));  
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}

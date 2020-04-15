@@ -1,11 +1,8 @@
 package org.iitbact.erp.services;
 
-import org.iitbact.erp.entities.AdminUser;
 import org.iitbact.erp.entities.HospitalUser;
-import org.iitbact.erp.repository.AdminUserRepository;
 import org.iitbact.erp.repository.UserRepository;
 import org.iitbact.erp.requests.BaseRequest;
-import org.iitbact.erp.response.AdminUserProfile;
 import org.iitbact.erp.response.ErpUserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +14,6 @@ public class UserServices {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private AdminUserRepository adminUserRepository;
-	
-	
-
-	@Autowired
 	private ApiValidationService validationService;
 
 	public ErpUserProfile profile(BaseRequest request) {
@@ -31,13 +23,4 @@ public class UserServices {
 		response.setProfile(user);
 		return response;
 	}
-
-	public AdminUserProfile adminProfile(BaseRequest request) {
-		String userId = validationService.verifyFirebaseIdToken(request.getAuthToken());
-		AdminUser user = adminUserRepository.findByUserId(userId);
-		AdminUserProfile response = new AdminUserProfile();
-		response.setProfile(user);
-		return response;
-	}
-
 }
