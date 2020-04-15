@@ -41,6 +41,12 @@ public class Ward implements Serializable {
 	
 	@Column(name="severity")
 	private String severity;
+	
+	@Column(name="icu_beds")
+	private int icuBeds;
+	
+	@Column(name="ventilators")
+	private int ventilators;
 
 	public Ward() {
 	}
@@ -107,4 +113,23 @@ public class Ward implements Serializable {
 	public void setSeverity(String severity) {
 		this.severity = severity;
 	}
+
+	public int getIcuBeds() {
+		return icuBeds;
+	}
+
+	public void setIcuBeds(int icuBeds) {
+		this.icuBeds = icuBeds;
+	}
+
+	public int getVentilators() {
+		return ventilators;
+	}
+
+	public void setVentilators(int ventilators) {
+		this.ventilators = ventilators;
+	}
+
+
+	
 }

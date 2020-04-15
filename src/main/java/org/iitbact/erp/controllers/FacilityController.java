@@ -158,7 +158,7 @@ public class FacilityController {
 	
 	
 	@PostMapping(path = "/facilities/{facilityId}/wards")
-	@ApiOperation(response = Ward.class,responseContainer = "List", value = " API request to fetch all available wards from facilities")
+	@ApiOperation(response = Ward.class,responseContainer = "List", value = "API request to fetch all available wards from facilities")
 	public ResponseBean fetchAvailableWards(@PathVariable int facilityId,@RequestBody FacilityRequest request){
 		HospitalErpError error = null;
 		ListResponse<Ward> data = new ListResponse<>();

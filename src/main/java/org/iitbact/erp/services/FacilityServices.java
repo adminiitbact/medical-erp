@@ -133,7 +133,7 @@ public class FacilityServices {
 		
 
 	public List<Ward> fetchAvailableWards(int facilityId, FacilityRequest request) {
-		this.authenticateUser(request.getAuthToken());
+		//this.authenticateUser(request.getAuthToken());
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
 
 		return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId,covidStatus,request.getSeverity().toString());
