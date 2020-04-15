@@ -9,7 +9,7 @@ public interface Constants {
 	final String NAME = "facility_name";
 	final String AREA = "area";
 	final String JURISDICTION = "jurisdiction";
-	final String TYPE = "type_of_facility";
+	final String TYPE = "type_of_institution";
 	final String EMAIL = "organisation_email";
 	final String TELEPHONE = "organisation_telephone";
 	final String IS_GOVERNMENT_FACILITY = "is_government_facility";
