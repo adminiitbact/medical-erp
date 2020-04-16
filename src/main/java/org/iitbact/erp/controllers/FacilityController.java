@@ -5,7 +5,6 @@ import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
-import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
@@ -156,20 +155,5 @@ public class FacilityController {
 		return responseBuilder.build();
 	}
 	
-	
-	@PostMapping(path = "/facilities/{facilityId}/wards")
-	@ApiOperation(response = Ward.class,responseContainer = "List", value = "API request to fetch all available wards from facilities")
-	public ResponseBean fetchAvailableWards(@PathVariable int facilityId,@RequestBody FacilityRequest request){
-		HospitalErpError error = null;
-		ListResponse<Ward> data = new ListResponse<>();
-		try {
-			data.setList(facilityServices.fetchAvailableWards(facilityId, request));  
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-	
-	
+
 }

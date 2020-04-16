@@ -17,9 +17,9 @@ import org.iitbact.erp.requests.WardRequestBean;
  * 
  */
 @Entity
-@Table(name = "wards")
-@NamedQuery(name = "Ward.findAll", query = "SELECT w FROM Ward w")
-public class Ward implements Serializable {
+@Table(name = "wards_history")
+@NamedQuery(name = "WardsHistory.findAll", query = "SELECT w FROM WardsHistory w")
+public class WardsHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "available_beds")
@@ -31,6 +31,9 @@ public class Ward implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name = "ward_id")
+	private int WardId;
 
 	private String name;
 
@@ -50,55 +53,35 @@ public class Ward implements Serializable {
 	private int ventilators;
 
 	private String gender;
-	
+
 	@Column(name = "beds_distance_6_feet")
 	private boolean bedsDestance6Feet;
-	
+
 	@Column(name = "covid_ward")
 	private boolean covidWard;
-	
+
 	@Column(name = "independent_room_with_bed_and_toilet")
 	private boolean independentRoomsWithBedAndToilet;
 
+	public WardsHistory() {
+	}
 
 
-	public void updateWard(WardRequestBean request) {
+	public WardsHistory(Ward request) {
 		this.setAvailableBeds(request.getAvailableBeds());
+		this.setFacilityId(request.getFacilityId());
 		this.setName(request.getName());
-		this.setTotalBeds(request.getTotalBeds());;
-		this.setCovidStatus(request.getCovidStatus().name());
-		this.setSeverity(request.getSeverity().name());
+		this.setTotalBeds(request.getTotalBeds());
+		this.setWardId(request.getId());
+		this.setCovidStatus(request.getCovidStatus());
+		this.setSeverity(request.getSeverity());
 		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
-		this.setGender(request.getGender().name());
+		this.setVentilators(request.getVentilators());
+		this.setGender(request.getGender());
 		this.setBedsDestance6Feet(request.isBedsDestance6Feet());
 		this.setCovidWard(request.isCovidWard());
 		this.setIndependentRoomsWithBedAndToilet(request.isIndependentRoomsWithBedAndToilet());
 	}
-
-
-
-	public Ward() {
-	}
-
-
-
-	public Ward(WardRequestBean request, int facilityId) {
-		this.setAvailableBeds(request.getAvailableBeds());
-		this.setFacilityId(facilityId);
-		this.setName(request.getName());
-		this.setTotalBeds(request.getTotalBeds());;
-		this.setCovidStatus(request.getCovidStatus().name());
-		this.setSeverity(request.getSeverity().name());
-		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
-		this.setGender(request.getGender().name());
-		this.setBedsDestance6Feet(request.isBedsDestance6Feet());
-		this.setCovidWard(request.isCovidWard());
-		this.setIndependentRoomsWithBedAndToilet(request.isIndependentRoomsWithBedAndToilet());
-	}
-
-
 
 	public int getAvailableBeds() {
 		return this.availableBeds;
@@ -210,6 +193,14 @@ public class Ward implements Serializable {
 
 	public void setIndependentRoomsWithBedAndToilet(boolean independentRoomsWithBedAndToilet) {
 		this.independentRoomsWithBedAndToilet = independentRoomsWithBedAndToilet;
+	}
+
+	public int getWardId() {
+		return WardId;
+	}
+
+	public void setWardId(int wardId) {
+		WardId = wardId;
 	}
 
 }

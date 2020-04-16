@@ -9,7 +9,6 @@ import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.FacilityDetails;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
-import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.repository.FacilityRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
 import org.iitbact.erp.repository.WardRepository;
@@ -30,9 +29,6 @@ public class FacilityServices {
 
 	@Autowired
 	private FacilityRepository facilityRepository;
-
-	@Autowired
-	private WardRepository wardRepository;
 
 	@Autowired
 	private ApiValidationService validationService;
@@ -123,25 +119,17 @@ public class FacilityServices {
 	}
 
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
-		//this.authenticateUser(request.getAuthToken());
-		if(request.isWardAlloted()){
+		// this.authenticateUser(request.getAuthToken());
+		if (request.isWardAlloted()) {
 			return patientLiveStatusRepository.findWardAllotedPatientByFacilityId(facilityId);
-		}else{
+		} else {
 			return patientLiveStatusRepository.findReferredPatientByFacilityId(facilityId);
 		}
-	}
-		
-
-	public List<Ward> fetchAvailableWards(int facilityId, FacilityRequest request) {
-		this.authenticateUser(request.getAuthToken());
-		String covidStatus = getCovidStatus(request.getTestStatus().toString());
-
-		return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId,covidStatus,request.getSeverity().toString());
 	}
 
 	//
 
-	public List<FacilityProfileWithAvailablity> facilities(int facilityId,FacilityRequest request) {
+	public List<FacilityProfileWithAvailablity> facilities(int facilityId, FacilityRequest request) {
 		this.authenticateUser(request.getAuthToken());
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
@@ -152,7 +140,7 @@ public class FacilityServices {
 
 		// Fetch facilities based on covid status (suspected/confirmed)
 		if (covidStatus != null && facilityId != 0) {
-			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(),facilityId);
+			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(), facilityId);
 			/*
 			 * assignedPatients = facilityRepository
 			 * .assignedPatients(request.getSeverity().toString(),
@@ -197,4 +185,5 @@ public class FacilityServices {
 			return Constants.SUSPECTED;
 		}
 	}
+
 }
