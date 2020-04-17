@@ -10,24 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientDischargedRequestBean;
-import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 
-
-/**
- * The persistent class for the patient_history database table.
- * 
- */
 @Entity
-@Table(name="patient_history")
-@NamedQuery(name="PatientHistory.findAll", query="SELECT p FROM PatientHistory p")
-public class PatientHistory implements Serializable {
+@Table(name="patient_discharged")
+@NamedQuery(name="PatientDischarged.findAll", query="SELECT p FROM PatientDischarged p")
+public class PatientDischarged implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 
 	@Column(name="facility_id")
 	private int facilityId;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -35,42 +30,40 @@ public class PatientHistory implements Serializable {
 	@Column(name="severity")
 	private String severity;
 
+	@Column(name="patient_id")
+	private int patientId;
+
 	@Column(name="test_status")
 	private String testStatus;
 
 	@Column(name="ward_id")
 	private int wardId;
 	
-	@Column(name="patient_id")
-	private int patientId;
+	private String reason;
 	
+	@Column(name="wuarantine_type")
+	private String quarantineType;
 
-	public PatientHistory() {
+	public PatientDischarged() {
 	}
 	
-	public PatientHistory(PostPatientRequestBean request, Patient patient) {
-		this.severity=request.getSeverity().toString();
+	public PatientDischarged(PostPatientRequestBean request,Patient patient) {
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
+		this.severity=request.getSeverity().toString();
 	}
 	
-	public PatientHistory(int patientId,PatientTransferRequestBean request) {
-		this.severity=request.getSeverity().toString();
-		this.facilityId=request.getFacilityId();
-		this.wardId=request.getWardId();
-		this.patientId=patientId;
-		this.testStatus=request.getTestStatus().toString();
-	}
-	
-
-	public PatientHistory(int patientId, PatientDischargedRequestBean request) {
-		this.severity=request.getSeverity().toString();
-		this.facilityId=request.getFacilityId();
-		this.wardId=request.getWardId();
-		this.patientId=patientId;
-		this.testStatus=request.getTestStatus().toString();
+	public PatientDischarged(int patientId2, PatientDischargedRequestBean request) {
+		
+			this.facilityId = request.getFacilityId();
+			this.wardId = request.getWardId();
+			this.severity = request.getSeverity().toString();
+			this.testStatus = request.getTestStatus().toString();
+			this.reason = request.getReason().toString();
+			this.quarantineType = request.getQuarantineType().toString();
+		
 	}
 
 	public int getFacilityId() {
@@ -89,6 +82,13 @@ public class PatientHistory implements Serializable {
 		this.id = id;
 	}
 
+	public int getPatientId() {
+		return this.patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
 
 	public int getWardId() {
 		return this.wardId;
@@ -96,14 +96,6 @@ public class PatientHistory implements Serializable {
 
 	public void setWardId(int wardId) {
 		this.wardId = wardId;
-	}
-
-	public int getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(int patientId) {
-		this.patientId = patientId;
 	}
 
 	public String getSeverity() {
@@ -121,5 +113,22 @@ public class PatientHistory implements Serializable {
 	public void setTestStatus(String testStatus) {
 		this.testStatus = testStatus;
 	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getQuarantineType() {
+		return quarantineType;
+	}
+
+	public void setQuarantineType(String quarantineType) {
+		this.quarantineType = quarantineType;
+	}
+
 
 }

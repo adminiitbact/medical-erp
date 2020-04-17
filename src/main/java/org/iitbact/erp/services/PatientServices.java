@@ -1,18 +1,21 @@
 package org.iitbact.erp.services;
 
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientDischarged;
 import org.iitbact.erp.entities.PatientHistory;
 import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.entities.Ward;
+import org.iitbact.erp.repository.PatientDischargedRepository;
 import org.iitbact.erp.repository.PatientHistoryRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
 import org.iitbact.erp.repository.PatientRepository;
 import org.iitbact.erp.repository.WardRepository;
 import org.iitbact.erp.requests.BaseRequest;
+import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
-import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,9 @@ public class PatientServices {
 
 	@Autowired
 	private ApiValidationService validationService;
+	
+	@Autowired
+	private PatientDischargedRepository patientDischargedRepository;
 
 	private void authenticateUser(String authToken) {
 		validationService.verifyFirebaseIdToken(authToken);
@@ -133,5 +139,28 @@ public class PatientServices {
 
 	private void increaseAvailabilityByOne(Ward ward) {
 		ward.setAvailableBeds(ward.getAvailableBeds() + 1);
+	}
+
+	@Transactional
+	public BooleanResponse dischargePatient(int patientId, PatientDischargedRequestBean request) {
+		this.authenticateUser(request.getAuthToken());
+		
+		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
+		
+		if(patientCurrentStatus.getWardId()!=0){
+			Ward newWard = wardRepo.getOne(patientCurrentStatus.getWardId());
+			increaseAvailabilityByOne(newWard);
+			wardRepo.save(newWard);
+		}
+		
+		patientLiveStatusRepository.deleteById(patientCurrentStatus.getId());
+
+		PatientHistory history = new PatientHistory(patientId, request);
+		patientHistoryRepository.save(history);
+		
+		patientDischargedRepository.save(new PatientDischarged(patientId, request));
+
+		BooleanResponse returnVal = new BooleanResponse(true);
+		return returnVal;
 	}
 }

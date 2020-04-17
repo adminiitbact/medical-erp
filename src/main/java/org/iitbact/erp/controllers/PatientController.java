@@ -5,6 +5,7 @@ import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
+import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
@@ -92,6 +93,19 @@ public class PatientController {
 		BooleanResponse data = null;
 		try {
 			data = (patientServices.patientStatusUpdate(patientId,request));
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	@PostMapping(path = "/patients/{patientId}/discharge/post")
+	@ApiOperation(response = BooleanResponse.class, value = "API to discharge of a patient incase he is tested negative twice in a row or deceased ")
+	public ResponseBean dischargePatient(@PathVariable int patientId, @RequestBody PatientDischargedRequestBean request) {
+		HospitalErpError error = null;
+		BooleanResponse data = null;
+		try {
+			data = (patientServices.dischargePatient(patientId,request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
