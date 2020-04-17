@@ -40,31 +40,16 @@ public class WardController {
 	}
 
 	@PostMapping(path = "/facilities/{facilityId}/wards/post")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add a new ward to a facilities")
-	public ResponseBean addWardsToFacility(@PathVariable int facilityId, @RequestBody WardRequestBean request) {
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add/update a ward to a facilities")
+	public ResponseBean addAndUpdateWards(@PathVariable int facilityId, @RequestBody WardRequestBean request) {
 		HospitalErpError error = null;
 		BooleanResponse data = new BooleanResponse();
 		try {
-			data = (wardServices.addWardsToFacility(facilityId, request));
+			data = (wardServices.addAndUpdateWards(facilityId, request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
 		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
 		return responseBuilder.build();
 	}
-
-	@PostMapping(path = "/facilities/wards/update/{wardId}")
-	@ApiOperation(response = BooleanResponse.class, value = "API request update a ward's details")
-	public ResponseBean updateWard(@PathVariable int wardId, @RequestBody WardRequestBean request) {
-		HospitalErpError error = null;
-		BooleanResponse data = new BooleanResponse();
-		try {
-			data = wardServices.updateWardDetails(request, wardId);
-		} catch (HospitalErpException e) {
-			error = e.getError();
-		}
-		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
-		return responseBuilder.build();
-	}
-
 }

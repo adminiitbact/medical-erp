@@ -1,120 +1,180 @@
 package org.iitbact.erp.requests;
 
+import org.iitbact.erp.constants.PatientType;
 import org.iitbact.erp.constants.SEVERITY;
-import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.constants.WARD_GENDER;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class WardRequestBean extends BaseRequest {
-
-	private int availableBeds;
-
+	
+	@ApiModelProperty(value = "wardId = 0 in case of adding a new ward & non zero othrwise")
+	private int wardId;
+	
 	private String name;
-
-	private int totalBeds;
-
-	private TEST_STATUS covidStatus;
-
+	private String buildingName;
+	private String wardNumber;
+	private String floorNo;
+	private PatientType patientType;
 	private SEVERITY severity;
-
-	private int icuBeds;
-
-	private int ventilators;
-
 	private WARD_GENDER gender;
+	
+	private int totalBeds;
+	private int bedsOccupied;
+	
+	private int icuBeds;
+	private int icuBedsOccupied;
+	private int ventilators;
+	private int ventilatorsOccupied;
+	
+	@ApiModelProperty(value = "Other fields ,please refer to field highlight in green https://docs.google.com/presentation/d/1G2P_uVOqln2j2UGLSJ0q28a5bfdTaZHywCeVX1w9mHM/edit#slide=id.g73475c0e45_0_152")
+	private Object extraFields;
 
-	private boolean bedsDestance6Feet;
-
-	private boolean covidWard;
-
-	private boolean independentRoomsWithBedAndToilet;
-
-	public int getAvailableBeds() {
-		return availableBeds;
-	}
-
-	public void setAvailableBeds(int availableBeds) {
-		this.availableBeds = availableBeds;
-	}
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getTotalBeds() {
-		return totalBeds;
+
+	public String getBuildingName() {
+		return buildingName;
 	}
 
-	public void setTotalBeds(int totalBeds) {
-		this.totalBeds = totalBeds;
+
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
 	}
 
-	public TEST_STATUS getCovidStatus() {
-		return covidStatus;
+
+	public String getFloorNo() {
+		return floorNo;
 	}
 
-	public void setCovidStatus(TEST_STATUS covidStatus) {
-		this.covidStatus = covidStatus;
+
+	public void setFloorNo(String floorNo) {
+		this.floorNo = floorNo;
 	}
+
+
+	public PatientType getPatientType() {
+		return patientType;
+	}
+
+
+	public void setPatientType(PatientType patientType) {
+		this.patientType = patientType;
+	}
+
 
 	public SEVERITY getSeverity() {
 		return severity;
 	}
 
+
 	public void setSeverity(SEVERITY severity) {
 		this.severity = severity;
 	}
 
-	public int getIcuBeds() {
-		return icuBeds;
-	}
-
-	public void setIcuBeds(int icuBeds) {
-		this.icuBeds = icuBeds;
-	}
-
-	public int getVentilators() {
-		return ventilators;
-	}
-
-	public void setVentilators(int ventilators) {
-		this.ventilators = ventilators;
-	}
 
 	public WARD_GENDER getGender() {
 		return gender;
 	}
 
+
 	public void setGender(WARD_GENDER gender) {
 		this.gender = gender;
 	}
 
-	public boolean isBedsDestance6Feet() {
-		return bedsDestance6Feet;
+
+	public int getTotalBeds() {
+		return totalBeds;
 	}
 
-	public void setBedsDestance6Feet(boolean bedsDestance6Feet) {
-		this.bedsDestance6Feet = bedsDestance6Feet;
+
+	public void setTotalBeds(int totalBeds) {
+		this.totalBeds = totalBeds;
 	}
 
-	public boolean isCovidWard() {
-		return covidWard;
+
+	public int getBedsOccupied() {
+		return bedsOccupied;
 	}
 
-	public void setCovidWard(boolean covidWard) {
-		this.covidWard = covidWard;
+
+	public void setBedsOccupied(int bedsOccupied) {
+		this.bedsOccupied = bedsOccupied;
 	}
 
-	public boolean isIndependentRoomsWithBedAndToilet() {
-		return independentRoomsWithBedAndToilet;
+
+	public int getIcuBeds() {
+		return icuBeds;
 	}
 
-	public void setIndependentRoomsWithBedAndToilet(boolean independentRoomsWithBedAndToilet) {
-		this.independentRoomsWithBedAndToilet = independentRoomsWithBedAndToilet;
+
+	public void setIcuBeds(int icuBeds) {
+		this.icuBeds = icuBeds;
 	}
 
-	
+
+	public int getIcuBedsOccupied() {
+		return icuBedsOccupied;
+	}
+
+
+	public void setIcuBedsOccupied(int icuBedsOccupied) {
+		this.icuBedsOccupied = icuBedsOccupied;
+	}
+
+
+	public int getVentilators() {
+		return ventilators;
+	}
+
+
+	public void setVentilators(int ventilators) {
+		this.ventilators = ventilators;
+	}
+
+
+	public int getVentilatorsOccupied() {
+		return ventilatorsOccupied;
+	}
+
+
+	public void setVentilatorsOccupied(int ventilatorsOccupied) {
+		this.ventilatorsOccupied = ventilatorsOccupied;
+	}
+
+
+	public int getWardId() {
+		return wardId;
+	}
+	public void setWardId(int wardId) {
+		this.wardId = wardId;
+	}
+
+
+	public Object getExtraFields() {
+		return extraFields;
+	}
+
+
+	public void setExtraFields(Object extraFields) {
+		this.extraFields = extraFields;
+	}
+
+
+	public String getWardNumber() {
+		return wardNumber;
+	}
+
+
+	public void setWardNumber(String wardNumber) {
+		this.wardNumber = wardNumber;
+	}
 }

@@ -4,83 +4,86 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.iitbact.erp.requests.WardRequestBean;
 
+
 /**
- * The persistent class for the wards database table.
+ * The persistent class for the wards_history database table.
  * 
  */
 @Entity
-@Table(name = "wards_history")
-@NamedQuery(name = "WardsHistory.findAll", query = "SELECT w FROM WardsHistory w")
+@Table(name="wards_history")
+@NamedQuery(name="WardsHistory.findAll", query="SELECT w FROM WardsHistory w")
 public class WardsHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "available_beds")
+	@Column(name="available_beds")
 	private int availableBeds;
 
-	@Column(name = "facility_id")
-	private int facilityId;
+	@Column(name="building_name")
+	private String buildingName;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
-	@Column(name = "ward_id")
-	private int WardId;
-
-	private String name;
-
-	@Column(name = "total_beds")
-	private int totalBeds;
-
-	@Column(name = "covid_status")
+	@Column(name="covid_status")
 	private String covidStatus;
 
-	@Column(name = "severity")
-	private String severity;
+	@Column(name="extra_fields")
+	private Object extraFields;
 
-	@Column(name = "icu_beds")
-	private int icuBeds;
+	@Column(name="facility_id")
+	private int facilityId;
 
-	@Column(name = "ventilators")
-	private int ventilators;
+	private String floor;
 
 	private String gender;
 
-	@Column(name = "beds_distance_6_feet")
-	private boolean bedsDestance6Feet;
+	@Column(name="icu_beds")
+	private int icuBeds;
 
-	@Column(name = "covid_ward")
-	private boolean covidWard;
+	@Column(name="is_covid_ward")
+	private byte isCovidWard;
 
-	@Column(name = "independent_room_with_bed_and_toilet")
-	private boolean independentRoomsWithBedAndToilet;
+	private String name;
+
+	private String severity;
+
+	@Column(name="total_beds")
+	private int totalBeds;
+
+	private int ventilators;
+
+	@Id
+	@Column(name="ward_history_id")
+	private int wardHistoryId;
+
+	@Column(name="ward_id")
+	private int wardId;
+
+	@Column(name="ward_number")
+	private String wardNumber;
 
 	public WardsHistory() {
 	}
 
-
-	public WardsHistory(Ward request) {
-		this.setAvailableBeds(request.getAvailableBeds());
-		this.setFacilityId(request.getFacilityId());
-		this.setName(request.getName());
+	public WardsHistory(WardRequestBean request,int facilityId,int wardId) {
+		this.setAvailableBeds(request.getTotalBeds()-request.getBedsOccupied());
 		this.setTotalBeds(request.getTotalBeds());
-		this.setWardId(request.getId());
-		this.setCovidStatus(request.getCovidStatus());
-		this.setSeverity(request.getSeverity());
+		this.setCovidStatus(request.getPatientType().toString());
+		this.setSeverity(request.getSeverity().toString());
 		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());
-		this.setGender(request.getGender());
-		this.setBedsDestance6Feet(request.isBedsDestance6Feet());
-		this.setCovidWard(request.isCovidWard());
-		this.setIndependentRoomsWithBedAndToilet(request.isIndependentRoomsWithBedAndToilet());
+		this.setVentilators(request.getVentilators());;
+		
+		this.setName(request.getName());
+		this.setGender(request.getGender().toString());
+		this.setWardNumber(request.getWardNumber());
+		this.setBuildingName(request.getBuildingName());
+		this.setExtraFields(request.getExtraFields());
+		
+		this.setWardId(wardId);
+		this.setFacilityId(facilityId);
 	}
 
 	public int getAvailableBeds() {
@@ -91,6 +94,30 @@ public class WardsHistory implements Serializable {
 		this.availableBeds = availableBeds;
 	}
 
+	public String getBuildingName() {
+		return this.buildingName;
+	}
+
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
+	}
+
+	public String getCovidStatus() {
+		return this.covidStatus;
+	}
+
+	public void setCovidStatus(String covidStatus) {
+		this.covidStatus = covidStatus;
+	}
+
+	public Object getExtraFields() {
+		return this.extraFields;
+	}
+
+	public void setExtraFields(Object extraFields) {
+		this.extraFields = extraFields;
+	}
+
 	public int getFacilityId() {
 		return this.facilityId;
 	}
@@ -99,12 +126,36 @@ public class WardsHistory implements Serializable {
 		this.facilityId = facilityId;
 	}
 
-	public int getId() {
-		return this.id;
+	public String getFloor() {
+		return this.floor;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+
+	public String getGender() {
+		return this.gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public int getIcuBeds() {
+		return this.icuBeds;
+	}
+
+	public void setIcuBeds(int icuBeds) {
+		this.icuBeds = icuBeds;
+	}
+
+	public byte getIsCovidWard() {
+		return this.isCovidWard;
+	}
+
+	public void setIsCovidWard(byte isCovidWard) {
+		this.isCovidWard = isCovidWard;
 	}
 
 	public String getName() {
@@ -115,6 +166,14 @@ public class WardsHistory implements Serializable {
 		this.name = name;
 	}
 
+	public String getSeverity() {
+		return this.severity;
+	}
+
+	public void setSeverity(String severity) {
+		this.severity = severity;
+	}
+
 	public int getTotalBeds() {
 		return this.totalBeds;
 	}
@@ -123,84 +182,36 @@ public class WardsHistory implements Serializable {
 		this.totalBeds = totalBeds;
 	}
 
-	public void decreaseAvailabilityByOne() {
-		this.availableBeds -= 1;
-	}
-
-	public void IncreaseAvailabilityByOne() {
-		this.availableBeds += 1;
-	}
-
-	public String getCovidStatus() {
-		return covidStatus;
-	}
-
-	public void setCovidStatus(String covidStatus) {
-		this.covidStatus = covidStatus;
-	}
-
-	public String getSeverity() {
-		return severity;
-	}
-
-	public void setSeverity(String severity) {
-		this.severity = severity;
-	}
-
-	public int getIcuBeds() {
-		return icuBeds;
-	}
-
-	public void setIcuBeds(int icuBeds) {
-		this.icuBeds = icuBeds;
-	}
-
 	public int getVentilators() {
-		return ventilators;
+		return this.ventilators;
 	}
 
 	public void setVentilators(int ventilators) {
 		this.ventilators = ventilators;
 	}
 
-	public String getGender() {
-		return gender;
+	public int getWardHistoryId() {
+		return this.wardHistoryId;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public boolean isBedsDestance6Feet() {
-		return bedsDestance6Feet;
-	}
-
-	public void setBedsDestance6Feet(boolean bedsDestance6Feet) {
-		this.bedsDestance6Feet = bedsDestance6Feet;
-	}
-
-	public boolean isCovidWard() {
-		return covidWard;
-	}
-
-	public void setCovidWard(boolean covidWard) {
-		this.covidWard = covidWard;
-	}
-
-	public boolean isIndependentRoomsWithBedAndToilet() {
-		return independentRoomsWithBedAndToilet;
-	}
-
-	public void setIndependentRoomsWithBedAndToilet(boolean independentRoomsWithBedAndToilet) {
-		this.independentRoomsWithBedAndToilet = independentRoomsWithBedAndToilet;
+	public void setWardHistoryId(int wardHistoryId) {
+		this.wardHistoryId = wardHistoryId;
 	}
 
 	public int getWardId() {
-		return WardId;
+		return this.wardId;
 	}
 
 	public void setWardId(int wardId) {
-		WardId = wardId;
+		this.wardId = wardId;
+	}
+
+	public String getWardNumber() {
+		return this.wardNumber;
+	}
+
+	public void setWardNumber(String wardNumber) {
+		this.wardNumber = wardNumber;
 	}
 
 }

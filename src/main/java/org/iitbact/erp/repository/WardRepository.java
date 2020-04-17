@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WardRepository extends JpaRepository<Ward, Integer> {
 	List<Ward> findByFacilityIdAndCovidStatusAndSeverity(int facilityId, String covidStatus, String severity);
+
+	Ward findByWardIdAndFacilityId(int wardId, int facilityId);
 }

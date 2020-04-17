@@ -2,7 +2,7 @@ package org.iitbact.erp.services;
 
 import java.util.List;
 
-import org.iitbact.erp.constants.Constants;
+import org.iitbact.erp.constants.PatientType;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.entities.WardsHistory;
@@ -24,7 +24,7 @@ public class WardServices {
 	private WardHistoryRepository wardHistoryRepository;
 
 	private void authenticateUser(String authToken) {
-		// validationService.verifyFirebaseIdToken(authToken);
+		// validationService.verifyFirebaseIdToken(authToken); //TODO
 		// userRepository.findByUserId(userId);
 		// TODO: If user.facilityId == facilityId or user should be able to
 		// access this
@@ -42,26 +42,29 @@ public class WardServices {
 
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
-			return Constants.CONFIRMED;
+			return PatientType.CONFIRMED.toString();
 		} else {
-			return Constants.SUSPECTED;
+			return PatientType.SUSPECTED.toString();
 		}
 	}
 
-	public BooleanResponse addWardsToFacility(int facilityId, WardRequestBean request) {
+	public BooleanResponse addAndUpdateWards(int facilityId, WardRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-		Ward ward = new Ward(request, facilityId);
+
+		Ward ward = null;
+
+		if (request.getWardId() != 0) {
+			ward = wardRepository.findByWardIdAndFacilityId(request.getWardId(), facilityId);
+			ward.updateWard(request);
+		} else {
+			ward = new Ward(request, facilityId);
+		}
+
 		wardRepository.save(ward);
+		wardHistoryRepository.save(new WardsHistory(request,facilityId,ward.getId()));
+
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
 	}
 
-	public BooleanResponse updateWardDetails(WardRequestBean request, int wardId) {
-		this.authenticateUser(request.getAuthToken());
-		Ward ward = wardRepository.getOne(wardId);
-		ward.updateWard(request);
-		wardHistoryRepository.save(new WardsHistory(wardRepository.save(ward)));
-		BooleanResponse returnVal = new BooleanResponse(true);
-		return returnVal;
-	}
 }
