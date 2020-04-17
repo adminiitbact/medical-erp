@@ -17,7 +17,7 @@ public class ApiValidationService {
 		// idToken comes from the client app
 		//return "E2gHG4A2QqVl7A4S4mSJs0zRBvF2";
 		
-		/*try {
+		try {
 			FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(authToken);
 			String uid = decodedToken.getUid();
 			return uid;
@@ -27,8 +27,7 @@ public class ApiValidationService {
 			//return "DHF1C6Z5wLY6WcYZAzzd8VxcaAi2" ;
 
 		}
-*/
-	return null;	
+
 	}
 	
 
