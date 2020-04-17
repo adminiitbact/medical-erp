@@ -61,6 +61,12 @@ public class Facility implements Serializable, BaseBean {
 
 	@Column(name="agreement_status")
 	private String agreementStatus;
+	
+	@Column(name="is_seperate_entry_exit_available")
+	private boolean isSeperateEntryExitAvailable ;
+	
+	@Column(name="is_fever_clinic_available")
+	private boolean isFeverClinicAvailable ;
 
 	//bi-directional one-to-one association to FacilityAsset
 	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -207,6 +213,14 @@ public class Facility implements Serializable, BaseBean {
 		if(facilityData.get(Constants.COVID_FACILITY_TYPE)!=null) {
 			this.setCovidFacilityType(facilityData.get(Constants.COVID_FACILITY_TYPE).asText());	
 		}
+		
+		if(facilityData.get(Constants.SEPERATE_ENTRY_EXIT)!=null) {
+			this.setSeperateEntryExitAvailable(facilityData.get(Constants.SEPERATE_ENTRY_EXIT).asBoolean());	
+		}
+		
+		if(facilityData.get(Constants.FEVER_CLINIC)!=null) {
+			this.setFeverClinicAvailable(facilityData.get(Constants.FEVER_CLINIC).asBoolean());	
+		}
 	}
 
 	public String getCovidFacilityType() {
@@ -247,6 +261,22 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setAgreementStatus(String agreementStatus) {
 		this.agreementStatus = agreementStatus;
+	}
+
+	public boolean isSeperateEntryExitAvailable() {
+		return isSeperateEntryExitAvailable;
+	}
+
+	public void setSeperateEntryExitAvailable(boolean isSeperateEntryExitAvailable) {
+		this.isSeperateEntryExitAvailable = isSeperateEntryExitAvailable;
+	}
+
+	public boolean isFeverClinicAvailable() {
+		return isFeverClinicAvailable;
+	}
+
+	public void setFeverClinicAvailable(boolean isFeverClinicAvailable) {
+		this.isFeverClinicAvailable = isFeverClinicAvailable;
 	}
 
 }
