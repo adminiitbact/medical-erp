@@ -56,20 +56,20 @@ public class PatientHistory implements Serializable {
 		this.testStatus=request.getTestStatus().toString();
 	}
 	
-	public PatientHistory(int patientId,PatientTransferRequestBean request) {
-		this.severity=request.getSeverity().toString();
-		this.facilityId=request.getFacilityId();
-		this.wardId=request.getWardId();
-		this.patientId=patientId;
-		this.testStatus=request.getTestStatus().toString();
-	}
-	
 
 	public PatientHistory(int patientId, PatientDischargedRequestBean request) {
 		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patientId;
+		this.testStatus=request.getTestStatus().toString();
+	}
+
+	public PatientHistory(PatientLiveStatus request) {
+		this.severity=request.getSeverity().toString();
+		this.facilityId=request.getFacilityId();
+		this.wardId=request.getWardId();
+		this.patientId=request.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
 	}
 

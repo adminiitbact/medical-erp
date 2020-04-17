@@ -6,11 +6,22 @@ import org.iitbact.erp.constants.TEST_STATUS;
 public class PatientTransferRequestBean extends BaseRequest {
 	private int facilityId;
 	
+	private String patientHospitalId;
+	
 	private SEVERITY severity;
 
 	private TEST_STATUS testStatus;
 
 	private int wardId;
+
+	
+	public String getPatientHospitalId() {
+		return patientHospitalId;
+	}
+
+	public void setPatientHospitalId(String patientHospitalId) {
+		this.patientHospitalId = patientHospitalId;
+	}
 
 	public int getFacilityId() {
 		return facilityId;

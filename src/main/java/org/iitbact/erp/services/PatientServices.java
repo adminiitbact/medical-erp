@@ -39,7 +39,7 @@ public class PatientServices {
 
 	@Autowired
 	private ApiValidationService validationService;
-	
+
 	@Autowired
 	private PatientDischargedRepository patientDischargedRepository;
 
@@ -68,7 +68,7 @@ public class PatientServices {
 		// TODO Single threaded ()
 		// Decrease the bed available from ward
 		if (request.getWardId() != 0) {
-			changeWardAvailablility(request.getWardId(),0);
+			changeWardAvailablility(request.getWardId(), 0);
 		}
 
 		BooleanResponse returnVal = new BooleanResponse(true);
@@ -107,11 +107,15 @@ public class PatientServices {
 		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
 
 		changeWardAvailablility(request.getWardId(), patientCurrentStatus.getWardId());
+	
+		patientCurrentStatus.update(patientId, request);
+		if (request.getWardId() == 0) {
+			patientCurrentStatus.setPatientHospitalId("NA");
+		}
 
-		PatientHistory history = new PatientHistory(patientId, request);
+		PatientHistory history = new PatientHistory(patientCurrentStatus);
 		patientHistoryRepository.save(history);
 
-		patientCurrentStatus.update(patientId, request);
 		patientLiveStatusRepository.save(patientCurrentStatus);
 
 		BooleanResponse returnVal = new BooleanResponse(true);
@@ -144,20 +148,20 @@ public class PatientServices {
 	@Transactional
 	public BooleanResponse dischargePatient(int patientId, PatientDischargedRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-		
+
 		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
-		
-		if(patientCurrentStatus.getWardId()!=0){
+
+		if (patientCurrentStatus.getWardId() != 0) {
 			Ward newWard = wardRepo.getOne(patientCurrentStatus.getWardId());
 			increaseAvailabilityByOne(newWard);
 			wardRepo.save(newWard);
 		}
-		
+
 		patientLiveStatusRepository.deleteById(patientCurrentStatus.getId());
 
 		PatientHistory history = new PatientHistory(patientId, request);
 		patientHistoryRepository.save(history);
-		
+
 		patientDischargedRepository.save(new PatientDischarged(patientId, request));
 
 		BooleanResponse returnVal = new BooleanResponse(true);

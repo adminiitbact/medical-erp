@@ -10,10 +10,10 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String gender;
 
 	private String name;
-	
+
 	private String emergencyContact;
 
-	private String patientHospitalId;
+	private String goiCovidId;
 
 	public String getAddress() {
 		return address;
@@ -47,12 +47,12 @@ public class PatientProfileRequestBean extends BaseRequest {
 		this.gender = gender;
 	}
 
-	public String getName() {
-		return name;
+	public String getGoiCovidId() {
+		return goiCovidId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGoiCovidId(String goiCovidId) {
+		this.goiCovidId = goiCovidId;
 	}
 
 	public String getEmergencyContact() {
@@ -63,11 +63,13 @@ public class PatientProfileRequestBean extends BaseRequest {
 		this.emergencyContact = emergencyContact;
 	}
 
-	public String getPatientHospitalId() {
-		return this.patientHospitalId;
+	public String getName() {
+		return name;
 	}
 
-	public void setPatientHospitalId(String patientHospitalId) {
-		this.patientHospitalId = patientHospitalId;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
 }

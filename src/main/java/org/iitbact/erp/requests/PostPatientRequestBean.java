@@ -11,14 +11,22 @@ public class PostPatientRequestBean extends BaseRequest {
 	private String name;
 	private String emergencyContact;
 	
+	private String goiCovidId;
 	private String patientHospitalId;
-	
 	private int facilityId;
 	private int wardId;
 	private TEST_STATUS testStatus;
 	private SEVERITY severity;
 
 	
+	public String getPatientHospitalId() {
+		return patientHospitalId;
+	}
+
+	public void setPatientHospitalId(String patientHospitalId) {
+		this.patientHospitalId = patientHospitalId;
+	}
+
 	public int getFacilityId() {
 		return facilityId;
 	}
@@ -99,12 +107,12 @@ public class PostPatientRequestBean extends BaseRequest {
 		this.emergencyContact = emergencyContact;
 	}
 
-	public String getPatientHospitalId() {
-		return patientHospitalId;
+	public String getGoiCovidId() {
+		return goiCovidId;
 	}
 
-	public void setPatientHospitalId(String patientHospitalId) {
-		this.patientHospitalId = patientHospitalId;
+	public void setGoiCovidId(String goiCovidId) {
+		this.goiCovidId = goiCovidId;
 	}
 
 }

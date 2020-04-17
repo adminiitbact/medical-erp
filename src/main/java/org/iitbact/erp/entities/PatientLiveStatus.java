@@ -40,6 +40,9 @@ public class PatientLiveStatus implements Serializable {
 
 	@Column(name="ward_id")
 	private int wardId;
+	
+	@Column(name="patient_hospital_id")
+	private String patientHospitalId;
 
 	public PatientLiveStatus() {
 	}
@@ -50,6 +53,7 @@ public class PatientLiveStatus implements Serializable {
 		this.patientId=patient.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
 		this.severity=request.getSeverity().toString();
+		this.patientHospitalId = request.getPatientHospitalId();
 	}
 	
 	public int getFacilityId() {
@@ -83,6 +87,31 @@ public class PatientLiveStatus implements Serializable {
 	public void setWardId(int wardId) {
 		this.wardId = wardId;
 	}
+	
+
+	public String getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(String severity) {
+		this.severity = severity;
+	}
+
+	public String getTestStatus() {
+		return testStatus;
+	}
+
+	public void setTestStatus(String testStatus) {
+		this.testStatus = testStatus;
+	}
+
+	public String getPatientHospitalId() {
+		return patientHospitalId;
+	}
+
+	public void setPatientHospitalId(String patientHospitalId) {
+		this.patientHospitalId = patientHospitalId;
+	}
 
 	public void update(int patientId,PatientTransferRequestBean request) {
 		this.severity=request.getSeverity().toString();
@@ -90,5 +119,6 @@ public class PatientLiveStatus implements Serializable {
 		this.wardId=request.getWardId();
 		this.patientId=patientId;
 		this.testStatus=request.getTestStatus().toString();
+		this.patientHospitalId = request.getPatientHospitalId();
 	}
 }

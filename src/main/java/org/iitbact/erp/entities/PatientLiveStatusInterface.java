@@ -18,4 +18,7 @@ public interface PatientLiveStatusInterface {
 	
 	public String getPatientName();
 	
+	public String getPatientHospitalId();
+
+	
 }
