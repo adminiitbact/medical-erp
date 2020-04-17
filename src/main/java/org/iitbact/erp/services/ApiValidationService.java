@@ -27,7 +27,6 @@ public class ApiValidationService {
 			//return "DHF1C6Z5wLY6WcYZAzzd8VxcaAi2" ;
 
 		}
-		
 	}
 	
 
