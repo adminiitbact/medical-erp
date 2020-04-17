@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface WardRepository extends JpaRepository<Ward, Integer> {
 	List<Ward> findByFacilityIdAndCovidStatusAndSeverity(int facilityId, String covidStatus, String severity);
 
-	Ward findByIdAndFacilityId(int wardId, int facilityId);
+	Ward findByIdAndFacilityId(int id, int facilityId);
 }

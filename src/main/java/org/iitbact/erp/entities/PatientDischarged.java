@@ -41,7 +41,7 @@ public class PatientDischarged implements Serializable {
 	
 	private String reason;
 	
-	@Column(name="wuarantine_type")
+	@Column(name="quarantine_type")
 	private String quarantineType;
 
 	public PatientDischarged() {
@@ -55,8 +55,8 @@ public class PatientDischarged implements Serializable {
 		this.severity=request.getSeverity().toString();
 	}
 	
-	public PatientDischarged(int patientId2, PatientDischargedRequestBean request) {
-		
+	public PatientDischarged(int patientId, PatientDischargedRequestBean request) {
+			this.patientId = patientId;
 			this.facilityId = request.getFacilityId();
 			this.wardId = request.getWardId();
 			this.severity = request.getSeverity().toString();

@@ -16,71 +16,68 @@ import org.iitbact.erp.requests.WardRequestBean;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
-
 /**
  * The persistent class for the wards database table.
  * 
  */
 @Entity
-@Table(name="wards")
-@NamedQuery(name="Ward.findAll", query="SELECT w FROM Ward w")
-@TypeDef(
-	    name = "json",
-	    typeClass = JsonStringType.class
-	)
+@Table(name = "wards")
+@NamedQuery(name = "Ward.findAll", query = "SELECT w FROM Ward w")
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Ward implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="available_beds")
+	@Column(name = "available_beds")
 	private int availableBeds;
 
-	@Column(name="building_name")
+	@Column(name = "building_name")
 	private String buildingName;
 
-	@Column(name="covid_status")
+	@Column(name = "covid_status")
 	private String covidStatus;
 
-	@Column(name="extra_fields",columnDefinition = "json")
+	@Column(name = "extra_fields", columnDefinition = "json")
 	@Type(type = "json")
 	private Object extraFields;
 
-	@Column(name="facility_id")
+	@Column(name = "facility_id")
 	private int facilityId;
 
 	private String floor;
 
 	private String gender;
 
-	@Column(name="icu_beds")
+	@Column(name = "icu_beds")
 	private int icuBeds;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
 
 	private String name;
 
 	private String severity;
 
-	@Column(name="total_beds")
+	@Column(name = "total_beds")
 	private int totalBeds;
 
 	private int ventilators;
 
-	@Column(name="ward_number")
+	@Column(name = "ward_number")
 	private String wardNumber;
 
 	public Ward() {
 	}
-	
+
 	public Ward(WardRequestBean request, int facilityId2) {
-		this.setAvailableBeds(request.getTotalBeds()-request.getBedsOccupied());
+		this.setAvailableBeds(request.getTotalBeds() - request.getBedsOccupied());
 		this.setTotalBeds(request.getTotalBeds());
 		this.setCovidStatus(request.getPatientType().toString());
 		this.setSeverity(request.getSeverity().toString());
 		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
-		
+		this.setVentilators(request.getVentilators());
+		this.setFloor(request.getFloorNo());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
@@ -153,8 +150,9 @@ public class Ward implements Serializable {
 		this.icuBeds = icuBeds;
 	}
 
+
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -202,14 +200,15 @@ public class Ward implements Serializable {
 	}
 
 	public void updateWard(WardRequestBean request) {
-		//TODO how to work out this? open due to lack of clarity
-		this.setAvailableBeds(request.getTotalBeds()-request.getBedsOccupied());
+		// TODO how to work out this? open due to lack of clarity
+		this.setAvailableBeds(request.getTotalBeds() - request.getBedsOccupied());
 		this.setTotalBeds(request.getTotalBeds());
 		this.setCovidStatus(request.getPatientType().toString());
 		this.setSeverity(request.getSeverity().toString());
 		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
-		
+		this.setVentilators(request.getVentilators());
+		this.floor = request.getFloorNo();
+
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
