@@ -119,7 +119,7 @@ public class FacilityServices {
 	}
 
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
-		// this.authenticateUser(request.getAuthToken());
+		 this.authenticateUser(request.getAuthToken());
 		if (request.isWardAlloted()) {
 			return patientLiveStatusRepository.findWardAllotedPatientByFacilityId(facilityId);
 		} else {

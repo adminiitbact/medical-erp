@@ -41,6 +41,8 @@ public class PatientDischarged implements Serializable {
 	
 	private String reason;
 	
+	private String patientHospitalId;
+	
 	@Column(name="quarantine_type")
 	private String quarantineType;
 
@@ -53,6 +55,7 @@ public class PatientDischarged implements Serializable {
 		this.patientId=patient.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
 		this.severity=request.getSeverity().toString();
+		this.patientHospitalId = request.getPatientHospitalId();
 	}
 	
 	public PatientDischarged(int patientId, PatientDischargedRequestBean request) {
@@ -63,6 +66,7 @@ public class PatientDischarged implements Serializable {
 			this.testStatus = request.getTestStatus().toString();
 			this.reason = request.getReason().toString();
 			this.quarantineType = request.getQuarantineType().toString();
+			this.patientHospitalId = request.getPatientHospitalId();
 		
 	}
 
@@ -128,6 +132,14 @@ public class PatientDischarged implements Serializable {
 
 	public void setQuarantineType(String quarantineType) {
 		this.quarantineType = quarantineType;
+	}
+
+	public String getPatientHospitalId() {
+		return patientHospitalId;
+	}
+
+	public void setPatientHospitalId(String patientHospitalId) {
+		this.patientHospitalId = patientHospitalId;
 	}
 
 
