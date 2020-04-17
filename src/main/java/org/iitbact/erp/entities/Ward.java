@@ -10,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.iitbact.erp.requests.WardRequestBean;
+
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 
 /**
@@ -20,6 +24,10 @@ import org.iitbact.erp.requests.WardRequestBean;
 @Entity
 @Table(name="wards")
 @NamedQuery(name="Ward.findAll", query="SELECT w FROM Ward w")
+@TypeDef(
+	    name = "json",
+	    typeClass = JsonStringType.class
+	)
 public class Ward implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +40,8 @@ public class Ward implements Serializable {
 	@Column(name="covid_status")
 	private String covidStatus;
 
-	@Column(name="extra_fields")
+	@Column(name="extra_fields",columnDefinition = "json")
+	@Type(type = "json")
 	private Object extraFields;
 
 	@Column(name="facility_id")
@@ -48,9 +57,6 @@ public class Ward implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@Column(name="is_covid_ward")
-	private boolean isCovidWard;
 
 	private String name;
 
@@ -153,14 +159,6 @@ public class Ward implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public boolean getIsCovidWard() {
-		return this.isCovidWard;
-	}
-
-	public void setIsCovidWard(boolean isCovidWard) {
-		this.isCovidWard = isCovidWard;
 	}
 
 	public String getName() {

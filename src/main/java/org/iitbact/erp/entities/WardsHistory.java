@@ -8,7 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.iitbact.erp.requests.WardRequestBean;
+
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 
 /**
@@ -18,6 +22,11 @@ import org.iitbact.erp.requests.WardRequestBean;
 @Entity
 @Table(name="wards_history")
 @NamedQuery(name="WardsHistory.findAll", query="SELECT w FROM WardsHistory w")
+@TypeDef(
+	    name = "json",
+	    typeClass = JsonStringType.class
+	)
+
 public class WardsHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +39,8 @@ public class WardsHistory implements Serializable {
 	@Column(name="covid_status")
 	private String covidStatus;
 
-	@Column(name="extra_fields")
+	@Column(name="extra_fields",columnDefinition = "json")
+	@Type(type = "json")
 	private Object extraFields;
 
 	@Column(name="facility_id")
@@ -42,9 +52,6 @@ public class WardsHistory implements Serializable {
 
 	@Column(name="icu_beds")
 	private int icuBeds;
-
-	@Column(name="is_covid_ward")
-	private byte isCovidWard;
 
 	private String name;
 
@@ -148,14 +155,6 @@ public class WardsHistory implements Serializable {
 
 	public void setIcuBeds(int icuBeds) {
 		this.icuBeds = icuBeds;
-	}
-
-	public byte getIsCovidWard() {
-		return this.isCovidWard;
-	}
-
-	public void setIsCovidWard(byte isCovidWard) {
-		this.isCovidWard = isCovidWard;
 	}
 
 	public String getName() {
