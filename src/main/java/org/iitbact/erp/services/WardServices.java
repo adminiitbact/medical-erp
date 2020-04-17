@@ -54,7 +54,7 @@ public class WardServices {
 		Ward ward = null;
 
 		if (request.getWardId() != 0) {
-			ward = wardRepository.findByWardIdAndFacilityId(request.getWardId(), facilityId);
+			ward = wardRepository.findByIdAndFacilityId(request.getWardId(), facilityId);
 			ward.updateWard(request);
 		} else {
 			ward = new Ward(request, facilityId);
