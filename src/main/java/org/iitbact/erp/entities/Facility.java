@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -30,13 +32,17 @@ public class Facility implements Serializable, BaseBean {
 	private String area;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="facility_id")
 	private int facilityId;
 	
 	private String email;
 
-	@Column(name="facility_type")
-	private String facilityType;
+	@Column(name="institution_type")
+	private String institutionType;
+	
+	@Column(name="covid_facility_type")
+	private String covidFacilityType;
 
 	@Column(name="government_hospital")
 	private boolean governmentHospital;
@@ -46,6 +52,21 @@ public class Facility implements Serializable, BaseBean {
 	private String name;
 
 	private String telephone;
+	
+	@Column(name="facility_status")
+	private String facilityStatus;
+	
+	@Column(name="hospital_category")
+	private String hospitalCategory;
+
+	@Column(name="agreement_status")
+	private String agreementStatus;
+	
+	@Column(name="is_seperate_entry_exit_available")
+	private boolean isSeperateEntryExitAvailable ;
+	
+	@Column(name="is_fever_clinic_available")
+	private boolean isFeverClinicAvailable ;
 
 	//bi-directional one-to-one association to FacilityAsset
 	@OneToOne(mappedBy="facility", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -84,14 +105,6 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getFacilityType() {
-		return this.facilityType;
-	}
-
-	public void setFacilityType(String facilityType) {
-		this.facilityType = facilityType;
 	}
 
 	public boolean getGovernmentHospital() {
@@ -193,10 +206,77 @@ public class Facility implements Serializable, BaseBean {
 		this.setName(facilityData.get(Constants.NAME).asText());
 		this.setArea(facilityData.get(Constants.AREA).asText());
 		this.setJurisdiction(facilityData.get(Constants.JURISDICTION).asText());
-		this.setFacilityType(facilityData.get(Constants.TYPE).asText());
+		this.setInstitutionType(facilityData.get(Constants.TYPE).asText());
 		this.setGovernmentHospital(facilityData.get(Constants.IS_GOVERNMENT_FACILITY).asBoolean());
 		this.setTelephone(facilityData.get(Constants.TELEPHONE).asText());
 		this.setEmail(facilityData.get(Constants.EMAIL).asText());
+		if(facilityData.get(Constants.COVID_FACILITY_TYPE)!=null) {
+			this.setCovidFacilityType(facilityData.get(Constants.COVID_FACILITY_TYPE).asText());	
+		}
+		
+		if(facilityData.get(Constants.SEPERATE_ENTRY_EXIT)!=null) {
+			this.setSeperateEntryExitAvailable(facilityData.get(Constants.SEPERATE_ENTRY_EXIT).asBoolean());	
+		}
+		
+		if(facilityData.get(Constants.FEVER_CLINIC)!=null) {
+			this.setFeverClinicAvailable(facilityData.get(Constants.FEVER_CLINIC).asBoolean());	
+		}
+	}
+
+	public String getCovidFacilityType() {
+		return covidFacilityType;
+	}
+
+	public void setCovidFacilityType(String covidFacilityType) {
+		this.covidFacilityType = covidFacilityType;
+	}
+
+	public String getInstitutionType() {
+		return institutionType;
+	}
+
+	public void setInstitutionType(String institutionType) {
+		this.institutionType = institutionType;
+	}
+
+	public String getFacilityStatus() {
+		return facilityStatus;
+	}
+
+	public void setFacilityStatus(String facilityStatus) {
+		this.facilityStatus = facilityStatus;
+	}
+
+	public String getHospitalCategory() {
+		return hospitalCategory;
+	}
+
+	public void setHospitalCategory(String hospitalCategory) {
+		this.hospitalCategory = hospitalCategory;
+	}
+
+	public String getAgreementStatus() {
+		return agreementStatus;
+	}
+
+	public void setAgreementStatus(String agreementStatus) {
+		this.agreementStatus = agreementStatus;
+	}
+
+	public boolean isSeperateEntryExitAvailable() {
+		return isSeperateEntryExitAvailable;
+	}
+
+	public void setSeperateEntryExitAvailable(boolean isSeperateEntryExitAvailable) {
+		this.isSeperateEntryExitAvailable = isSeperateEntryExitAvailable;
+	}
+
+	public boolean isFeverClinicAvailable() {
+		return isFeverClinicAvailable;
+	}
+
+	public void setFeverClinicAvailable(boolean isFeverClinicAvailable) {
+		this.isFeverClinicAvailable = isFeverClinicAvailable;
 	}
 
 }

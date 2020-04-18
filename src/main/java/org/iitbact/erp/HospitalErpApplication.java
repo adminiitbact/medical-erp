@@ -18,20 +18,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class MedicalErpApplication {
+public class HospitalErpApplication {
 
 	@Autowired
 	DataSource dataSource;
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedicalErpApplication.class, args);
+		SpringApplication.run(HospitalErpApplication.class, args);
 	}
 
 	@Bean
 	public Docket swaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("org.iitbact.erp")).build().apiInfo(apiInfo())
-				.host("staging.iitbact.org:8080");
+				.host("staging.cov2.in");
 	}
 
 	private ApiInfo apiInfo() {

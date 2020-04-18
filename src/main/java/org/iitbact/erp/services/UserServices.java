@@ -12,7 +12,7 @@ public class UserServices {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
 	private ApiValidationService validationService;
 
@@ -23,5 +23,4 @@ public class UserServices {
 		response.setProfile(user);
 		return response;
 	}
-
 }
