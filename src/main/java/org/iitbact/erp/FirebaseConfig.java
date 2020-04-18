@@ -36,7 +36,7 @@ public class FirebaseConfig {
 			FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setDatabaseUrl(dbUrl)
 					.build();
 			FirebaseApp.initializeApp(options);
-		} else {
+		}else {
 			GoogleCredentials credentials = readCredentialsFromProperties();
 			FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setDatabaseUrl(dbUrl)
 					.build();

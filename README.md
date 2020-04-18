@@ -5,7 +5,7 @@ In order to run, create a spring boot run configuration from eclipse run configu
 # setting up spring boot run config
 Project > hospital-erp
 Main Type > org.iitbact.erp.MedicalErpApplication
-Profile > staging
+Profile > dev
 
 # setting up env in run config
 GOOGLE_APPLICATION_CREDENTIALS=path to firebase.json file
