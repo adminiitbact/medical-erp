@@ -20,20 +20,17 @@ import com.google.firebase.FirebaseOptions;
 @Configuration
 public class FirebaseConfig {
 
-	@Value("firebase")
+	@Value("${firebase}")
 	private String credentials;
 
-	@Value("firebase.dburl")
+	@Value("${firebase.dburl}")
 	private String dbUrl;
 
-	@Value("ENV")
+	@Value("${ENV}")
 	private String env;
 
 	@PostConstruct
 	public void initFirebase() {
-		System.out.println("Firebase credentials "+credentials);
-		System.out.println("firebase.dburl "+dbUrl);
-		System.out.println("env "+ env);
 		if (SYSTEM_ENVIRONMENT.DEV.toString().equalsIgnoreCase(env)) {
 			GoogleCredentials credentials = readCredentialsForDev();
 			FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setDatabaseUrl(dbUrl)

@@ -8,7 +8,11 @@ Main Type > org.iitbact.erp.MedicalErpApplication
 Profile > staging
 
 # setting up env in run config
-GOOGLE_APPLICATION_CREDENTIALS=firebase.json
+GOOGLE_APPLICATION_CREDENTIALS=path to firebase.json file
+ENV=DEV
+DB_connection : URL
+DB_password : ***
+DB_user : ***
 
 After setting all the configurations, run the project as spring boot app
 
