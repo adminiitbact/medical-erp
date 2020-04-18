@@ -80,10 +80,16 @@
 
 	<profiles>
 		<profile>
-			<id>staging</id>
+			<id>dev</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>staging</id>
 			<properties>
 				<spring.profiles.active>staging</spring.profiles.active>
 			</properties>
