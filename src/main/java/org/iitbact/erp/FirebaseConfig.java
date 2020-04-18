@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 
 import javax.annotation.PostConstruct;
 
@@ -48,7 +50,8 @@ public class FirebaseConfig {
 	private GoogleCredentials readCredentialsFromProperties() {
 		try {
 	        //use ByteArrayInputStream to get the bytes of the String and convert them to InputStream.
-	        InputStream inputStream = new ByteArrayInputStream(credentials.getBytes(Charset.forName("UTF-8")));
+			Decoder decoder= Base64.getDecoder();
+	        InputStream inputStream = new ByteArrayInputStream(decoder.decode(credentials));
 			return GoogleCredentials.fromStream(inputStream);
 		} catch (Exception e) {
 			e.printStackTrace();
