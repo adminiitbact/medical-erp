@@ -2,7 +2,7 @@ package org.iitbact.erp.services;
 
 import java.util.List;
 
-import org.iitbact.erp.constants.PatientType;
+import org.iitbact.erp.constants.CovidStatus;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.entities.WardsHistory;
@@ -42,15 +42,16 @@ public class WardServices {
 
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
-			return PatientType.CONFIRMED.toString();
+			return CovidStatus.CONFIRMED.toString();
 		} else {
-			return PatientType.SUSPECTED.toString();
+			return CovidStatus.SUSPECTED.toString();
 		}
 	}
 
 	public BooleanResponse addAndUpdateWards(int facilityId, WardRequestBean request) {
 		this.authenticateUser(request.getAuthToken());
-
+		//TODO validation on total bed count against occupied beds
+		
 		Ward ward = null;
 
 		if (request.getWardId() != 0) {

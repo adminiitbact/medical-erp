@@ -1,5 +1,5 @@
 package org.iitbact.erp.constants;
 
-public enum PatientType {
+public enum CovidStatus {
 	CONFIRMED,SUSPECTED
 }
