@@ -13,7 +13,7 @@ public class WardRequestBean extends BaseRequest {
 	private String name;
 	private String buildingName;
 	private String wardNumber;
-	private String floorNo;
+	private String floor;
 	private CovidStatus covidStatus;
 	private SEVERITY severity;
 	private WARD_GENDER gender;
@@ -37,12 +37,6 @@ public class WardRequestBean extends BaseRequest {
 	}
 	public void setBuildingName(String buildingName) {
 		this.buildingName = buildingName;
-	}
-	public String getFloorNo() {
-		return floorNo;
-	}
-	public void setFloorNo(String floorNo) {
-		this.floorNo = floorNo;
 	}
 
 	public SEVERITY getSeverity() {
@@ -136,8 +130,13 @@ public class WardRequestBean extends BaseRequest {
 		return covidWard;
 	}
 
-
 	public void setCovidWard(boolean covidWard) {
 		this.covidWard = covidWard;
+	}
+	public String getFloor() {
+		return floor;
+	}
+	public void setFloor(String floor) {
+		this.floor = floor;
 	}
 }
