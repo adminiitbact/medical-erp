@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientDischargedRequestBean;
-import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 
 
 /**
