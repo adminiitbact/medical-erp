@@ -12,6 +12,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.iitbact.erp.exceptions.HospitalErpErrorCode;
+import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.exceptions.HosptialErpErrorMsg;
 import org.iitbact.erp.requests.WardRequestBean;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -75,6 +78,9 @@ public class Ward implements Serializable {
 	}
 
 	public Ward(WardRequestBean request, int facilityId2) {
+		if(request.getTotalBeds()<0) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
 		this.setAvailableBeds(request.getTotalBeds());
 		this.setTotalBeds(request.getTotalBeds());
 		this.setCovidStatus(request.getCovidStatus().toString());
@@ -188,8 +194,19 @@ public class Ward implements Serializable {
 	}
 
 	public void updateWard(WardRequestBean request) {
+		
+		if(request.getTotalBeds() < 0 ) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
+		
+		int newAvailablity=this.availableBeds+(request.getTotalBeds()-this.totalBeds);
+		
+		if(newAvailablity < 0 ) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
+		
+		this.setAvailableBeds(newAvailablity);
 		this.setTotalBeds(request.getTotalBeds());
-		this.setAvailableBeds(this.availableBeds+=(request.getTotalBeds()-this.totalBeds));
 		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
 		this.setVentilators(request.getVentilators());

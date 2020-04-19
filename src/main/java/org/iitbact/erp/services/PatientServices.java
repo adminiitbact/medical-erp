@@ -6,6 +6,9 @@ import org.iitbact.erp.entities.PatientHistory;
 import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.entities.Ward;
+import org.iitbact.erp.exceptions.HospitalErpErrorCode;
+import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.exceptions.HosptialErpErrorMsg;
 import org.iitbact.erp.repository.PatientDischargedRepository;
 import org.iitbact.erp.repository.PatientHistoryRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
@@ -20,6 +23,7 @@ import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -121,8 +125,9 @@ public class PatientServices {
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
 	}
-
-	private synchronized void changeWardAvailablility(int requestWardId, int currentWardId) {
+	
+	@Transactional(propagation = Propagation.MANDATORY)
+	public synchronized void changeWardAvailablility(int requestWardId, int currentWardId) {
 		if (currentWardId != 0 && requestWardId != currentWardId) {
 			Ward currentWard = wardRepo.getOne(currentWardId);
 			increaseAvailabilityByOne(currentWard);
@@ -131,6 +136,9 @@ public class PatientServices {
 
 		if (requestWardId != 0 && requestWardId != currentWardId) {
 			Ward newWard = wardRepo.getOne(requestWardId);
+			if(newWard.getAvailableBeds()<=0) {
+				throw new HospitalErpException(HospitalErpErrorCode.NO_ENOUGH_BEDS, HosptialErpErrorMsg.NO_ENOUGH_BEDS);
+			}
 			decreaseAvailabilityByOne(newWard);
 			wardRepo.save(newWard);
 		}
