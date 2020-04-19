@@ -20,5 +20,6 @@ public interface PatientLiveStatusInterface {
 	
 	public String getPatientHospitalId();
 
+	public String getGoiCovidId();
 	
 }
