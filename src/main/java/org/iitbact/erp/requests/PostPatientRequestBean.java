@@ -11,6 +11,8 @@ public class PostPatientRequestBean extends BaseRequest {
 	private String name;
 	private String emergencyContact;
 	
+	private Object preExistingMedicalCondition;
+	
 	private String goiCovidId;
 	private String patientHospitalId;
 	private int facilityId;
@@ -115,4 +117,11 @@ public class PostPatientRequestBean extends BaseRequest {
 		this.goiCovidId = goiCovidId;
 	}
 
+	public Object getPreExistingMedicalCondition() {
+		return preExistingMedicalCondition;
+	}
+
+	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
+		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
 }
