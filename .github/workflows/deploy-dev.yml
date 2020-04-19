@@ -1,11 +1,11 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Deploy to Dev
 
 on:
   push:
-    branches: [ master, release ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -P staging
 
     - name: Beanstalk Deploy
       uses: einaregilsson/beanstalk-deploy@v9
@@ -27,7 +27,7 @@ jobs:
         aws_access_key: ${{ secrets.aws_access_key }}
         aws_secret_key: ${{ secrets.aws_secret_key }}
         region: ap-south-1
-        application_name: iitb-act-backend-app
-        environment_name: iitbactbackend-env
+        application_name: iitb-act-backend-dev-app
+        environment_name: iitbactbackenddev-env
         version_label: ${{ github.sha }}
         deployment_package: target/hospitalerp.war
