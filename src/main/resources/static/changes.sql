@@ -15,10 +15,6 @@ ALTER TABLE `wards_history`
 	DROP COLUMN `icu_beds`;
 
 
-
-
-
-
 --------------------------------- Done -------------------------------
 
 ALTER TABLE `facilities`
