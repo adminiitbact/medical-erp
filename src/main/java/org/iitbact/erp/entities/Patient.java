@@ -11,12 +11,20 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
+
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
+@TypeDef(
+	    name = "json",
+	    typeClass = JsonStringType.class
+	)
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +51,9 @@ public class Patient implements Serializable {
 	@Column(name="goi_covid_id")
 	private String goiCovidId;
 	
+	@Type(type = "json")
+    @Column(name="pre_existing_medical_condition",columnDefinition = "json")
+	private Object preExistingMedicalCondition;
 
 	public Patient() {
 	}
@@ -55,6 +66,7 @@ public class Patient implements Serializable {
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
 		this.setGoiCovidId(request.getGoiCovidId());
+		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
 	}
 
 	public void updatePatient(PatientProfileRequestBean request) {
@@ -65,6 +77,7 @@ public class Patient implements Serializable {
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
 		this.setGoiCovidId(request.getGoiCovidId());
+		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
 	}
 
 	public String getAddress() {
@@ -131,6 +144,11 @@ public class Patient implements Serializable {
 		this.goiCovidId = goiCovidId;
 	}
 
+	public Object getPreExistingMedicalCondition() {
+		return preExistingMedicalCondition;
+	}
 
-
+	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
+		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
 }

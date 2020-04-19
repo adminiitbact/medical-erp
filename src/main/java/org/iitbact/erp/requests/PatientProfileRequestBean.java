@@ -14,6 +14,8 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String emergencyContact;
 
 	private String goiCovidId;
+	
+	private Object preExistingMedicalCondition;
 
 	public String getAddress() {
 		return address;
@@ -69,6 +71,14 @@ public class PatientProfileRequestBean extends BaseRequest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Object getPreExistingMedicalCondition() {
+		return preExistingMedicalCondition;
+	}
+
+	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
+		this.preExistingMedicalCondition = preExistingMedicalCondition;
 	}
 
 
