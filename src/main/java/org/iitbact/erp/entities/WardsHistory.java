@@ -93,7 +93,7 @@ public class WardsHistory implements Serializable {
 		this.setVentilators(request.getVentilators());
 		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
 		this.setCovidWard(request.isCovidWard());
-		this.setFloor(request.getFloorNo());
+		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());

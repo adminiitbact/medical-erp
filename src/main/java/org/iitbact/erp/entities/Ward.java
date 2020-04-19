@@ -80,7 +80,7 @@ public class Ward implements Serializable {
 		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
 		this.setVentilators(request.getVentilators());
-		this.setFloor(request.getFloorNo());
+		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
@@ -193,7 +193,7 @@ public class Ward implements Serializable {
 		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
 		this.setVentilators(request.getVentilators());
-		this.floor = request.getFloorNo();
+		this.floor = request.getFloor();
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());

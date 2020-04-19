@@ -44,6 +44,7 @@ public class FirebaseConfig {
 			FirebaseApp.initializeApp(options);
 		}
 	}
+	
 
 	// Google credentials from firebase property from system
 	private GoogleCredentials readCredentialsFromProperties() {
