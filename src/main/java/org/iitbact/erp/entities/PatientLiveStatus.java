@@ -53,7 +53,12 @@ public class PatientLiveStatus implements Serializable {
 		this.patientId=patient.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
 		this.severity=request.getSeverity().toString();
-		this.patientHospitalId = request.getPatientHospitalId();
+		
+		if (request.getWardId() == 0) {
+			this.patientHospitalId = "NA";
+		}else {
+			this.patientHospitalId =request.getPatientHospitalId();
+		}
 	}
 	
 	public int getFacilityId() {
