@@ -74,17 +74,25 @@ public class WardsHistory implements Serializable {
 
 	@Column(name="ward_number")
 	private String wardNumber;
+	
+	@Column(name="covid_ward")
+	private boolean covidWard;
+	
+	@Column(name="ventilators_occupied")
+	private int ventilatorsOccupied;
+
 
 	public WardsHistory() {
 	}
 
 	public WardsHistory(WardRequestBean request,int facilityId,int wardId) {
-		this.setAvailableBeds(request.getTotalBeds()-request.getBedsOccupied());
+		this.setAvailableBeds(request.getTotalBeds());
 		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getPatientType().toString());
+		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
-		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
+		this.setVentilators(request.getVentilators());
+		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
+		this.setCovidWard(request.isCovidWard());
 		this.setFloor(request.getFloorNo());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
@@ -214,6 +222,22 @@ public class WardsHistory implements Serializable {
 
 	public void setWardNumber(String wardNumber) {
 		this.wardNumber = wardNumber;
+	}
+
+	public boolean isCovidWard() {
+		return covidWard;
+	}
+
+	public void setCovidWard(boolean covidWard) {
+		this.covidWard = covidWard;
+	}
+
+	public int getVentilatorsOccupied() {
+		return ventilatorsOccupied;
+	}
+
+	public void setVentilatorsOccupied(int ventilatorsOccupied) {
+		this.ventilatorsOccupied = ventilatorsOccupied;
 	}
 
 }
