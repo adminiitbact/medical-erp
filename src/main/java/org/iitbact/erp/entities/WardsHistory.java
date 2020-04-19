@@ -52,9 +52,6 @@ public class WardsHistory implements Serializable {
 
 	private String gender;
 
-	@Column(name="icu_beds")
-	private int icuBeds;
-
 	private String name;
 
 	private String severity;
@@ -158,14 +155,6 @@ public class WardsHistory implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public int getIcuBeds() {
-		return this.icuBeds;
-	}
-
-	public void setIcuBeds(int icuBeds) {
-		this.icuBeds = icuBeds;
 	}
 
 	public String getName() {
