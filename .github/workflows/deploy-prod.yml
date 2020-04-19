@@ -27,7 +27,7 @@ jobs:
         aws_access_key: ${{ secrets.aws_access_key }}
         aws_secret_key: ${{ secrets.aws_secret_key }}
         region: ap-south-1
-        application_name: iitb-act-backend-app
+        application_name: iitb-act-backend-app-v2
         environment_name: iitbactbackend-env-v2
         version_label: ${{ github.sha }}
         deployment_package: target/hospitalerp.war
