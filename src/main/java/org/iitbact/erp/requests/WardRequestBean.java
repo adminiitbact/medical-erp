@@ -12,7 +12,6 @@ public class WardRequestBean extends BaseRequest {
 	private int wardId;
 	private String name;
 	private String buildingName;
-	private String wardNumber;
 	private String floor;
 	private CovidStatus covidStatus;
 	private SEVERITY severity;
@@ -104,17 +103,6 @@ public class WardRequestBean extends BaseRequest {
 	public void setExtraFields(Object extraFields) {
 		this.extraFields = extraFields;
 	}
-
-
-	public String getWardNumber() {
-		return wardNumber;
-	}
-
-
-	public void setWardNumber(String wardNumber) {
-		this.wardNumber = wardNumber;
-	}
-
 
 	public CovidStatus getCovidStatus() {
 		return covidStatus;

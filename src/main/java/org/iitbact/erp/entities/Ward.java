@@ -71,9 +71,6 @@ public class Ward implements Serializable {
 	@Column(name="ventilators_occupied")
 	private int ventilatorsOccupied;
 
-	@Column(name = "ward_number")
-	private String wardNumber;
-
 	public Ward() {
 	}
 
@@ -89,7 +86,6 @@ public class Ward implements Serializable {
 		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
-		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
 		this.setExtraFields(request.getExtraFields());
 		this.setFacilityId(facilityId2);
@@ -185,14 +181,6 @@ public class Ward implements Serializable {
 		this.ventilators = ventilators;
 	}
 
-	public String getWardNumber() {
-		return this.wardNumber;
-	}
-
-	public void setWardNumber(String wardNumber) {
-		this.wardNumber = wardNumber;
-	}
-
 	public void updateWard(WardRequestBean request) {
 		
 		if(request.getTotalBeds() < 0 ) {
@@ -213,7 +201,6 @@ public class Ward implements Serializable {
 		this.floor = request.getFloor();
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
-		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
 		this.covidWard=request.isCovidWard();
 		this.setExtraFields(request.getExtraFields());
