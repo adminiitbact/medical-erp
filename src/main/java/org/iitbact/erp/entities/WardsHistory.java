@@ -52,9 +52,6 @@ public class WardsHistory implements Serializable {
 
 	private String gender;
 
-	@Column(name="icu_beds")
-	private int icuBeds;
-
 	private String name;
 
 	private String severity;
@@ -74,18 +71,26 @@ public class WardsHistory implements Serializable {
 
 	@Column(name="ward_number")
 	private String wardNumber;
+	
+	@Column(name="covid_ward")
+	private boolean covidWard;
+	
+	@Column(name="ventilators_occupied")
+	private int ventilatorsOccupied;
+
 
 	public WardsHistory() {
 	}
 
 	public WardsHistory(WardRequestBean request,int facilityId,int wardId) {
-		this.setAvailableBeds(request.getTotalBeds()-request.getBedsOccupied());
+		this.setAvailableBeds(request.getTotalBeds());
 		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getPatientType().toString());
+		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
-		this.setIcuBeds(request.getIcuBeds());
-		this.setVentilators(request.getVentilators());;
-		this.setFloor(request.getFloorNo());
+		this.setVentilators(request.getVentilators());
+		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
+		this.setCovidWard(request.isCovidWard());
+		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
@@ -152,14 +157,6 @@ public class WardsHistory implements Serializable {
 		this.gender = gender;
 	}
 
-	public int getIcuBeds() {
-		return this.icuBeds;
-	}
-
-	public void setIcuBeds(int icuBeds) {
-		this.icuBeds = icuBeds;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -214,6 +211,22 @@ public class WardsHistory implements Serializable {
 
 	public void setWardNumber(String wardNumber) {
 		this.wardNumber = wardNumber;
+	}
+
+	public boolean isCovidWard() {
+		return covidWard;
+	}
+
+	public void setCovidWard(boolean covidWard) {
+		this.covidWard = covidWard;
+	}
+
+	public int getVentilatorsOccupied() {
+		return ventilatorsOccupied;
+	}
+
+	public void setVentilatorsOccupied(int ventilatorsOccupied) {
+		this.ventilatorsOccupied = ventilatorsOccupied;
 	}
 
 }

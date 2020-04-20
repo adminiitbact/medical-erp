@@ -12,6 +12,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.iitbact.erp.exceptions.HospitalErpErrorCode;
+import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.exceptions.HosptialErpErrorMsg;
 import org.iitbact.erp.requests.WardRequestBean;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -26,9 +29,6 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Ward implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Column(name = "available_beds")
-	private int availableBeds;
 
 	@Column(name = "building_name")
 	private String buildingName;
@@ -47,8 +47,8 @@ public class Ward implements Serializable {
 
 	private String gender;
 
-	@Column(name = "icu_beds")
-	private int icuBeds;
+	@Column(name="covid_ward")
+	private boolean covidWard;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,8 +61,15 @@ public class Ward implements Serializable {
 
 	@Column(name = "total_beds")
 	private int totalBeds;
+	
+	@Column(name = "available_beds")
+	private int availableBeds;
+	
 
 	private int ventilators;
+	
+	@Column(name="ventilators_occupied")
+	private int ventilatorsOccupied;
 
 	@Column(name = "ward_number")
 	private String wardNumber;
@@ -71,27 +78,23 @@ public class Ward implements Serializable {
 	}
 
 	public Ward(WardRequestBean request, int facilityId2) {
-		this.setAvailableBeds(request.getTotalBeds() - request.getBedsOccupied());
+		if(request.getTotalBeds()<0) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
+		this.setAvailableBeds(request.getTotalBeds());
 		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getPatientType().toString());
+		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
-		this.setIcuBeds(request.getIcuBeds());
 		this.setVentilators(request.getVentilators());
-		this.setFloor(request.getFloorNo());
+		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
 		this.setExtraFields(request.getExtraFields());
 		this.setFacilityId(facilityId2);
-	}
-
-	public int getAvailableBeds() {
-		return this.availableBeds;
-	}
-
-	public void setAvailableBeds(int availableBeds) {
-		this.availableBeds = availableBeds;
+		this.setCovidWard(request.isCovidWard());
+		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
 	}
 
 	public String getBuildingName() {
@@ -142,15 +145,6 @@ public class Ward implements Serializable {
 		this.gender = gender;
 	}
 
-	public int getIcuBeds() {
-		return this.icuBeds;
-	}
-
-	public void setIcuBeds(int icuBeds) {
-		this.icuBeds = icuBeds;
-	}
-
-
 	public int getId() {
 		return id;
 	}
@@ -200,21 +194,55 @@ public class Ward implements Serializable {
 	}
 
 	public void updateWard(WardRequestBean request) {
-		// TODO how to work out this? open due to lack of clarity
-		this.setAvailableBeds(request.getTotalBeds() - request.getBedsOccupied());
+		
+		if(request.getTotalBeds() < 0 ) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
+		
+		int newAvailablity=this.availableBeds+(request.getTotalBeds()-this.totalBeds);
+		
+		if(newAvailablity < 0 ) {
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
+		}
+		
+		this.setAvailableBeds(newAvailablity);
 		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getPatientType().toString());
+		this.setCovidStatus(request.getCovidStatus().toString());
 		this.setSeverity(request.getSeverity().toString());
-		this.setIcuBeds(request.getIcuBeds());
 		this.setVentilators(request.getVentilators());
-		this.floor = request.getFloorNo();
-
+		this.floor = request.getFloor();
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
 		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
+		this.covidWard=request.isCovidWard();
 		this.setExtraFields(request.getExtraFields());
+		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
 
+	}
+
+	public int getVentilatorsOccupied() {
+		return ventilatorsOccupied;
+	}
+
+	public void setVentilatorsOccupied(int ventilatorsOccupied) {
+		this.ventilatorsOccupied = ventilatorsOccupied;
+	}
+
+	public boolean isCovidWard() {
+		return covidWard;
+	}
+
+	public void setCovidWard(boolean covidWard) {
+		this.covidWard = covidWard;
+	}
+
+	public int getAvailableBeds() {
+		return availableBeds;
+	}
+
+	public void setAvailableBeds(int availableBeds) {
+		this.availableBeds = availableBeds;
 	}
 
 }

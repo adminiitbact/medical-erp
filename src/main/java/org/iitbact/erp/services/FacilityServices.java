@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.iitbact.erp.beans.FacilityProfileWithAvailablity;
 import org.iitbact.erp.constants.Constants;
-import org.iitbact.erp.constants.PatientType;
+import org.iitbact.erp.constants.CovidStatus;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.FacilityDetails;
@@ -180,9 +180,9 @@ public class FacilityServices {
 
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
-			return PatientType.CONFIRMED.toString();
+			return CovidStatus.CONFIRMED.toString();
 		} else {
-			return PatientType.CONFIRMED.toString();
+			return CovidStatus.CONFIRMED.toString();
 		}
 	}
 

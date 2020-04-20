@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+
 import java.util.Base64;
 import java.util.Base64.Decoder;
 
@@ -38,7 +38,7 @@ public class FirebaseConfig {
 			FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setDatabaseUrl(dbUrl)
 					.build();
 			FirebaseApp.initializeApp(options);
-		}else {
+		} else {
 			GoogleCredentials credentials = readCredentialsFromProperties();
 			FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setDatabaseUrl(dbUrl)
 					.build();
@@ -49,15 +49,17 @@ public class FirebaseConfig {
 	// Google credentials from firebase property from system
 	private GoogleCredentials readCredentialsFromProperties() {
 		try {
-	        //use ByteArrayInputStream to get the bytes of the String and convert them to InputStream.
-			Decoder decoder= Base64.getDecoder();
-	        InputStream inputStream = new ByteArrayInputStream(decoder.decode(credentials));
+			// use ByteArrayInputStream to get the bytes of the String and
+			// convert them to InputStream.
+			Decoder decoder = Base64.getDecoder();
+			InputStream inputStream = new ByteArrayInputStream(decoder.decode(credentials));
 			return GoogleCredentials.fromStream(inputStream);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+
 	// Google credentials for Dev using GOOGLE_APPLICATION_CREDENTIALS
 	private GoogleCredentials readCredentialsForDev() {
 		try {

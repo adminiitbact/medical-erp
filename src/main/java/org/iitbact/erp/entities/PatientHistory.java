@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.PatientDischargedRequestBean;
-import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 
 
 /**
@@ -44,6 +43,9 @@ public class PatientHistory implements Serializable {
 	@Column(name="patient_id")
 	private int patientId;
 	
+	
+	@Column(name="patient_hospital_id")
+	private String patientHospitalId;
 
 	public PatientHistory() {
 	}
@@ -54,15 +56,25 @@ public class PatientHistory implements Serializable {
 		this.wardId=request.getWardId();
 		this.patientId=patient.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
+		if (request.getWardId() == 0) {
+			this.patientHospitalId = "NA";
+		}else {
+			this.patientHospitalId =request.getPatientHospitalId();
+		}
+		
 	}
 	
-
 	public PatientHistory(int patientId, PatientDischargedRequestBean request) {
 		this.severity=request.getSeverity().toString();
 		this.facilityId=request.getFacilityId();
 		this.wardId=request.getWardId();
 		this.patientId=patientId;
 		this.testStatus=request.getTestStatus().toString();
+		if (request.getWardId() == 0) {
+			this.patientHospitalId = "NA";
+		}else {
+			this.patientHospitalId =request.getPatientHospitalId();
+		}
 	}
 
 	public PatientHistory(PatientLiveStatus request) {
@@ -71,6 +83,7 @@ public class PatientHistory implements Serializable {
 		this.wardId=request.getWardId();
 		this.patientId=request.getPatientId();
 		this.testStatus=request.getTestStatus().toString();
+		this.patientHospitalId=request.getPatientHospitalId();
 	}
 
 	public int getFacilityId() {

@@ -12,5 +12,6 @@ public class HosptialErpErrorMsg {
 	public static final String COOKIE_NULL = "Token cannot be null";
 	public static final String INVALID_OTP = "Invalid Otp!";
 	public static final String DATE_FORMAT_ERROR = "Date is not in correct format!";
+	public static final String NO_ENOUGH_BEDS = "No bed is available in this ward!";
 	
 }
