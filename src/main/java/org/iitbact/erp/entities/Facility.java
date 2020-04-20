@@ -263,7 +263,7 @@ public class Facility implements Serializable, BaseBean {
 		this.agreementStatus = agreementStatus;
 	}
 
-	public boolean isSeperateEntryExitAvailable() {
+	public boolean isIsSeperateEntryExitAvailable() {
 		return isSeperateEntryExitAvailable;
 	}
 
@@ -271,7 +271,7 @@ public class Facility implements Serializable, BaseBean {
 		this.isSeperateEntryExitAvailable = isSeperateEntryExitAvailable;
 	}
 
-	public boolean isFeverClinicAvailable() {
+	public boolean isIsFeverClinicAvailable() {
 		return isFeverClinicAvailable;
 	}
 
