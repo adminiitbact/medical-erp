@@ -69,9 +69,6 @@ public class WardsHistory implements Serializable {
 	@Column(name="ward_id")
 	private int wardId;
 
-	@Column(name="ward_number")
-	private String wardNumber;
-	
 	@Column(name="covid_ward")
 	private boolean covidWard;
 	
@@ -93,7 +90,6 @@ public class WardsHistory implements Serializable {
 		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
-		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
 		this.setExtraFields(request.getExtraFields());
 		
@@ -203,14 +199,6 @@ public class WardsHistory implements Serializable {
 
 	public void setWardId(int wardId) {
 		this.wardId = wardId;
-	}
-
-	public String getWardNumber() {
-		return this.wardNumber;
-	}
-
-	public void setWardNumber(String wardNumber) {
-		this.wardNumber = wardNumber;
 	}
 
 	public boolean isCovidWard() {
