@@ -5,6 +5,7 @@ import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
+import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
@@ -46,6 +47,20 @@ public class WardController {
 		BooleanResponse data = new BooleanResponse();
 		try {
 			data = (wardServices.addAndUpdateWards(facilityId, request));
+		} catch (HospitalErpException e) {
+			error = e.getError();
+		}
+		ResponseBuilder responseBuilder = new ResponseBuilder(data, error);
+		return responseBuilder.build();
+	}
+	
+	@PostMapping(path = "/facilities/{facilityId}/wards/{wardId}/remove")
+	@ApiOperation(response = BooleanResponse.class, value = "API to remove a ward from a facilities given no patient is allocated to the ward")
+	public ResponseBean removeWard(@PathVariable int facilityId,@PathVariable int wardId,@RequestBody BaseRequest request) {
+		HospitalErpError error = null;
+		BooleanResponse data = new BooleanResponse();
+		try {
+			data = (wardServices.removeWard(facilityId,wardId,request));
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}
