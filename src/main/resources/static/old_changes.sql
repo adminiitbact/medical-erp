@@ -1,3 +1,9 @@
+--------------------------------- Done 20/04/2020 -----------------------------
+ALTER TABLE `wards`
+	DROP COLUMN `ward_number`;
+
+ALTER TABLE `wards_history`
+	DROP COLUMN `ward_number`;
 --------------------------------- Done 20/04/2020 ------------------------------
 ALTER TABLE `wards`
 	ADD COLUMN `ventilators_occupied` INT(11) NOT NULL DEFAULT '0' AFTER `ventilators`;

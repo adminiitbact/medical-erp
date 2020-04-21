@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class WardRequestBean extends BaseRequest {
 	
-	@ApiModelProperty(value = "wardId = 0 in case of adding a new ward & non zero othrwise")
+	@ApiModelProperty(value = "wardId = 0 in case of adding a new ward & non zero otherwise")
 	private int wardId;
 	private String name;
 	private String buildingName;
@@ -19,6 +19,7 @@ public class WardRequestBean extends BaseRequest {
 	private int totalBeds;
 	private int ventilators;
 	private int ventilatorsOccupied;
+	
 	private boolean covidWard;
 	
 	@ApiModelProperty(value = "Other fields ,please refer to field highlight in green https://docs.google.com/presentation/d/1G2P_uVOqln2j2UGLSJ0q28a5bfdTaZHywCeVX1w9mHM/edit#slide=id.g73475c0e45_0_152")
