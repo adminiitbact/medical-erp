@@ -1,9 +1,9 @@
 package org.iitbact.erp.controllers;
 
-import org.iitbact.erp.beans.FacilityProfileWithAvailablity;
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.entities.Facility;
+import org.iitbact.erp.entities.FacilityDetails;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.exceptions.HospitalErpError;
 import org.iitbact.erp.exceptions.HospitalErpException;
@@ -142,10 +142,10 @@ public class FacilityController {
 	}
 	
 	@PostMapping(path = "/facilities/{facilityId}")
-	@ApiOperation(response = FacilityProfileWithAvailablity.class,responseContainer = "List", value = " API request to fetch all available facilities")
+	@ApiOperation(response = FacilityDetails.class,responseContainer = "List", value = " API request to fetch all available facilities")
 	public ResponseBean facilities(@PathVariable int facilityId, @RequestBody FacilityRequest request) {
 		HospitalErpError error = null;
-		ListResponse<FacilityProfileWithAvailablity> data = new ListResponse<FacilityProfileWithAvailablity>();
+		ListResponse<FacilityDetails> data = new ListResponse<FacilityDetails>();
 		try {
 			data.setList(facilityServices.facilities(facilityId,request));
 		} catch (HospitalErpException e) {
