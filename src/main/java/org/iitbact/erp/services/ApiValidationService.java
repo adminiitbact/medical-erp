@@ -8,6 +8,8 @@ import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.WardRequestBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class ApiValidationService {
 	@Autowired
 	private WardServices wardServices;
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApiValidationService.class);
+
 	public String verifyFirebaseIdToken(String authToken) {
 
 		try {
@@ -31,7 +35,7 @@ public class ApiValidationService {
 			String uid = decodedToken.getUid();
 			return uid;
 		} catch (FirebaseAuthException e) {
-			System.out.println("Firebase token has expired or invalid!");
+			LOGGER.error("Firebase token has expired or invalid!");
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
 					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
 		}
@@ -42,7 +46,8 @@ public class ApiValidationService {
 		HospitalUser hospitalUser = userServices.userProfileWrtUserId(userId);
 
 		if (facilityId != hospitalUser.getFacilityId()) {
-			System.out.println("Trying to access another facility data " + userId);
+			LOGGER.error("User with userId {} is trying to access data from another facility {}", userId, facilityId);
+			System.out.println();
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
 					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
 		}
@@ -52,28 +57,37 @@ public class ApiValidationService {
 		String userId = verifyFirebaseIdToken(request.getAuthToken());
 		checkForUserFacility(userId, facilityId);
 	}
-	
-	//we are not deleting ward just soft removing it , so what will happen if someone add the same name/bulding/floor tupple again?//TODO
+
 	public Ward addAndUpdateWards(int facilityId, WardRequestBean request) {
 		String userId = verifyFirebaseIdToken(request.getAuthToken());
 
 		checkForUserFacility(userId, facilityId);
 
 		if (request.getTotalBeds() < 0 || request.getVentilators() < 0 || request.getVentilatorsOccupied() < 0) {
-			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT,HospitalErpErrorMsg.NEGATIVE_VALUES);
+			LOGGER.error(
+					"Negative input for facility/ward - {}/{} (Totalbeds {} , Ventilators {}  OccupiedVentilators {})",
+					facilityId, request.getWardId(), request.getTotalBeds(), request.getVentilators(),
+					request.getVentilatorsOccupied());
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.NEGATIVE_VALUES);
 		}
 
 		Ward ward = null;
 		if (request.getWardId() != 0) {
 			ward = wardServices.findWardByIdAndFacilityId(request.getWardId(), facilityId);
-			
-			if(!ward.isActive()) {
-				throw new HospitalErpException(HospitalErpErrorCode.WARD_NOT_ACTIVE,HospitalErpErrorMsg.WARD_NOT_ACTIVE);
+
+			if (!ward.isActive()) {
+				LOGGER.error("Ward is already deleted facility/ward - {}/{}", facilityId, request.getWardId());
+				throw new HospitalErpException(HospitalErpErrorCode.WARD_NOT_ACTIVE,
+						HospitalErpErrorMsg.WARD_NOT_ACTIVE);
 			}
-			
+
 			int newAvailablity = ward.getAvailableBeds() + (request.getTotalBeds() - ward.getTotalBeds());
 			if (newAvailablity < 0) {
-				throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT,HospitalErpErrorMsg.MORE_PATIENT_EXIST);
+				LOGGER.error(
+						"Total beds cannot be less than beds total occupied beds within ward! facility/ward - {}/{}",
+						facilityId, request.getWardId());
+				throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT,
+						HospitalErpErrorMsg.MORE_PATIENT_EXIST);
 			}
 		}
 		return ward;
@@ -85,12 +99,13 @@ public class ApiValidationService {
 		checkForUserFacility(userId, facilityId);
 
 		Ward ward = wardServices.findWardByIdAndFacilityId(wardId, facilityId);
-		
-		if(!ward.isActive()) {
-			throw new HospitalErpException(HospitalErpErrorCode.WARD_NOT_ACTIVE,HospitalErpErrorMsg.WARD_NOT_ACTIVE);
+
+		if (!ward.isActive()) {
+			throw new HospitalErpException(HospitalErpErrorCode.WARD_NOT_ACTIVE, HospitalErpErrorMsg.WARD_NOT_ACTIVE);
 		}
-		
+
 		if (ward.getAvailableBeds() != ward.getTotalBeds()) {
+			LOGGER.error("Ward is occupied! facility/ward - {}/{}", facilityId, ward.getId());
 			throw new HospitalErpException(HospitalErpErrorCode.REMOVE_WARD_FAILED,
 					HospitalErpErrorMsg.REMOVE_WARD_FAILED);
 		}

@@ -54,8 +54,7 @@ public class WardServices {
 			wardHistoryRepository.save(new WardsHistory(ward));
 		} catch (Exception e) {
 			System.out.println("System Error {saveWard} :  facilityId : " + ward.getFacilityId());
-			//TODO remove extra msg after discussing with team on unique constraint
-			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR + " Also cross check the wardname/floor/building for duplicacy!");
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
 		}
 	}
 
