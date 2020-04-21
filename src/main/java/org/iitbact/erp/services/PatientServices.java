@@ -1,5 +1,7 @@
 package org.iitbact.erp.services;
 
+import java.text.ParseException;
+
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientDischarged;
 import org.iitbact.erp.entities.PatientHistory;
@@ -52,7 +54,7 @@ public class PatientServices {
 	}
 
 	@Transactional
-	public BooleanResponse addPatient(PostPatientRequestBean request) {
+	public BooleanResponse addPatient(PostPatientRequestBean request) throws ParseException {
 
 		// TODO validation to check if user exist wrt mobilie no. age & gender
 		// (to reduce duplicate data in system)
@@ -93,7 +95,7 @@ public class PatientServices {
 		return patientRepository.findById(patientId).get();
 	}
 
-	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
+	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) throws ParseException {
 		Patient profile = validationService.updatePatientProfile(patientId, request);
 		profile.updatePatient(request);
 		patientRepository.save(profile);

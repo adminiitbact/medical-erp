@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.Ward;
@@ -32,7 +33,7 @@ public class ApiValidationService {
 
 	@Autowired
 	private WardServices wardServices;
-	
+
 	@Autowired
 	private PatientServices patientServices;
 
@@ -122,23 +123,22 @@ public class ApiValidationService {
 		return ward;
 	}
 
-	public Patient addPatient(PostPatientRequestBean request) {
+	public Patient addPatient(PostPatientRequestBean request) throws ParseException {
 		verifyFirebaseIdToken(request.getAuthToken());
 		isDateValid(request.getDob());
 		return new Patient(request);
 	}
 
 	private void isDateValid(String date) {
-		String DATE_FORMAT = "YYYY-MM-dd";
 		try {
-			DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+			DateFormat df = new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE);
 			df.setLenient(false);
 			df.parse(date);
 		} catch (ParseException e) {
-			LOGGER.error("Patient dob is in Invalid format! dob - ",date);
+			LOGGER.error("Patient dob is in Invalid format! dob - ", date);
 			throw new HospitalErpException(HospitalErpErrorCode.DATE_FORMAT_ERROR,
 					HospitalErpErrorMsg.DATE_FORMAT_ERROR);
-			
+
 		}
 	}
 
@@ -147,5 +147,5 @@ public class ApiValidationService {
 		isDateValid(request.getDob());
 		return patientServices.findById(patientId);
 	}
-	
+
 }
