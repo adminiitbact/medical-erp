@@ -5,6 +5,7 @@ import java.util.Collections;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,9 @@ public class HospitalErpApplication {
 
 	@Autowired
 	DataSource dataSource;
+	
+	@Value("${swagger.host}")
+	private String swaggerHost;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HospitalErpApplication.class, args);
@@ -31,7 +35,7 @@ public class HospitalErpApplication {
 	public Docket swaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("org.iitbact.erp")).build().apiInfo(apiInfo())
-				.host("staging.cov2.in");
+				.host(swaggerHost);
 	}
 
 	private ApiInfo apiInfo() {

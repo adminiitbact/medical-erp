@@ -8,11 +8,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class WardRequestBean extends BaseRequest {
 	
-	@ApiModelProperty(value = "wardId = 0 in case of adding a new ward & non zero othrwise")
+	@ApiModelProperty(value = "wardId = 0 in case of adding a new ward & non zero otherwise")
 	private int wardId;
 	private String name;
 	private String buildingName;
-	private String wardNumber;
 	private String floor;
 	private CovidStatus covidStatus;
 	private SEVERITY severity;
@@ -20,6 +19,7 @@ public class WardRequestBean extends BaseRequest {
 	private int totalBeds;
 	private int ventilators;
 	private int ventilatorsOccupied;
+	
 	private boolean covidWard;
 	
 	@ApiModelProperty(value = "Other fields ,please refer to field highlight in green https://docs.google.com/presentation/d/1G2P_uVOqln2j2UGLSJ0q28a5bfdTaZHywCeVX1w9mHM/edit#slide=id.g73475c0e45_0_152")
@@ -104,17 +104,6 @@ public class WardRequestBean extends BaseRequest {
 	public void setExtraFields(Object extraFields) {
 		this.extraFields = extraFields;
 	}
-
-
-	public String getWardNumber() {
-		return wardNumber;
-	}
-
-
-	public void setWardNumber(String wardNumber) {
-		this.wardNumber = wardNumber;
-	}
-
 
 	public CovidStatus getCovidStatus() {
 		return covidStatus;

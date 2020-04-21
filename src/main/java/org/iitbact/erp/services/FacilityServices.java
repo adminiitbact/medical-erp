@@ -1,9 +1,7 @@
 package org.iitbact.erp.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.iitbact.erp.beans.FacilityProfileWithAvailablity;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.constants.CovidStatus;
 import org.iitbact.erp.constants.TEST_STATUS;
@@ -119,7 +117,7 @@ public class FacilityServices {
 	}
 
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
-		 this.authenticateUser(request.getAuthToken());
+		this.authenticateUser(request.getAuthToken());
 		if (request.isWardAlloted()) {
 			return patientLiveStatusRepository.findWardAllotedPatientByFacilityId(facilityId);
 		} else {
@@ -127,62 +125,22 @@ public class FacilityServices {
 		}
 	}
 
-	//
-
-	public List<FacilityProfileWithAvailablity> facilities(int facilityId, FacilityRequest request) {
+	public List<FacilityDetails> facilities(int facilityId, FacilityRequest request) {
 		this.authenticateUser(request.getAuthToken());
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
 
-		List<FacilityDetails> facilities = null;
-		// List<FacilityAssignedPatients> assignedPatients=null;//TODO do
-		// something about it
+		List<FacilityDetails> facilities = facilityRepository.getFacilities(covidStatus,
+				request.getSeverity().toString(), facilityId);
 
-		// Fetch facilities based on covid status (suspected/confirmed)
-		if (covidStatus != null && facilityId != 0) {
-			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(), facilityId);
-			/*
-			 * assignedPatients = facilityRepository
-			 * .assignedPatients(request.getSeverity().toString(),
-			 * request.getTestStatus().toString());
-			 */
-		} else {
-			facilities = facilityRepository.getFacilities();// TODO what to do
-															// in case of
-															// nagative
-			/*
-			 * assignedPatients = facilityRepository .assignedPatients();
-			 */
-		}
-
-		// Create Response
-		List<FacilityProfileWithAvailablity> data = new ArrayList<FacilityProfileWithAvailablity>();
-
-		for (FacilityDetails facility : facilities) {
-			FacilityProfileWithAvailablity facilityProfileWithAvailablity = new FacilityProfileWithAvailablity(
-					facility);
-
-			/*
-			 * if(!assignedPatients.isEmpty()) { FacilityAssignedPatients
-			 * totalAssigned = assignedPatients.stream().filter(x ->
-			 * facilityProfileWithAvailablity.getFacilityId() ==
-			 * x.getFacilityId()).findAny().get();
-			 * 
-			 * if (totalAssigned != null) {
-			 * facilityProfileWithAvailablity.substractAssigned(totalAssigned.
-			 * getTotalAssigned()); } }
-			 */
-
-			data.add(facilityProfileWithAvailablity);
-		}
-		return data;
+		return facilities;
 	}
 
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
 			return CovidStatus.CONFIRMED.toString();
 		} else {
-			return CovidStatus.CONFIRMED.toString();
+			return CovidStatus.SUSPECTED.toString();
 		}
 	}
 

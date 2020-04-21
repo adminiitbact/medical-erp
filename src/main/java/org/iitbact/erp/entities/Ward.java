@@ -12,9 +12,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.iitbact.erp.exceptions.HospitalErpErrorCode;
-import org.iitbact.erp.exceptions.HospitalErpException;
-import org.iitbact.erp.exceptions.HosptialErpErrorMsg;
 import org.iitbact.erp.requests.WardRequestBean;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -70,17 +67,13 @@ public class Ward implements Serializable {
 	
 	@Column(name="ventilators_occupied")
 	private int ventilatorsOccupied;
-
-	@Column(name = "ward_number")
-	private String wardNumber;
+	
+	private boolean active;
 
 	public Ward() {
 	}
 
 	public Ward(WardRequestBean request, int facilityId2) {
-		if(request.getTotalBeds()<0) {
-			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
-		}
 		this.setAvailableBeds(request.getTotalBeds());
 		this.setTotalBeds(request.getTotalBeds());
 		this.setCovidStatus(request.getCovidStatus().toString());
@@ -89,12 +82,34 @@ public class Ward implements Serializable {
 		this.setFloor(request.getFloor());
 		this.setName(request.getName());
 		this.setGender(request.getGender().toString());
-		this.setWardNumber(request.getWardNumber());
 		this.setBuildingName(request.getBuildingName());
 		this.setExtraFields(request.getExtraFields());
 		this.setFacilityId(facilityId2);
 		this.setCovidWard(request.isCovidWard());
 		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
+		this.setActive(true);
+	}
+	
+	public void updateWard(WardRequestBean request) {
+		int newAvailablity=this.availableBeds+(request.getTotalBeds()-this.totalBeds);
+		this.setAvailableBeds(newAvailablity);
+		
+		this.setTotalBeds(request.getTotalBeds());
+		
+		this.setCovidStatus(request.getCovidStatus().toString());
+		this.setSeverity(request.getSeverity().toString());
+		
+		//Unique constraint//TODO we should remove this as delete feature is up
+		this.floor = request.getFloor();
+		this.setName(request.getName());
+		this.setBuildingName(request.getBuildingName());
+		
+		this.setGender(request.getGender().toString());
+		
+		this.covidWard=request.isCovidWard();
+		this.setExtraFields(request.getExtraFields());
+		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
+		this.setVentilators(request.getVentilators());
 	}
 
 	public String getBuildingName() {
@@ -185,42 +200,6 @@ public class Ward implements Serializable {
 		this.ventilators = ventilators;
 	}
 
-	public String getWardNumber() {
-		return this.wardNumber;
-	}
-
-	public void setWardNumber(String wardNumber) {
-		this.wardNumber = wardNumber;
-	}
-
-	public void updateWard(WardRequestBean request) {
-		
-		if(request.getTotalBeds() < 0 ) {
-			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
-		}
-		
-		int newAvailablity=this.availableBeds+(request.getTotalBeds()-this.totalBeds);
-		
-		if(newAvailablity < 0 ) {
-			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HosptialErpErrorMsg.INVALID_INPUT);
-		}
-		
-		this.setAvailableBeds(newAvailablity);
-		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getCovidStatus().toString());
-		this.setSeverity(request.getSeverity().toString());
-		this.setVentilators(request.getVentilators());
-		this.floor = request.getFloor();
-		this.setName(request.getName());
-		this.setGender(request.getGender().toString());
-		this.setWardNumber(request.getWardNumber());
-		this.setBuildingName(request.getBuildingName());
-		this.covidWard=request.isCovidWard();
-		this.setExtraFields(request.getExtraFields());
-		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
-
-	}
-
 	public int getVentilatorsOccupied() {
 		return ventilatorsOccupied;
 	}
@@ -243,6 +222,14 @@ public class Ward implements Serializable {
 
 	public void setAvailableBeds(int availableBeds) {
 		this.availableBeds = availableBeds;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }
