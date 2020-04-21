@@ -1,5 +1,11 @@
 ## Helper scripts
 
+Install required packages
+
+```
+$ npm i fast-csv generate-password argparse firebase-admin
+```
+
 ### To create firebase  credentials for users.
 
 ```
