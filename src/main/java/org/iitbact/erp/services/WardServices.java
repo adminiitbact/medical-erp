@@ -22,9 +22,12 @@ public class WardServices {
 
 	@Autowired
 	private WardHistoryRepository wardHistoryRepository;
+	
+	@Autowired
+	private ApiValidationService validationService;
 
 	private void authenticateUser(String authToken) {
-		// validationService.verifyFirebaseIdToken(authToken); //TODO
+		validationService.verifyFirebaseIdToken(authToken); //TODO
 		// userRepository.findByUserId(userId);
 		// TODO: If user.facilityId == facilityId or user should be able to
 		// access this
