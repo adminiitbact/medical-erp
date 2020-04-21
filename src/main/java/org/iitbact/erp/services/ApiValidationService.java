@@ -1,12 +1,19 @@
 package org.iitbact.erp.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.iitbact.erp.entities.HospitalUser;
+import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpErrorCode;
 import org.iitbact.erp.exceptions.HospitalErpErrorMsg;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
+import org.iitbact.erp.requests.PatientProfileRequestBean;
+import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +32,9 @@ public class ApiValidationService {
 
 	@Autowired
 	private WardServices wardServices;
+	
+	@Autowired
+	private PatientServices patientServices;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiValidationService.class);
 
@@ -112,4 +122,30 @@ public class ApiValidationService {
 		return ward;
 	}
 
+	public Patient addPatient(PostPatientRequestBean request) {
+		verifyFirebaseIdToken(request.getAuthToken());
+		isDateValid(request.getDob());
+		return new Patient(request);
+	}
+
+	private void isDateValid(String date) {
+		String DATE_FORMAT = "YYYY-MM-dd";
+		try {
+			DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+			df.setLenient(false);
+			df.parse(date);
+		} catch (ParseException e) {
+			LOGGER.error("Patient dob is in Invalid format! dob - ",date);
+			throw new HospitalErpException(HospitalErpErrorCode.DATE_FORMAT_ERROR,
+					HospitalErpErrorMsg.DATE_FORMAT_ERROR);
+			
+		}
+	}
+
+	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
+		verifyFirebaseIdToken(request.getAuthToken());
+		isDateValid(request.getDob());
+		return patientServices.findById(patientId);
+	}
+	
 }

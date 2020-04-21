@@ -58,7 +58,7 @@ public class PatientController {
 	}
 	
 	@PostMapping(path = "/patients/new")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's into database")
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's profile or biodata")
 	public ResponseBean addPatient(@RequestBody PostPatientRequestBean request) {
 		HospitalErpError error = null;
 		BooleanResponse data = null;

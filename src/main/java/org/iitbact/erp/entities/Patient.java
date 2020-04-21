@@ -21,17 +21,14 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
-@TypeDef(
-	    name = "json",
-	    typeClass = JsonStringType.class
-	)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
 	private String address;
 
-	private int age;
+	private String dob;
 
 	@Column(name = "contact_number")
 	private String contactNumber;
@@ -44,15 +41,15 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
-	
+
 	@Column(name = "emergency_contact")
 	private String emergencyContact;
-	
-	@Column(name="goi_covid_id")
+
+	@Column(name = "goi_covid_id")
 	private String goiCovidId;
-	
+
 	@Type(type = "json")
-    @Column(name="pre_existing_medical_condition",columnDefinition = "json")
+	@Column(name = "pre_existing_medical_condition", columnDefinition = "json")
 	private Object preExistingMedicalCondition;
 
 	public Patient() {
@@ -60,7 +57,7 @@ public class Patient implements Serializable {
 
 	public Patient(PostPatientRequestBean request) {
 		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
+		this.setDob(request.getDob());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -71,7 +68,7 @@ public class Patient implements Serializable {
 
 	public void updatePatient(PatientProfileRequestBean request) {
 		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
+		this.setDob(request.getDob());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -88,12 +85,13 @@ public class Patient implements Serializable {
 		this.address = address;
 	}
 
-	public int getAge() {
-		return this.age;
+
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 	public String getContactNumber() {

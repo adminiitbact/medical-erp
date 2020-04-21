@@ -53,13 +53,13 @@ public class PatientServices {
 
 	@Transactional
 	public BooleanResponse addPatient(PostPatientRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
+
 		// TODO validation to check if user exist wrt mobilie no. age & gender
 		// (to reduce duplicate data in system)
 		// TODO ward / facilily mapping check in case of ward Id is not zero
 		// TODO validation facility ID ==0
 
-		Patient patient = new Patient(request);
+		Patient patient = validationService.addPatient(request);
 		patient = patientRepository.save(patient);
 
 		// Insert into patient History & patient live status table
@@ -94,13 +94,9 @@ public class PatientServices {
 	}
 
 	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
-		// Validation //TODO
-		Patient profile = patientRepository.findById(patientId).get();
-		if (profile != null) {
-			profile.updatePatient(request);
-			patientRepository.save(profile);
-		}
+		Patient profile = validationService.updatePatientProfile(patientId, request);
+		profile.updatePatient(request);
+		patientRepository.save(profile);
 		return profile;
 	}
 
@@ -111,7 +107,7 @@ public class PatientServices {
 		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
 
 		changeWardAvailablility(request.getWardId(), patientCurrentStatus.getWardId());
-	
+
 		patientCurrentStatus.update(patientId, request);
 		if (request.getWardId() == 0) {
 			patientCurrentStatus.setPatientHospitalId("NA");
@@ -125,7 +121,7 @@ public class PatientServices {
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
 	}
-	
+
 	@Transactional(propagation = Propagation.MANDATORY)
 	public synchronized void changeWardAvailablility(int requestWardId, int currentWardId) {
 		if (currentWardId != 0 && requestWardId != currentWardId) {
@@ -136,7 +132,7 @@ public class PatientServices {
 
 		if (requestWardId != 0 && requestWardId != currentWardId) {
 			Ward newWard = wardRepo.getOne(requestWardId);
-			if(newWard.getAvailableBeds()<=0) {
+			if (newWard.getAvailableBeds() <= 0) {
 				throw new HospitalErpException(HospitalErpErrorCode.NO_ENOUGH_BEDS, HospitalErpErrorMsg.NO_ENOUGH_BEDS);
 			}
 			decreaseAvailabilityByOne(newWard);
@@ -174,5 +170,19 @@ public class PatientServices {
 
 		BooleanResponse returnVal = new BooleanResponse(true);
 		return returnVal;
+	}
+
+	public Patient findById(int patientId) {
+		try {
+			Patient patient = patientRepository.findById(patientId).get();
+			if (patient == null) {
+				System.out.println("Patient not found {findById} patientId : " + patientId);
+				throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.INVALID_INPUT);
+			}
+			return patient;
+		} catch (Exception e) {
+			System.out.println("System Error {findById} PatientId : " + patientId);
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
+		}
 	}
 }

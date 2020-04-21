@@ -15,6 +15,7 @@ public class HospitalErpErrorCode {
 	public static final long NO_ENOUGH_BEDS = 12;
 	public static final long REMOVE_WARD_FAILED = 13;
 	public static final long WARD_NOT_ACTIVE = 14;
+	public static final long DATE_FORMAT_ERROR = 15;
     
 }
 
