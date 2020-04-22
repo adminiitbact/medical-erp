@@ -182,7 +182,7 @@ public class FacilityServices {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
 			return CovidStatus.CONFIRMED.toString();
 		} else {
-			return CovidStatus.CONFIRMED.toString();
+			return CovidStatus.SUSPECTED.toString();
 		}
 	}
 
