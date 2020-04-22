@@ -23,6 +23,6 @@ public interface Constants {
 	 final String GENDER = "gender";
 	final String ADDRESS = "address";
 	final String MYSQL_FORMAT = "yyyy-MM-dd";
-	final String MYSQL_FORMAT_REVERSE = "dd-MM-YYYY";
+	final String MYSQL_FORMAT_REVERSE = "dd-MM-yyyy";
 		
 }
