@@ -1,5 +1,7 @@
 package org.iitbact.erp.controllers;
 
+import java.text.ParseException;
+
 import org.iitbact.erp.beans.ResponseBean;
 import org.iitbact.erp.beans.ResponseBuilder;
 import org.iitbact.erp.exceptions.HospitalErpError;
@@ -45,7 +47,7 @@ public class PatientController {
 
 	@PostMapping(path = "/patients/{patientId}/profile/post")
 	@ApiOperation(response = PatientProfileResponse.class, value = "API to update patient's profile or biodata")
-	public ResponseBean updatePateintDetails(@PathVariable int patientId, @RequestBody PatientProfileRequestBean request)  {
+	public ResponseBean updatePateintDetails(@PathVariable int patientId, @RequestBody PatientProfileRequestBean request) throws ParseException  {
 		HospitalErpError error = null;
 		PatientProfileResponse data = new PatientProfileResponse();;
 		try {
@@ -58,8 +60,8 @@ public class PatientController {
 	}
 	
 	@PostMapping(path = "/patients/new")
-	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's into database")
-	public ResponseBean addPatient(@RequestBody PostPatientRequestBean request) {
+	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's profile or biodata")
+	public ResponseBean addPatient(@RequestBody PostPatientRequestBean request) throws ParseException {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {

@@ -1,6 +1,8 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 
@@ -21,17 +24,14 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
-@TypeDef(
-	    name = "json",
-	    typeClass = JsonStringType.class
-	)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
 	private String address;
 
-	private int age;
+	private String dob;
 
 	@Column(name = "contact_number")
 	private String contactNumber;
@@ -44,23 +44,27 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
-	
+
 	@Column(name = "emergency_contact")
 	private String emergencyContact;
-	
-	@Column(name="goi_covid_id")
+
+	@Column(name = "goi_covid_id")
 	private String goiCovidId;
-	
+
 	@Type(type = "json")
-    @Column(name="pre_existing_medical_condition",columnDefinition = "json")
+	@Column(name = "pre_existing_medical_condition", columnDefinition = "json")
 	private Object preExistingMedicalCondition;
 
 	public Patient() {
 	}
+	
+	public String formatDate(String date, String currentFormat, String newFormat) throws ParseException {
+		return new SimpleDateFormat(currentFormat).format(new SimpleDateFormat(newFormat).parse(date));
 
-	public Patient(PostPatientRequestBean request) {
+	}
+	public Patient(PostPatientRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
+		this.setDob(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).format(new SimpleDateFormat(Constants.MYSQL_FORMAT).parse(request.getDob())));
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -69,9 +73,9 @@ public class Patient implements Serializable {
 		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
 	}
 
-	public void updatePatient(PatientProfileRequestBean request) {
+	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
+		this.setDob(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).format(new SimpleDateFormat(Constants.MYSQL_FORMAT).parse(request.getDob())));
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -88,12 +92,13 @@ public class Patient implements Serializable {
 		this.address = address;
 	}
 
-	public int getAge() {
-		return this.age;
+
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDob(String dob) throws ParseException {
+		this.dob = (new SimpleDateFormat(Constants.MYSQL_FORMAT).format(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).parse(dob)));
 	}
 
 	public String getContactNumber() {

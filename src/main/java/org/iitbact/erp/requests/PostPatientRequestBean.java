@@ -5,14 +5,14 @@ import org.iitbact.erp.constants.TEST_STATUS;
 
 public class PostPatientRequestBean extends BaseRequest {
 	private String address;
-	private int age;
+	private String dob;
 	private String contactNumber;
 	private String gender;
 	private String name;
 	private String emergencyContact;
-	
+
 	private Object preExistingMedicalCondition;
-	
+
 	private String goiCovidId;
 	private String patientHospitalId;
 	private int facilityId;
@@ -20,7 +20,6 @@ public class PostPatientRequestBean extends BaseRequest {
 	private TEST_STATUS testStatus;
 	private SEVERITY severity;
 
-	
 	public String getPatientHospitalId() {
 		return patientHospitalId;
 	}
@@ -53,12 +52,12 @@ public class PostPatientRequestBean extends BaseRequest {
 		this.address = address;
 	}
 
-	public int getAge() {
-		return age;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 	public String getContactNumber() {
