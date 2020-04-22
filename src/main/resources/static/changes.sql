@@ -12,4 +12,9 @@ ALTER TABLE `wards_history`
 	ADD COLUMN `dob` DATE NOT NULL DEFAULT '0000-00-00' AFTER `gender`;
 
 	ALTER TABLE `patients`
+	DROP INDEX `name_age_contact_number`,
+	ADD UNIQUE INDEX `name_age_contact_number` (`name`, `dob`, `contact_number`);
+	
+	
+	ALTER TABLE `patients`
 	DROP COLUMN `age`;
