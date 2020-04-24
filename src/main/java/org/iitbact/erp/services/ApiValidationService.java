@@ -7,13 +7,16 @@ import java.text.SimpleDateFormat;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpErrorCode;
 import org.iitbact.erp.exceptions.HospitalErpErrorMsg;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
+import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.slf4j.Logger;
@@ -37,6 +40,7 @@ public class ApiValidationService {
 	@Autowired
 	private PatientServices patientServices;
 
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiValidationService.class);
 
 	public String verifyFirebaseIdToken(String authToken) {
@@ -143,9 +147,38 @@ public class ApiValidationService {
 	}
 
 	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
-		verifyFirebaseIdToken(request.getAuthToken());
+		String userId = verifyFirebaseIdToken(request.getAuthToken());
+		checkForUserFacility(userId, patientServices.findStatusByPatientId(patientId).getFacilityId());
 		isDateValid(request.getDob());
 		return patientServices.findById(patientId);
 	}
+	
+	public void getPatientProfile(int patientId, BaseRequest request) {
+		String userId = verifyFirebaseIdToken(request.getAuthToken());
+		checkForUserPatient(userId, patientId);
+	}
+	
+	public PatientLiveStatus checkForUserPatient(String userId,int patientId){
+		PatientLiveStatus patientLiveStatus =  patientServices.findStatusByPatientId(patientId);
+		checkForUserFacility(userId,patientLiveStatus.getFacilityId());
+		return patientLiveStatus;
+	}
+
+	public void fetchPatientStatusLive(int patientId, BaseRequest request) {
+		String userId = verifyFirebaseIdToken(request.getAuthToken());
+		checkForUserPatient(userId, patientId);
+	}
+
+	public PatientLiveStatus patientStatusUpdate(int patientId, PatientTransferRequestBean request) {
+		String userId = verifyFirebaseIdToken(request.getAuthToken());
+		return checkForUserPatient(userId, patientId);
+	}
+
+	public PatientLiveStatus dischargePatient(int patientId, PatientDischargedRequestBean request) {
+		String userId = verifyFirebaseIdToken(request.getAuthToken());
+		return checkForUserPatient(userId, patientId);
+	}
+
+	
 
 }
