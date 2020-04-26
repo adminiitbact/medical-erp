@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.iitbact.erp.beans.BaseBean;
 import org.iitbact.erp.constants.Constants;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
