@@ -44,6 +44,7 @@ public class HospitalUser implements Serializable {
 	@Column(name="facility_id",insertable = false,updatable = false)
 	private int facilityId;
 	
+	private int region;
 
 	//uni-directional many-to-one association to Facility
 	@JsonIgnore
@@ -108,6 +109,14 @@ public class HospitalUser implements Serializable {
 
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	public int getRegion() {
+		return region;
+	}
+
+	public void setRegion(int region) {
+		this.region = region;
 	}
 
 }

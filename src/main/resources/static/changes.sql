@@ -6,6 +6,20 @@ ALTER TABLE `wards_history`
 	
 	ALTER TABLE `wards`
 	DROP INDEX `facility_id_name_ward_number_floor_building_name`;
+	
+
+	ALTER TABLE `facilities`
+	ADD COLUMN `region` TINYINT NOT NULL DEFAULT '1' AFTER `ulb_zone_name`;
+
+	CREATE TABLE `areas` (
+	`area_id` INT NOT NULL AUTO_INCREMENT,
+	`area` VARCHAR(50) NOT NULL,
+	`region` VARCHAR(50) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`area_id`)
+)
+COLLATE='latin1_swedish_ci'
+;
+
 
 	------------ Changes to accept DOB instead of age (22-04-2020)----------
 	ALTER TABLE `patients`

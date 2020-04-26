@@ -7,13 +7,16 @@ import java.text.SimpleDateFormat;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpErrorCode;
 import org.iitbact.erp.exceptions.HospitalErpErrorMsg;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
+import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
+import org.iitbact.erp.requests.PatientTransferRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.slf4j.Logger;
@@ -53,15 +56,14 @@ public class ApiValidationService {
 	}
 
 	// Check for illegal access accross facility
-	private void checkForUserFacility(String userId, int facilityId) {
+	public HospitalUser checkForUserFacility(String userId, int facilityId) {
 		HospitalUser hospitalUser = userServices.userProfileWrtUserId(userId);
-
 		if (facilityId != hospitalUser.getFacilityId()) {
 			LOGGER.error("User with userId {} is trying to access data from another facility {}", userId, facilityId);
-			System.out.println();
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
 					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
 		}
+		return hospitalUser;
 	}
 
 	public void fetchAvailableWards(int facilityId, FacilityRequest request) {
@@ -124,8 +126,16 @@ public class ApiValidationService {
 	}
 
 	public Patient addPatient(PostPatientRequestBean request) throws ParseException {
-		verifyFirebaseIdToken(request.getAuthToken());
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+
+		checkForUserFacility(uid, request.getFacilityId());
+
+		if (request.getWardId() != 0) {
+			wardServices.findWardByIdAndFacilityId(request.getWardId(), request.getFacilityId());
+		}
+
 		isDateValid(request.getDob());
+
 		return new Patient(request);
 	}
 
@@ -143,9 +153,81 @@ public class ApiValidationService {
 	}
 
 	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
-		verifyFirebaseIdToken(request.getAuthToken());
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		HospitalUser user = userServices.userProfileWrtUserId(uid);
+
+		PatientLiveStatus patientCurrentStatus = patientServices.patientLiveStatus(patientId);
+
+		if (patientCurrentStatus.getFacilityId() != user.getFacilityId()) {
+			LOGGER.error("Trying to updatePatientProfile a patient {} from another facility! UserId {}", patientId,
+					user.getEmailId());
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
+					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
+		}
+
 		isDateValid(request.getDob());
 		return patientServices.findById(patientId);
+	}
+
+	public HospitalUser checkUserFacility(int facilityId, BaseRequest request) {
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		return checkForUserFacility(uid, facilityId);
+	}
+
+	public PatientLiveStatus dischargePatient(int patientId, PatientDischargedRequestBean request) {
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		HospitalUser user = checkForUserFacility(uid, request.getFacilityId());
+
+		PatientLiveStatus patientCurrentStatus = patientServices.patientLiveStatus(patientId);
+
+		if (patientCurrentStatus.getFacilityId() != user.getFacilityId()) {
+			LOGGER.error("Trying to dishcarge a patient {} from another facility! UserId {}", patientId,
+					user.getEmailId());
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
+					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
+		}
+		return patientCurrentStatus;
+	}
+
+	public HospitalUser fetchPatientStatusLive(BaseRequest request) {
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		HospitalUser hospitalUser = userServices.userProfileWrtUserId(uid);
+		return hospitalUser;
+	}
+
+	public void getPatientProfile(int patientId, BaseRequest request) {
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		HospitalUser user = userServices.userProfileWrtUserId(uid);
+
+		PatientLiveStatus patientCurrentStatus = patientServices.patientLiveStatus(patientId);
+
+		if (patientCurrentStatus.getFacilityId() != user.getFacilityId()) {
+			LOGGER.error("Trying to getPatientProfile a patient {} from another facility! UserId {}", patientId,
+					user.getEmailId());
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
+					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
+		}
+	}
+
+	public PatientLiveStatus patientStatusUpdate(int patientId, PatientTransferRequestBean request) {
+		String uid = verifyFirebaseIdToken(request.getAuthToken());
+		
+		HospitalUser user = userServices.userProfileWrtUserId(uid);
+
+		PatientLiveStatus patientCurrentStatus = patientServices.patientLiveStatus(patientId);
+
+		if (patientCurrentStatus.getFacilityId() != user.getFacilityId()) {
+			LOGGER.error("Trying to update status of patient {} from another facility! UserId {}", patientId,
+					user.getEmailId());
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
+					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
+		}
+		
+		if (request.getWardId() != 0) {
+			wardServices.findWardByIdAndFacilityId(request.getWardId(), request.getFacilityId());
+		}
+
+		return patientCurrentStatus;
 	}
 
 }
