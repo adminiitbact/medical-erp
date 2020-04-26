@@ -106,8 +106,11 @@ public class FacilityServices {
 	}
 
 	public Facility fetchFacilityData(int facilityId, BaseRequest request) {
-		validationService.checkUserFacility(facilityId,request);
+		
+		validationService.checkUserFacility(facilityId, request);
+		
 		Facility facility = facilityRepository.findById(facilityId).get();
+		System.out.println("Fetching faciltiy details for facility Id "+ facility.getFacilityId());
 		return facility;
 	}
 
