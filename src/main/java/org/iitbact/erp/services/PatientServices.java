@@ -2,6 +2,7 @@ package org.iitbact.erp.services;
 
 import java.text.ParseException;
 
+import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientDischarged;
 import org.iitbact.erp.entities.PatientHistory;
@@ -49,19 +50,15 @@ public class PatientServices {
 	@Autowired
 	private PatientDischargedRepository patientDischargedRepository;
 
-	private void authenticateUser(String authToken) {
-		validationService.verifyFirebaseIdToken(authToken);
-	}
-
 	@Transactional
 	public BooleanResponse addPatient(PostPatientRequestBean request) throws ParseException {
 
 		// TODO validation to check if user exist wrt mobilie no. age & gender
 		// (to reduce duplicate data in system)
-		// TODO ward / facilily mapping check in case of ward Id is not zero
-		// TODO validation facility ID ==0
+		// cannot add a patient outside region TODO
 
 		Patient patient = validationService.addPatient(request);
+		
 		patient = patientRepository.save(patient);
 
 		// Insert into patient History & patient live status table
@@ -82,16 +79,18 @@ public class PatientServices {
 	}
 
 	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
+		HospitalUser user= validationService.fetchPatientStatusLive(request);
+		
 		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository
-				.findByPatientIdFromMultipleTables(patientId);
+				.findByPatientIdFromMultipleTables(patientId,user.getFacilityId());
+		
 		PatientLiveStatusResponse response = new PatientLiveStatusResponse();
 		response.setPatientStatus(patientStatus);
 		return response;
 	}
 
 	public Patient getPatientProfile(int patientId, BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
+		validationService.getPatientProfile(patientId,request);
 		return patientRepository.findById(patientId).get();
 	}
 
@@ -104,9 +103,8 @@ public class PatientServices {
 
 	@Transactional
 	public BooleanResponse patientStatusUpdate(int patientId, PatientTransferRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
-
-		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
+		
+		PatientLiveStatus patientCurrentStatus = validationService.patientStatusUpdate(patientId,request);
 
 		changeWardAvailablility(request.getWardId(), patientCurrentStatus.getWardId());
 
@@ -153,14 +151,11 @@ public class PatientServices {
 
 	@Transactional
 	public BooleanResponse dischargePatient(int patientId, PatientDischargedRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
-
-		PatientLiveStatus patientCurrentStatus = patientLiveStatusRepository.findByPatientId(patientId);
+		
+		PatientLiveStatus patientCurrentStatus =  validationService.dischargePatient(patientId,request);
 
 		if (patientCurrentStatus.getWardId() != 0) {
-			Ward newWard = wardRepo.getOne(patientCurrentStatus.getWardId());
-			increaseAvailabilityByOne(newWard);
-			wardRepo.save(newWard);
+			changeWardAvailablility(0, patientCurrentStatus.getWardId());
 		}
 
 		patientLiveStatusRepository.deleteById(patientCurrentStatus.getId());
@@ -184,6 +179,20 @@ public class PatientServices {
 			return patient;
 		} catch (Exception e) {
 			System.out.println("System Error {findById} PatientId : " + patientId);
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
+		}
+	}
+	
+	public PatientLiveStatus patientLiveStatus(int patientId) {
+		try {
+			PatientLiveStatus status = patientLiveStatusRepository.findByPatientId(patientId);
+			if (status == null) {
+				System.out.println("Patient Status not found {patientLiveStatus} patientId : " + patientId);
+				throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.INVALID_INPUT);
+			}
+			return status;
+		} catch (Exception e) {
+			System.out.println("Patient Status not found {patientLiveStatus} patientId : " + patientId);
 			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
 		}
 	}
