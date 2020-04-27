@@ -30,6 +30,10 @@ public class Patient implements Serializable {
 
 	@Lob
 	private String address;
+	
+	private String locality;
+	
+	private String pincode;
 
 	private String dob;
 
@@ -64,24 +68,28 @@ public class Patient implements Serializable {
 	}
 	public Patient(PostPatientRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setDob(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).format(new SimpleDateFormat(Constants.MYSQL_FORMAT).parse(request.getDob())));
+		this.setDob(formatDate(request.getDob(), Constants.MYSQL_FORMAT_REVERSE, Constants.MYSQL_FORMAT));
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
 		this.setGoiCovidId(request.getGoiCovidId());
 		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setLocality(request.getLocality());
+		this.setPincode(request.getPincode());
 	}
 
 	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setDob(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).format(new SimpleDateFormat(Constants.MYSQL_FORMAT).parse(request.getDob())));
+		this.setDob(formatDate(request.getDob(), Constants.MYSQL_FORMAT_REVERSE, Constants.MYSQL_FORMAT));
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
 		this.setGoiCovidId(request.getGoiCovidId());
 		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setLocality(request.getLocality());
+		this.setPincode(request.getPincode());
 	}
 
 	public String getAddress() {
@@ -98,7 +106,7 @@ public class Patient implements Serializable {
 	}
 
 	public void setDob(String dob) throws ParseException {
-		this.dob = (new SimpleDateFormat(Constants.MYSQL_FORMAT).format(new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE).parse(dob)));
+		this.dob = (formatDate(dob, Constants.MYSQL_FORMAT, Constants.MYSQL_FORMAT_REVERSE));
 	}
 
 	public String getContactNumber() {
@@ -155,5 +163,21 @@ public class Patient implements Serializable {
 
 	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
 		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 }
