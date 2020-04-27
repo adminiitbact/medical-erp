@@ -10,6 +10,8 @@ public class PostPatientRequestBean extends BaseRequest {
 	private String gender;
 	private String name;
 	private String emergencyContact;
+	private String locality;
+	private String pincode;
 
 	private Object preExistingMedicalCondition;
 
@@ -122,5 +124,21 @@ public class PostPatientRequestBean extends BaseRequest {
 
 	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
 		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 }

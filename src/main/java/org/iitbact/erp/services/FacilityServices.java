@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.constants.CovidStatus;
+import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.FacilityDetails;
@@ -127,11 +128,20 @@ public class FacilityServices {
 		HospitalUser user= validationService.checkUserFacility(facilityId,request);
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
+		String severity=getSeverity(request.getSeverity().toString());
 
 		List<FacilityDetails> facilities = facilityRepository.getFacilities(covidStatus,
-				request.getSeverity().toString(), facilityId,user.getRegion());
+				severity, facilityId,user.getRegion());
 
 		return facilities;
+	}
+
+	private String getSeverity(String severity) {
+		if (SEVERITY.ASYMPTOMATIC.toString().equalsIgnoreCase(severity)) {
+			return SEVERITY.MILD.toString();
+		} else {
+			return severity;
+		}
 	}
 
 	private String getCovidStatus(String testStatus) {

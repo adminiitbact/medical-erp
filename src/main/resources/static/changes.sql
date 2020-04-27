@@ -20,6 +20,10 @@ ALTER TABLE `wards_history`
 COLLATE='latin1_swedish_ci'
 ;
 
+ALTER TABLE `patients`
+	ADD COLUMN `locality` VARCHAR(50) NULL DEFAULT NULL AFTER `address`,
+	ADD COLUMN `pincode` VARCHAR(50) NULL DEFAULT NULL AFTER `locality`;
+
 
 	------------ Changes to accept DOB instead of age (22-04-2020)----------
 	ALTER TABLE `patients`
