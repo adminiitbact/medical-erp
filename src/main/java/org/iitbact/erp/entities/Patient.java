@@ -68,7 +68,7 @@ public class Patient implements Serializable {
 
 	public Patient(PostPatientRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setDob(formatDate(request.getDob(), Constants.MYSQL_FORMAT_REVERSE, Constants.MYSQL_FORMAT));
+		this.setDob(request.getDob());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -81,7 +81,7 @@ public class Patient implements Serializable {
 
 	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setDob(formatDate(request.getDob(), Constants.MYSQL_FORMAT_REVERSE, Constants.MYSQL_FORMAT));
+		this.setDob(request.getDob());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -100,13 +100,12 @@ public class Patient implements Serializable {
 		this.address = address;
 	}
 
-	public String getDob() throws ParseException {
-		return new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE)
-				.format(new SimpleDateFormat(Constants.MYSQL_FORMAT).parse(this.dob));
+	public String getDob() {
+		return dob;
 	}
 
 	public void setDob(String dob) throws ParseException {
-		this.dob = (formatDate(dob, Constants.MYSQL_FORMAT, Constants.MYSQL_FORMAT_REVERSE));
+		this.dob = dob;
 	}
 
 	public String getContactNumber() {

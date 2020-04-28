@@ -141,7 +141,7 @@ public class ApiValidationService {
 
 	private void isDateValid(String date) {
 		try {
-			DateFormat df = new SimpleDateFormat(Constants.MYSQL_FORMAT_REVERSE);
+			DateFormat df = new SimpleDateFormat(Constants.MYSQL_FORMAT);
 			df.setLenient(false);
 			df.parse(date);
 		} catch (ParseException e) {
