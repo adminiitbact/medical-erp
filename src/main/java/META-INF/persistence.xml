@@ -13,6 +13,7 @@
 		<class>org.iitbact.erp.entities.PatientHistory</class>
 		<class>org.iitbact.erp.entities.Ward</class>
 		<class>org.iitbact.erp.entities.WardsHistory</class>
+		<class>org.iitbact.erp.entities.PatientDischarged</class>
 		<properties>
 			<property name="eclipselink.exclude-eclipselink-orm" value="false"/>
 		</properties>
