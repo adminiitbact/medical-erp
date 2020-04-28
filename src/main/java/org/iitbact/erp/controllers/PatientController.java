@@ -80,7 +80,6 @@ public class PatientController {
 		PatientLiveStatusResponse data = null;
 		try {
 			data = (patientServices.fetchPatientStatusLive(patientId, request));
-
 		} catch (HospitalErpException e) {
 			error = e.getError();
 		}

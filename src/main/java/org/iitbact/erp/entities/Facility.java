@@ -53,6 +53,8 @@ public class Facility implements Serializable, BaseBean {
 
 	private String telephone;
 	
+	private int region;
+	
 	@Column(name="facility_status")
 	private String facilityStatus;
 	
@@ -277,6 +279,14 @@ public class Facility implements Serializable, BaseBean {
 
 	public void setFeverClinicAvailable(boolean isFeverClinicAvailable) {
 		this.isFeverClinicAvailable = isFeverClinicAvailable;
+	}
+
+	public int getRegion() {
+		return region;
+	}
+
+	public void setRegion(int region) {
+		this.region = region;
 	}
 
 }

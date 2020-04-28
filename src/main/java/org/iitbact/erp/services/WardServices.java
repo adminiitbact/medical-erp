@@ -3,6 +3,7 @@ package org.iitbact.erp.services;
 import java.util.List;
 
 import org.iitbact.erp.constants.CovidStatus;
+import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.entities.WardsHistory;
@@ -57,16 +58,17 @@ public class WardServices {
 			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
 		}
 	}
-
+	
+	
 	public List<Ward> fetchAvailableWards(int facilityId, FacilityRequest request) {
 
 		validationService.fetchAvailableWards(facilityId, request);
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
-
+		String severity=getSeverity(request.getSeverity().toString());
 		try {
 			return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId, covidStatus,
-					request.getSeverity().toString());
+					severity);
 		} catch (Exception e) {
 			System.out.println("System Error {fetchAvailableWards} :  facilityId : " + facilityId);
 			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
@@ -107,6 +109,14 @@ public class WardServices {
 			return CovidStatus.CONFIRMED.toString();
 		} else {
 			return CovidStatus.SUSPECTED.toString();
+		}
+	}
+	
+	private String getSeverity(String severity) {
+		if (SEVERITY.ASYMPTOMATIC.toString().equalsIgnoreCase(severity)) {
+			return SEVERITY.MILD.toString();
+		} else {
+			return severity;
 		}
 	}
 }

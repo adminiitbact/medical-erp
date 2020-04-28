@@ -16,6 +16,9 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String goiCovidId;
 
 	private Object preExistingMedicalCondition;
+	
+	private String locality;
+	private String pincode;
 
 	public String getAddress() {
 		return address;
@@ -79,6 +82,22 @@ public class PatientProfileRequestBean extends BaseRequest {
 
 	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
 		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 
 }
