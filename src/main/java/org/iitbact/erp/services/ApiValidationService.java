@@ -146,7 +146,7 @@ public class ApiValidationService {
 	 */
 
 	private void isMonthValid(int month) {
-		if (!(0 < month && month <= 12)) {
+		if (!(0 <= month && month <= 12)) {
 			LOGGER.error("Patient month is in Invalid! month - ", month);
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.INVALID_INPUT);
 		}
