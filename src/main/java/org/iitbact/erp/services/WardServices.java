@@ -28,10 +28,6 @@ public class WardServices {
 
 	@Autowired
 	private WardHistoryRepository wardHistoryRepository;
-	
-	@Autowired
-	private ApiValidationService validationService;
-
 
 	@Autowired
 	private ApiValidationService validationService;
