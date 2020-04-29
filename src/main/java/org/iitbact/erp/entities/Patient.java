@@ -69,6 +69,7 @@ public class Patient implements Serializable {
 	}
 
 	public Patient(PostPatientRequestBean request) throws ParseException {
+		this.setDob(request.getDob());
 		this.setAddress(request.getAddress());
 		this.setAge(request.getAge());
 		this.setMonth(request.getMonth());
@@ -85,6 +86,7 @@ public class Patient implements Serializable {
 	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
 		this.setAge(request.getAge());
+		this.setDob(request.getDob());
 		this.setMonth(request.getMonth());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
