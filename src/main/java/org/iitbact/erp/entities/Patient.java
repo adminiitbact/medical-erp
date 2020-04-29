@@ -1,6 +1,8 @@
 package org.iitbact.erp.entities;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,17 +23,18 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 @Entity
 @Table(name = "patients")
 @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")
-@TypeDef(
-	    name = "json",
-	    typeClass = JsonStringType.class
-	)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
 	private String address;
 
-	private int age;
+	private String locality;
+
+	private String pincode;
+
+	private String dob;
 
 	@Column(name = "contact_number")
 	private String contactNumber;
@@ -44,40 +47,48 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
-	
+
 	@Column(name = "emergency_contact")
 	private String emergencyContact;
-	
-	@Column(name="goi_covid_id")
+
+	@Column(name = "goi_covid_id")
 	private String goiCovidId;
-	
+
 	@Type(type = "json")
-    @Column(name="pre_existing_medical_condition",columnDefinition = "json")
+	@Column(name = "pre_existing_medical_condition", columnDefinition = "json")
 	private Object preExistingMedicalCondition;
 
 	public Patient() {
 	}
 
-	public Patient(PostPatientRequestBean request) {
-		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
-		this.setContactNumber(request.getContactNumber());
-		this.setGender(request.getGender());
-		this.setName(request.getName());
-		this.setEmergencyContact(request.getEmergencyContact());
-		this.setGoiCovidId(request.getGoiCovidId());
-		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+	public String formatDate(String date, String currentFormat, String newFormat) throws ParseException {
+		return new SimpleDateFormat(currentFormat).format(new SimpleDateFormat(newFormat).parse(date));
 	}
 
-	public void updatePatient(PatientProfileRequestBean request) {
+	public Patient(PostPatientRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
-		this.setAge(request.getAge());
+		this.setDob(request.getDob());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
 		this.setEmergencyContact(request.getEmergencyContact());
 		this.setGoiCovidId(request.getGoiCovidId());
 		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setLocality(request.getLocality());
+		this.setPincode(request.getPincode());
+	}
+
+	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
+		this.setAddress(request.getAddress());
+		this.setDob(request.getDob());
+		this.setContactNumber(request.getContactNumber());
+		this.setGender(request.getGender());
+		this.setName(request.getName());
+		this.setEmergencyContact(request.getEmergencyContact());
+		this.setGoiCovidId(request.getGoiCovidId());
+		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setLocality(request.getLocality());
+		this.setPincode(request.getPincode());
 	}
 
 	public String getAddress() {
@@ -88,12 +99,12 @@ public class Patient implements Serializable {
 		this.address = address;
 	}
 
-	public int getAge() {
-		return this.age;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDob(String dob) throws ParseException {
+		this.dob = dob;
 	}
 
 	public String getContactNumber() {
@@ -150,5 +161,21 @@ public class Patient implements Serializable {
 
 	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
 		this.preExistingMedicalCondition = preExistingMedicalCondition;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 }

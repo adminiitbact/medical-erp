@@ -3,7 +3,7 @@ package org.iitbact.erp.requests;
 public class PatientProfileRequestBean extends BaseRequest {
 	private String address;
 
-	private int age;
+	private String dob;
 
 	private String contactNumber;
 
@@ -14,8 +14,11 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String emergencyContact;
 
 	private String goiCovidId;
-	
+
 	private Object preExistingMedicalCondition;
+	
+	private String locality;
+	private String pincode;
 
 	public String getAddress() {
 		return address;
@@ -25,12 +28,12 @@ public class PatientProfileRequestBean extends BaseRequest {
 		this.address = address;
 	}
 
-	public int getAge() {
-		return age;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 	public String getContactNumber() {
@@ -81,5 +84,20 @@ public class PatientProfileRequestBean extends BaseRequest {
 		this.preExistingMedicalCondition = preExistingMedicalCondition;
 	}
 
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
 
 }

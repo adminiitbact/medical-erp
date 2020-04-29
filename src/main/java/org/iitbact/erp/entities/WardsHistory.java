@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.iitbact.erp.requests.WardRequestBean;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
@@ -74,27 +73,28 @@ public class WardsHistory implements Serializable {
 	
 	@Column(name="ventilators_occupied")
 	private int ventilatorsOccupied;
-
+	
+	private boolean active;
 
 	public WardsHistory() {
 	}
 
-	public WardsHistory(WardRequestBean request,int facilityId,int wardId) {
-		this.setAvailableBeds(request.getTotalBeds());
-		this.setTotalBeds(request.getTotalBeds());
-		this.setCovidStatus(request.getCovidStatus().toString());
-		this.setSeverity(request.getSeverity().toString());
-		this.setVentilators(request.getVentilators());
-		this.setVentilatorsOccupied(request.getVentilatorsOccupied());
-		this.setCovidWard(request.isCovidWard());
-		this.setFloor(request.getFloor());
-		this.setName(request.getName());
-		this.setGender(request.getGender().toString());
-		this.setBuildingName(request.getBuildingName());
-		this.setExtraFields(request.getExtraFields());
-		
-		this.setWardId(wardId);
-		this.setFacilityId(facilityId);
+	public WardsHistory(Ward ward) {
+		this.setAvailableBeds(ward.getTotalBeds());
+		this.setTotalBeds(ward.getTotalBeds());
+		this.setCovidStatus(ward.getCovidStatus());
+		this.setSeverity(ward.getSeverity());
+		this.setVentilators(ward.getVentilators());
+		this.setVentilatorsOccupied(ward.getVentilatorsOccupied());
+		this.setCovidWard(ward.isCovidWard());
+		this.setFloor(ward.getFloor());
+		this.setName(ward.getName());
+		this.setGender(ward.getGender());
+		this.setBuildingName(ward.getBuildingName());
+		this.setExtraFields(ward.getExtraFields());
+		this.setWardId(ward.getId());
+		this.setFacilityId(ward.getFacilityId());
+		this.setActive(ward.isActive());
 	}
 
 	public int getAvailableBeds() {
@@ -215,6 +215,14 @@ public class WardsHistory implements Serializable {
 
 	public void setVentilatorsOccupied(int ventilatorsOccupied) {
 		this.ventilatorsOccupied = ventilatorsOccupied;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

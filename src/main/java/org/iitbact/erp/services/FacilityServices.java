@@ -1,14 +1,14 @@
 package org.iitbact.erp.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.iitbact.erp.beans.FacilityProfileWithAvailablity;
 import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.constants.CovidStatus;
+import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Facility;
 import org.iitbact.erp.entities.FacilityDetails;
+import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.PatientLiveStatusInterface;
 import org.iitbact.erp.repository.FacilityRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
@@ -36,23 +36,16 @@ public class FacilityServices {
 	@Autowired
 	private PatientLiveStatusRepository patientLiveStatusRepository;
 
-	private void authenticateUser(String authToken) {
-		validationService.verifyFirebaseIdToken(authToken);
-		// userRepository.findByUserId(userId);
-		// TODO: If user.facilityId == facilityId or user should be able to
-		// access this
-		// data then continue, else throw error
-		// throw runtime hospital exception
-	}
 
 	public BooleanResponse addFacilityProfileData(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
-		// this.authenticateUser(request.getAuthToken());
-
+		validationService.checkUserFacility(facilityId,request);
+		
 		Facility facility = facilityRepository.findById(facilityId).get();
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode data = mapper.convertValue(request.getData(), JsonNode.class);
+		
 		facility.updateProfileData(data.get(Constants.FACILITY_DATA));// TODO
 		if (data != null) {
 			facility.getFacilityContact().setData(data.get(Constants.CONTACT_DATA));
@@ -63,7 +56,8 @@ public class FacilityServices {
 	}
 
 	public BooleanResponse addFacilityAssets(int facilityId, FlexibleRequest request) throws JsonProcessingException {
-		this.authenticateUser(request.getAuthToken());
+		validationService.checkUserFacility(facilityId,request);
+		
 		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
@@ -76,7 +70,7 @@ public class FacilityServices {
 
 	public BooleanResponse addFacilityInventory(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
-		this.authenticateUser(request.getAuthToken());
+		validationService.checkUserFacility(facilityId,request);
 		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
@@ -88,7 +82,7 @@ public class FacilityServices {
 	}
 
 	public BooleanResponse addFacilityMedstaff(int facilityId, FlexibleRequest request) throws JsonProcessingException {
-		this.authenticateUser(request.getAuthToken());
+		validationService.checkUserFacility(facilityId,request);
 		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
@@ -101,7 +95,7 @@ public class FacilityServices {
 
 	public BooleanResponse addFacilityChecklist(int facilityId, FlexibleRequest request)
 			throws JsonProcessingException {
-		this.authenticateUser(request.getAuthToken());
+		validationService.checkUserFacility(facilityId,request);
 		Facility facility = facilityRepository.findById(facilityId).get();
 		Object data = request.getData();
 		if (data != null) {
@@ -113,13 +107,16 @@ public class FacilityServices {
 	}
 
 	public Facility fetchFacilityData(int facilityId, BaseRequest request) {
-		this.authenticateUser(request.getAuthToken());
+		
+		validationService.checkUserFacility(facilityId, request);
+		
 		Facility facility = facilityRepository.findById(facilityId).get();
+		System.out.println("Fetching faciltiy details for facility Id "+ facility.getFacilityId());
 		return facility;
 	}
 
 	public List<PatientLiveStatusInterface> searchPatientByFacility(int facilityId, GetPatientRequestBean request) {
-		 this.authenticateUser(request.getAuthToken());
+		validationService.checkUserFacility(facilityId,request);
 		if (request.isWardAlloted()) {
 			return patientLiveStatusRepository.findWardAllotedPatientByFacilityId(facilityId);
 		} else {
@@ -127,55 +124,24 @@ public class FacilityServices {
 		}
 	}
 
-	//
-
-	public List<FacilityProfileWithAvailablity> facilities(int facilityId, FacilityRequest request) {
-		this.authenticateUser(request.getAuthToken());
+	public List<FacilityDetails> facilities(int facilityId, FacilityRequest request) {
+		HospitalUser user= validationService.checkUserFacility(facilityId,request);
 
 		String covidStatus = getCovidStatus(request.getTestStatus().toString());
+		String severity=getSeverity(request.getSeverity().toString());
 
-		List<FacilityDetails> facilities = null;
-		// List<FacilityAssignedPatients> assignedPatients=null;//TODO do
-		// something about it
+		List<FacilityDetails> facilities = facilityRepository.getFacilities(covidStatus,
+				severity, facilityId,user.getRegion());
 
-		// Fetch facilities based on covid status (suspected/confirmed)
-		if (covidStatus != null && facilityId != 0) {
-			facilities = facilityRepository.getFacilities(covidStatus, request.getSeverity().toString(), facilityId);
-			/*
-			 * assignedPatients = facilityRepository
-			 * .assignedPatients(request.getSeverity().toString(),
-			 * request.getTestStatus().toString());
-			 */
+		return facilities;
+	}
+
+	private String getSeverity(String severity) {
+		if (SEVERITY.ASYMPTOMATIC.toString().equalsIgnoreCase(severity)) {
+			return SEVERITY.MILD.toString();
 		} else {
-			facilities = facilityRepository.getFacilities();// TODO what to do
-															// in case of
-															// nagative
-			/*
-			 * assignedPatients = facilityRepository .assignedPatients();
-			 */
+			return severity;
 		}
-
-		// Create Response
-		List<FacilityProfileWithAvailablity> data = new ArrayList<FacilityProfileWithAvailablity>();
-
-		for (FacilityDetails facility : facilities) {
-			FacilityProfileWithAvailablity facilityProfileWithAvailablity = new FacilityProfileWithAvailablity(
-					facility);
-
-			/*
-			 * if(!assignedPatients.isEmpty()) { FacilityAssignedPatients
-			 * totalAssigned = assignedPatients.stream().filter(x ->
-			 * facilityProfileWithAvailablity.getFacilityId() ==
-			 * x.getFacilityId()).findAny().get();
-			 * 
-			 * if (totalAssigned != null) {
-			 * facilityProfileWithAvailablity.substractAssigned(totalAssigned.
-			 * getTotalAssigned()); } }
-			 */
-
-			data.add(facilityProfileWithAvailablity);
-		}
-		return data;
 	}
 
 	private String getCovidStatus(String testStatus) {

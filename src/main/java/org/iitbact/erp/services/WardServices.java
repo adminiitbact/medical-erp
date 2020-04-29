@@ -3,16 +3,22 @@ package org.iitbact.erp.services;
 import java.util.List;
 
 import org.iitbact.erp.constants.CovidStatus;
+import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.entities.WardsHistory;
+import org.iitbact.erp.exceptions.HospitalErpErrorCode;
+import org.iitbact.erp.exceptions.HospitalErpErrorMsg;
+import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.repository.WardHistoryRepository;
 import org.iitbact.erp.repository.WardRepository;
+import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WardServices {
@@ -26,23 +32,82 @@ public class WardServices {
 	@Autowired
 	private ApiValidationService validationService;
 
-	private void authenticateUser(String authToken) {
-		validationService.verifyFirebaseIdToken(authToken); //TODO
-		// userRepository.findByUserId(userId);
-		// TODO: If user.facilityId == facilityId or user should be able to
-		// access this
-		// data then continue, else throw error
-		// throw runtime hospital exception
-	}
 
+	@Autowired
+	private ApiValidationService validationService;
+
+	public Ward findWardByIdAndFacilityId(int wardId, int facilityId) {
+		try {
+			Ward ward = wardRepository.findByIdAndFacilityId(wardId, facilityId);
+			if (ward == null) {
+				System.out.println("Ward not found {findWardByIdAndFacilityId} wardId : " + wardId + " facilityId : "
+						+ facilityId);
+				throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.INVALID_INPUT);
+			}
+			return ward;
+		} catch (Exception e) {
+			System.out.println(
+					"System Error {findWardByIdAndFacilityId} Ward : " + wardId + " facilityId : " + facilityId);
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
+		}
+	};
+
+	@Transactional
+	public void saveWard(Ward ward) {
+		try {
+			wardRepository.save(ward);
+			wardHistoryRepository.save(new WardsHistory(ward));
+		} catch (Exception e) {
+			System.out.println("System Error {saveWard} :  facilityId : " + ward.getFacilityId());
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
+		}
+	}
+	
+	
 	public List<Ward> fetchAvailableWards(int facilityId, FacilityRequest request) {
-		this.authenticateUser(request.getAuthToken());
-		String covidStatus = getCovidStatus(request.getTestStatus().toString());
 
-		return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId, covidStatus,
-				request.getSeverity().toString());
+		validationService.fetchAvailableWards(facilityId, request);
+
+		String covidStatus = getCovidStatus(request.getTestStatus().toString());
+		String severity=getSeverity(request.getSeverity().toString());
+		try {
+			return wardRepository.findByFacilityIdAndCovidStatusAndSeverity(facilityId, covidStatus,
+					severity);
+		} catch (Exception e) {
+			System.out.println("System Error {fetchAvailableWards} :  facilityId : " + facilityId);
+			throw new HospitalErpException(HospitalErpErrorCode.DATABASE_ERROR, HospitalErpErrorMsg.DATABASE_ERROR);
+		}
 	}
 
+	public BooleanResponse addAndUpdateWards(int facilityId, WardRequestBean request) {
+
+		Ward ward = validationService.addAndUpdateWards(facilityId, request);
+
+		// Ward already exist , update the existing ward
+		if (ward != null) {
+			ward.updateWard(request);
+		} else {
+			ward = new Ward(request, facilityId);
+		}
+		
+		saveWard(ward);
+
+		BooleanResponse returnVal = new BooleanResponse(true);
+		return returnVal;
+	}
+
+	public BooleanResponse removeWard(int facilityId, int wardId,BaseRequest request) {
+		
+		Ward ward = validationService.removeWard(facilityId,wardId,request);
+		
+		ward.setActive(false);
+		
+		saveWard(ward);
+		
+		return new BooleanResponse(true);
+	}
+
+	// ######################### Private methods #########################
 	private String getCovidStatus(String testStatus) {
 		if (TEST_STATUS.POSITIVE.toString().equalsIgnoreCase(testStatus)) {
 			return CovidStatus.CONFIRMED.toString();
@@ -50,25 +115,12 @@ public class WardServices {
 			return CovidStatus.SUSPECTED.toString();
 		}
 	}
-
-	public BooleanResponse addAndUpdateWards(int facilityId, WardRequestBean request) {
-		this.authenticateUser(request.getAuthToken());
-		//TODO validation on total bed count against occupied beds
-		
-		Ward ward = null;
-
-		if (request.getWardId() != 0) {
-			ward = wardRepository.findByIdAndFacilityId(request.getWardId(), facilityId);
-			ward.updateWard(request);
+	
+	private String getSeverity(String severity) {
+		if (SEVERITY.ASYMPTOMATIC.toString().equalsIgnoreCase(severity)) {
+			return SEVERITY.MILD.toString();
 		} else {
-			ward = new Ward(request, facilityId);
+			return severity;
 		}
-
-		wardRepository.save(ward);
-		wardHistoryRepository.save(new WardsHistory(request,facilityId,ward.getId()));
-
-		BooleanResponse returnVal = new BooleanResponse(true);
-		return returnVal;
 	}
-
 }

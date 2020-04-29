@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -44,12 +41,7 @@ public class HospitalUser implements Serializable {
 	@Column(name="facility_id",insertable = false,updatable = false)
 	private int facilityId;
 	
-
-	//uni-directional many-to-one association to Facility
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="facility_id", referencedColumnName="facility_id")
-	private Facility facility;
+	private int region;
 
 	public HospitalUser() {
 	}
@@ -94,20 +86,20 @@ public class HospitalUser implements Serializable {
 		this.userId = userId;
 	}
 
-	public Facility getFacility() {
-		return this.facility;
-	}
-
-	public void setFacility(Facility facility) {
-		this.facility = facility;
-	}
-
 	public int getFacilityId() {
 		return facilityId;
 	}
 
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	public int getRegion() {
+		return region;
+	}
+
+	public void setRegion(int region) {
+		this.region = region;
 	}
 
 }
