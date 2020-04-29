@@ -32,6 +32,7 @@ public class WardServices {
 	@Autowired
 	private ApiValidationService validationService;
 
+
 	public Ward findWardByIdAndFacilityId(int wardId, int facilityId) {
 		try {
 			Ward ward = wardRepository.findByIdAndFacilityId(wardId, facilityId);
