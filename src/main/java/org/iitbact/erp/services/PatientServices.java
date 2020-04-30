@@ -58,7 +58,6 @@ public class PatientServices {
 		// cannot add a patient outside region TODO
 
 		Patient patient = validationService.addPatient(request);
-
 		patient = patientRepository.save(patient);
 
 		// Insert into patient History & patient live status table

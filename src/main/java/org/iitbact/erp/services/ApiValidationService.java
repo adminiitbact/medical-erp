@@ -1,10 +1,7 @@
 package org.iitbact.erp.services;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import org.iitbact.erp.constants.Constants;
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
 import org.iitbact.erp.entities.PatientLiveStatus;
@@ -133,23 +130,27 @@ public class ApiValidationService {
 		if (request.getWardId() != 0) {
 			wardServices.findWardByIdAndFacilityId(request.getWardId(), request.getFacilityId());
 		}
-
-		isDateValid(request.getDob());
-
+		isMonthValid(request.getMonth());
 		return new Patient(request);
 	}
 
-	private void isDateValid(String date) {
-		try {
-			DateFormat df = new SimpleDateFormat(Constants.MYSQL_FORMAT);
-			df.setLenient(false);
-			df.parse(date);
-		} catch (ParseException e) {
-			LOGGER.error("Patient dob is in Invalid format! dob - ", date);
-			throw new HospitalErpException(HospitalErpErrorCode.DATE_FORMAT_ERROR,
-					HospitalErpErrorMsg.DATE_FORMAT_ERROR);
+	/*
+	 * private void isDateValid(String date) { try { DateFormat df = new
+	 * SimpleDateFormat(Constants.MYSQL_FORMAT); df.setLenient(false);
+	 * df.parse(date); } catch (ParseException e) { LOGGER.error(
+	 * "Patient dob is in Invalid format! dob - ", date); throw new
+	 * HospitalErpException(HospitalErpErrorCode.DATE_FORMAT_ERROR,
+	 * HospitalErpErrorMsg.DATE_FORMAT_ERROR);
+	 * 
+	 * } }
+	 */
 
+	private void isMonthValid(int month) {
+		if (!(0 <= month && month <= 12)) {
+			LOGGER.error("Patient month is in Invalid! month - ", month);
+			throw new HospitalErpException(HospitalErpErrorCode.INVALID_INPUT, HospitalErpErrorMsg.INVALID_INPUT);
 		}
+
 	}
 
 	public Patient updatePatientProfile(int patientId, PatientProfileRequestBean request) {
@@ -164,8 +165,7 @@ public class ApiValidationService {
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
 					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
 		}
-
-		isDateValid(request.getDob());
+		isMonthValid(request.getMonth());
 		return patientServices.findById(patientId);
 	}
 
@@ -211,7 +211,7 @@ public class ApiValidationService {
 
 	public PatientLiveStatus patientStatusUpdate(int patientId, PatientTransferRequestBean request) {
 		String uid = verifyFirebaseIdToken(request.getAuthToken());
-		
+
 		HospitalUser user = userServices.userProfileWrtUserId(uid);
 
 		PatientLiveStatus patientCurrentStatus = patientServices.patientLiveStatus(patientId);
@@ -222,7 +222,7 @@ public class ApiValidationService {
 			throw new HospitalErpException(HospitalErpErrorCode.INVALID_ACCESS_CODE,
 					HospitalErpErrorMsg.INVALID_ACCESS_CODE);
 		}
-		
+
 		if (request.getWardId() != 0) {
 			wardServices.findWardByIdAndFacilityId(request.getWardId(), request.getFacilityId());
 		}

@@ -8,7 +8,8 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String contactNumber;
 
 	private String gender;
-
+	private int age;
+	private int month;
 	private String name;
 
 	private String emergencyContact;
@@ -98,6 +99,22 @@ public class PatientProfileRequestBean extends BaseRequest {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
 	}
 
 }

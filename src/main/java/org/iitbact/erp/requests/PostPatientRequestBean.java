@@ -12,7 +12,8 @@ public class PostPatientRequestBean extends BaseRequest {
 	private String emergencyContact;
 	private String locality;
 	private String pincode;
-
+	private int age;
+	private int month;
 	private Object preExistingMedicalCondition;
 
 	private String goiCovidId;
@@ -140,5 +141,21 @@ public class PostPatientRequestBean extends BaseRequest {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
 	}
 }

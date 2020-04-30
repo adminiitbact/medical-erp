@@ -36,6 +36,9 @@ public class Patient implements Serializable {
 
 	private String dob;
 
+	private int month;
+	private int age;
+
 	@Column(name = "contact_number")
 	private String contactNumber;
 
@@ -66,8 +69,10 @@ public class Patient implements Serializable {
 	}
 
 	public Patient(PostPatientRequestBean request) throws ParseException {
-		this.setAddress(request.getAddress());
 		this.setDob(request.getDob());
+		this.setAddress(request.getAddress());
+		this.setAge(request.getAge());
+		this.setMonth(request.getMonth());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -80,7 +85,9 @@ public class Patient implements Serializable {
 
 	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
 		this.setAddress(request.getAddress());
+		this.setAge(request.getAge());
 		this.setDob(request.getDob());
+		this.setMonth(request.getMonth());
 		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
 		this.setName(request.getName());
@@ -177,5 +184,21 @@ public class Patient implements Serializable {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 }

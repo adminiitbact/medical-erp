@@ -30,9 +30,10 @@ ALTER TABLE `patients`
 	ADD COLUMN `dob` DATE NOT NULL DEFAULT '0000-00-00' AFTER `gender`;
 
 	ALTER TABLE `patients`
-	DROP INDEX `name_age_contact_number`,
-	ADD UNIQUE INDEX `name_age_contact_number` (`name`, `dob`, `contact_number`);
-	
+	ADD UNIQUE INDEX `name_age_contact_number` (`name`, `age`, `contact_number`);
 	
 	ALTER TABLE `patients`
-	DROP COLUMN `age`;
+	ADD COLUMN `month` INT(11) NULL DEFAULT '0' AFTER `age`;
+
+	ALTER TABLE `patients`
+	CHANGE COLUMN `dob` `dob` VARCHAR(10) NOT NULL AFTER `gender`;
