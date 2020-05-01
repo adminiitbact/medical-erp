@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HospitalErpApplication<hospital-erp>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/medical-erp",
+            "console": "internalConsole",
+            "mainClass": "org.iitbact.erp.HospitalErpApplication",
+            "projectName": "hospital-erp",
+            "args": "--spring.profiles.active=dev",
+            "env": {
+                "GOOGLE_APPLICATION_CREDENTIALS": "/home/ahir/projects/iitbact/medical-erp/firebase.json",
+                "ENV": "DEV",
+                "DB_connection": "jdbc:mysql://iitbact-stag-1.ccazzx7pipfi.ap-south-1.rds.amazonaws.com",
+                "DB_user": "dev2",
+                "DB_password": "D3v2P@55"
+            }
+        }
+    ]
+}
