@@ -4,6 +4,8 @@ import java.text.ParseException;
 
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientClinicalHist;
+import org.iitbact.erp.entities.PatientCovidTestDetails;
 import org.iitbact.erp.entities.PatientDischarged;
 import org.iitbact.erp.entities.PatientHistory;
 import org.iitbact.erp.entities.PatientLiveStatus;
@@ -12,6 +14,8 @@ import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpErrorCode;
 import org.iitbact.erp.exceptions.HospitalErpException;
 import org.iitbact.erp.exceptions.HospitalErpErrorMsg;
+import org.iitbact.erp.repository.PatientClinicalHistRepository;
+import org.iitbact.erp.repository.PatientCovidTestResultRepository;
 import org.iitbact.erp.repository.PatientDischargedRepository;
 import org.iitbact.erp.repository.PatientHistoryRepository;
 import org.iitbact.erp.repository.PatientLiveStatusRepository;
@@ -21,6 +25,8 @@ import org.iitbact.erp.requests.BaseRequest;
 import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientClinicalHistBean;
+import org.iitbact.erp.requests.PostPatientCovidTestDetailsBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.response.BooleanResponse;
 import org.iitbact.erp.response.PatientLiveStatusResponse;
@@ -34,6 +40,12 @@ public class PatientServices {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	private PatientClinicalHistRepository patientClinicalHist;
+
+	@Autowired
+	private PatientCovidTestResultRepository patientCovidTestDetails;
 
 	@Autowired
 	private PatientLiveStatusRepository patientLiveStatusRepository;
@@ -77,12 +89,36 @@ public class PatientServices {
 		return returnVal;
 	}
 
+	@Transactional
+	public BooleanResponse addPatientClinicalHist(PostPatientClinicalHistBean request) throws ParseException {
+
+		// TODO validation to check if user exist wrt mobilie no. age & gender
+		// (to reduce duplicate data in system)
+		// cannot add a patient outside region TODO
+
+		PatientClinicalHist patient = validationService.addPatientClinicalHist(request);
+		patient = patientClinicalHist.save(patient);
+		return new BooleanResponse(true);
+	}
+
+	@Transactional
+	public BooleanResponse addPatientCovidTestResult(PostPatientCovidTestDetailsBean request) throws ParseException {
+
+		// TODO validation to check if user exist wrt mobilie no. age & gender
+		// (to reduce duplicate data in system)
+		// cannot add a patient outside region TODO
+
+		PatientCovidTestDetails patient = validationService.addPatientCovidTestDetails(request);
+		patient = patientCovidTestDetails.save(patient);
+		return new BooleanResponse(true);
+	}
+
 	public PatientLiveStatusResponse fetchPatientStatusLive(int patientId, BaseRequest request) {
-		HospitalUser user= validationService.fetchPatientStatusLive(request);
-		
+		HospitalUser user = validationService.fetchPatientStatusLive(request);
+
 		PatientLiveStatusInterface patientStatus = patientLiveStatusRepository
-				.findByPatientIdFromMultipleTables(patientId,user.getFacilityId());
-		
+				.findByPatientIdFromMultipleTables(patientId, user.getFacilityId());
+
 		PatientLiveStatusResponse response = new PatientLiveStatusResponse();
 		response.setPatientStatus(patientStatus);
 		return response;
