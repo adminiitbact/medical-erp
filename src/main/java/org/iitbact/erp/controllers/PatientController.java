@@ -120,7 +120,7 @@ public class PatientController {
 		return responseBuilder.build();
 	}
 
-	@PostMapping(path = "/patients-clinical-hist/new")
+	@PostMapping(path = "/patients-clinical-hist/post")
 	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's clinical history")
 	public ResponseBean addPatientClinicalHist(@RequestBody PostPatientClinicalHistBean request) throws ParseException {
 		HospitalErpError error = null;
@@ -134,11 +134,10 @@ public class PatientController {
 		return responseBuilder.build();
 	}
 
-
-
-	@PostMapping(path = "/patients-covid-test-result/new")
+	@PostMapping(path = "/patients-covid-test-result/post")
 	@ApiOperation(response = BooleanResponse.class, value = "API request to add new patient's clinical history")
-	public ResponseBean addPatientCovidTestResult(@RequestBody PostPatientCovidTestDetailsBean request) throws ParseException {
+	public ResponseBean addPatientCovidTestResult(@RequestBody PostPatientCovidTestDetailsBean request)
+			throws ParseException {
 		HospitalErpError error = null;
 		BooleanResponse data = null;
 		try {
