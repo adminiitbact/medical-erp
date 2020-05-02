@@ -13,7 +13,6 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
@@ -27,98 +26,155 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private String firstName;
+	private String lastName;
+	private int age;
+	private String gender;
 	@Lob
 	private String address;
-
 	private String locality;
-
-	private String pincode;
-
-	private String dob;
-
-	private int month;
-	private int age;
-
+	private String district;
+	private String state;
+	private String occupation;
 	@Column(name = "contact_number")
 	private String contactNumber;
-
-	private String gender;
-
-	private String name;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "patient_id")
 	private int patientId;
 
-	@Column(name = "emergency_contact")
-	private String emergencyContact;
+	@Column(name = "district_case_id")
+	private String districtCaseId;
+
+	@Column(name = "hospital_patient_id")
+	private String hostpitalPatientId;
 
 	@Column(name = "goi_covid_id")
 	private String goiCovidId;
 
-	@Type(type = "json")
-	@Column(name = "pre_existing_medical_condition", columnDefinition = "json")
-	private Object preExistingMedicalCondition;
+	@Column(name = "covid_uid")
+	private String covidUID;
 
 	public Patient() {
 	}
 
-	public String formatDate(String date, String currentFormat, String newFormat) throws ParseException {
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(final String occupation) {
+		this.occupation = occupation;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(final String state) {
+		this.state = state;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(final String district) {
+		this.district = district;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String formatDate(final String date, final String currentFormat, final String newFormat)
+			throws ParseException {
 		return new SimpleDateFormat(currentFormat).format(new SimpleDateFormat(newFormat).parse(date));
 	}
 
-	public Patient(PostPatientRequestBean request) throws ParseException {
-		this.setDob(request.getDob());
-		this.setAddress(request.getAddress());
+	public Patient(final PostPatientRequestBean request) throws ParseException {
+		this.setFirstName(request.getFirstName());
+		this.setLastName(request.getLastName());
 		this.setAge(request.getAge());
-		this.setMonth(request.getMonth());
-		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
-		this.setName(request.getName());
-		this.setEmergencyContact(request.getEmergencyContact());
-		this.setGoiCovidId(request.getGoiCovidId());
-		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setAddress(request.getAddress());
 		this.setLocality(request.getLocality());
-		this.setPincode(request.getPincode());
+		this.setDistrict(request.getDistrict());
+		this.setState(request.getState());
+		this.setOccupation(request.getOccupation());
+		this.setContactNumber(request.getContactNumber());
+		this.setDistrictCaseId(request.getDistrictCaseId());
+		this.setHostpitalPatientId(request.getHostpitalPatientId());
+		this.setGoiCovidId(request.getGoiCovidId());
+		this.setCovidUID(request.getCovidUID());
 	}
 
-	public void updatePatient(PatientProfileRequestBean request) throws ParseException {
-		this.setAddress(request.getAddress());
+	public void updatePatient(final PatientProfileRequestBean request) throws ParseException {
+		this.setFirstName(request.getFirstName());
+		this.setLastName(request.getLastName());
 		this.setAge(request.getAge());
-		this.setDob(request.getDob());
-		this.setMonth(request.getMonth());
-		this.setContactNumber(request.getContactNumber());
 		this.setGender(request.getGender());
-		this.setName(request.getName());
-		this.setEmergencyContact(request.getEmergencyContact());
-		this.setGoiCovidId(request.getGoiCovidId());
-		this.setPreExistingMedicalCondition(request.getPreExistingMedicalCondition());
+		this.setAddress(request.getAddress());
 		this.setLocality(request.getLocality());
-		this.setPincode(request.getPincode());
+		this.setDistrict(request.getDistrict());
+		this.setState(request.getState());
+		this.setOccupation(request.getOccupation());
+		this.setContactNumber(request.getContactNumber());
+		this.setDistrictCaseId(request.getDistrictCaseId());
+		this.setHostpitalPatientId(request.getHostpitalPatientId());
+		this.setGoiCovidId(request.getGoiCovidId());
+		this.setCovidUID(request.getCovidUID());
+	}
+
+	public String getCovidUID() {
+		return this.covidUID;
+	}
+
+	public void setCovidUID(final String covidUID) {
+		this.covidUID = covidUID;
 	}
 
 	public String getAddress() {
 		return this.address;
 	}
 
-	public void setAddress(String address) {
+	public String getHostpitalPatientId() {
+		return this.hostpitalPatientId;
+	}
+
+	public void setHostpitalPatientId(final String hostpitalPatientId) {
+		this.hostpitalPatientId = hostpitalPatientId;
+	}
+
+	public void setAddress(final String address) {
 		this.address = address;
 	}
 
-	public String getDob() {
-		return dob;
+	public String getDistrictCaseId() {
+		return this.districtCaseId;
 	}
 
-	public void setDob(String dob) throws ParseException {
-		this.dob = dob;
+	public void setDistrictCaseId(final String districtCaseId) {
+		this.districtCaseId = districtCaseId;
 	}
 
 	public String getContactNumber() {
 		return this.contactNumber;
 	}
 
-	public void setContactNumber(String contactNumber) {
+	public void setContactNumber(final String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 
@@ -126,79 +182,39 @@ public class Patient implements Serializable {
 		return this.gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(final String gender) {
 		this.gender = gender;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getPatientId() {
 		return this.patientId;
 	}
 
-	public void setPatientId(int patientId) {
+	public void setPatientId(final int patientId) {
 		this.patientId = patientId;
-	}
-
-	public String getEmergencyContact() {
-		return emergencyContact;
-	}
-
-	public void setEmergencyContact(String emergencyContact) {
-		this.emergencyContact = emergencyContact;
 	}
 
 	public String getGoiCovidId() {
 		return goiCovidId;
 	}
 
-	public void setGoiCovidId(String goiCovidId) {
+	public void setGoiCovidId(final String goiCovidId) {
 		this.goiCovidId = goiCovidId;
-	}
-
-	public Object getPreExistingMedicalCondition() {
-		return preExistingMedicalCondition;
-	}
-
-	public void setPreExistingMedicalCondition(Object preExistingMedicalCondition) {
-		this.preExistingMedicalCondition = preExistingMedicalCondition;
 	}
 
 	public String getLocality() {
 		return locality;
 	}
 
-	public void setLocality(String locality) {
+	public void setLocality(final String locality) {
 		this.locality = locality;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
-
-	public int getMonth() {
-		return month;
 	}
 
 	public int getAge() {
 		return age;
 	}
 
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public void setAge(int age) {
+	public void setAge(final int age) {
 		this.age = age;
 	}
 }

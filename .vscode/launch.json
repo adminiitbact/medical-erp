@@ -16,7 +16,7 @@
             "env": {
                 "GOOGLE_APPLICATION_CREDENTIALS": "/home/ahir/projects/iitbact/medical-erp/firebase.json",
                 "ENV": "DEV",
-                "DB_connection": "jdbc:mysql://iitbact-stag-1.ccazzx7pipfi.ap-south-1.rds.amazonaws.com",
+                "spring.datasource.url": "jdbc:mysql://iitbact-stag-1.ccazzx7pipfi.ap-south-1.rds.amazonaws.com:3306/hospitaldb?verifyServerCertificate=false&useSSL=false&requireSSL=false&useUnicode=yes&characterEncoding=UTF-8",
                 "DB_user": "dev2",
                 "DB_password": "D3v2P@55"
             }
