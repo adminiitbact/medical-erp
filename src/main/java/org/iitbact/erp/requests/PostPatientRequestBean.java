@@ -4,19 +4,28 @@ import org.iitbact.erp.constants.SEVERITY;
 import org.iitbact.erp.constants.TEST_STATUS;
 
 public class PostPatientRequestBean extends BaseRequest {
-	private String address;
-	private String dob;
-	private String contactNumber;
+	private String firstName;
+	private String lastName;
+	private int age;
 	private String gender;
+	private String address;
+	private String locality;
+	private String district;
+	private String state;
+	private String occupation;
+	private String contactNumber;
+	private String districtCaseId;
+	private String hostpitalPatientId;
+	private String goiCovidId;
+	private String covidUID;
+
+	private String dob;
 	private String name;
 	private String emergencyContact;
-	private String locality;
 	private String pincode;
-	private int age;
 	private int month;
 	private Object preExistingMedicalCondition;
 
-	private String goiCovidId;
 	private String patientHospitalId;
 	private int facilityId;
 	private int wardId;
@@ -25,6 +34,70 @@ public class PostPatientRequestBean extends BaseRequest {
 
 	public String getPatientHospitalId() {
 		return patientHospitalId;
+	}
+
+	public String getCovidUID() {
+		return covidUID;
+	}
+
+	public void setCovidUID(String covidUID) {
+		this.covidUID = covidUID;
+	}
+
+	public String getHostpitalPatientId() {
+		return hostpitalPatientId;
+	}
+
+	public void setHostpitalPatientId(String hostpitalPatientId) {
+		this.hostpitalPatientId = hostpitalPatientId;
+	}
+
+	public String getDistrictCaseId() {
+		return districtCaseId;
+	}
+
+	public void setDistrictCaseId(String districtCaseId) {
+		this.districtCaseId = districtCaseId;
+	}
+
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public void setPatientHospitalId(String patientHospitalId) {

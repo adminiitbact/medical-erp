@@ -1,6 +1,15 @@
 package org.iitbact.erp.requests;
 
 public class PatientProfileRequestBean extends BaseRequest {
+	private String firstName;
+	private String lastName;
+	private String district;
+	private String state;
+	private String occupation;
+	private String districtCaseId;
+	private String hostpitalPatientId;
+	private String covidUID;
+
 	private String address;
 
 	private String dob;
@@ -17,12 +26,76 @@ public class PatientProfileRequestBean extends BaseRequest {
 	private String goiCovidId;
 
 	private Object preExistingMedicalCondition;
-	
+
 	private String locality;
 	private String pincode;
 
 	public String getAddress() {
 		return address;
+	}
+
+	public String getCovidUID() {
+		return covidUID;
+	}
+
+	public void setCovidUID(String covidUID) {
+		this.covidUID = covidUID;
+	}
+
+	public String getHostpitalPatientId() {
+		return hostpitalPatientId;
+	}
+
+	public void setHostpitalPatientId(String hostpitalPatientId) {
+		this.hostpitalPatientId = hostpitalPatientId;
+	}
+
+	public String getDistrictCaseId() {
+		return districtCaseId;
+	}
+
+	public void setDistrictCaseId(String districtCaseId) {
+		this.districtCaseId = districtCaseId;
+	}
+
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public void setAddress(String address) {

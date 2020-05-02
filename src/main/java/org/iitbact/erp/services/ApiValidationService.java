@@ -4,6 +4,8 @@ import java.text.ParseException;
 
 import org.iitbact.erp.entities.HospitalUser;
 import org.iitbact.erp.entities.Patient;
+import org.iitbact.erp.entities.PatientClinicalHist;
+import org.iitbact.erp.entities.PatientCovidTestDetails;
 import org.iitbact.erp.entities.PatientLiveStatus;
 import org.iitbact.erp.entities.Ward;
 import org.iitbact.erp.exceptions.HospitalErpErrorCode;
@@ -14,6 +16,8 @@ import org.iitbact.erp.requests.FacilityRequest;
 import org.iitbact.erp.requests.PatientDischargedRequestBean;
 import org.iitbact.erp.requests.PatientProfileRequestBean;
 import org.iitbact.erp.requests.PatientTransferRequestBean;
+import org.iitbact.erp.requests.PostPatientClinicalHistBean;
+import org.iitbact.erp.requests.PostPatientCovidTestDetailsBean;
 import org.iitbact.erp.requests.PostPatientRequestBean;
 import org.iitbact.erp.requests.WardRequestBean;
 import org.slf4j.Logger;
@@ -132,6 +136,14 @@ public class ApiValidationService {
 		}
 		isMonthValid(request.getMonth());
 		return new Patient(request);
+	}
+
+	public PatientClinicalHist addPatientClinicalHist(PostPatientClinicalHistBean request) throws ParseException {
+		return new PatientClinicalHist(request);
+	}
+
+	public PatientCovidTestDetails addPatientCovidTestDetails(PostPatientCovidTestDetailsBean request) throws ParseException {
+		return new PatientCovidTestDetails(request);
 	}
 
 	/*
