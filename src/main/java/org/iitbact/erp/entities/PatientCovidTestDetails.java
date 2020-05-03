@@ -30,6 +30,7 @@ public class PatientCovidTestDetails implements Serializable {
     private boolean resultAvailable;
     private String lab;
     private String result;
+    private String patientid;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +39,14 @@ public class PatientCovidTestDetails implements Serializable {
 
     public boolean isSampleCollected() {
         return sampleCollected;
+    }
+
+    public String getPatientid() {
+        return patientid;
+    }
+
+    public void setPatientid(String patientid) {
+        this.patientid = patientid;
     }
 
     public String getResult() {
@@ -100,5 +109,6 @@ public class PatientCovidTestDetails implements Serializable {
         this.setResultAvailable(request.isResultAvailable());
         this.setLab(request.getLab());
         this.setResult(request.getResult());
+        this.setPatientid(request.getPatientid());
     }
 }

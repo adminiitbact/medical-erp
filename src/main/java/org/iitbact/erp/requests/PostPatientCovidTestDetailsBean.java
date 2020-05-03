@@ -10,9 +10,18 @@ public class PostPatientCovidTestDetailsBean extends BaseRequest {
     private boolean resultAvailable;
     private String lab;
     private String result;
+    private String patientid;
 
     public boolean isSampleCollected() {
         return sampleCollected;
+    }
+
+    public String getPatientid() {
+        return patientid;
+    }
+
+    public void setPatientid(String patientid) {
+        this.patientid = patientid;
     }
 
     public String getResult() {
